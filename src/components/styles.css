@@ -1,0 +1,601 @@
+/* Container */
+.zona-turnos-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1750px;
+  /* margin: 30px auto; */
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
+  /* padding: 25px 30px; */
+  color: black;
+}
+
+/* Current date display */
+.fecha-hoy {
+  text-align: right;
+  font-weight: 600;
+  color: #54b198;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+/* Zonas section */
+
+.zonas-section {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5px;
+  /* slightly more than sidebar width */
+  /* padding: 20px 30px 30px 30px; */
+  box-sizing: border-box;
+}
+
+.zonas-section h2 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+  border-bottom: 3px solid #54b198;
+  padding-bottom: 6px;
+
+
+}
+
+.zona-buttons {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.zona-btn {
+  background-color: #54b198;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+}
+
+.zona-btn:hover,
+.zona-btn:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
+
+.zona-selected h3 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.seleccion-zona {
+  /* position: fixed;
+  top: 0;
+  left: 0; */
+  height: 100vh;
+  width: 5%;
+  background-color: white;
+  box-shadow: 3px 0 8px rgba(84, 177, 152, 0.15);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+  border-radius: 0 10px 10px 0;
+  /* rounded right corners */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.seleccion-zona h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #54b198;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.seleccion-zona .zona-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.seleccion-zona .zona-btn {
+  width: 100%;
+  background-color: #54b198;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 14px 0;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.seleccion-zona .zona-btn:hover,
+.seleccion-zona .zona-btn:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 6px 14px rgba(61, 125, 106, 0.7);
+}
+
+
+/*simulador inicio*/
+
+
+.simulacion-container{
+  display: flex;
+  align-items: center;
+}
+
+.simulacion-delete-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #54b198;
+  cursor: pointer;
+  padding: 4px 8px;
+  /* Slightly adjusted padding for inline fit */
+  border-radius: 50%;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  /* Ensures consistent size */
+  min-height: 28px;
+  margin-left: 10px;
+  /* Space from the text */
+}
+
+.simulacion-delete-btn:hover,
+.simulacion-delete-btn:focus {
+  background-color: #54b198;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 8px #54b198;
+}
+
+
+/* Calendario container */
+.calendario-container {
+  margin: 2px;
+  border-radius: 10px;
+  padding: 20px 15px 15px;
+  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.1);
+  max-width: 500px;
+  min-width: 499px;
+}
+
+.zona-1 {
+  background: #cdd9d6;
+}
+
+.zona-2 {
+  background: #b9e3d8;
+}
+
+.zona-3 {
+  background: #96cfc1;
+}
+
+.zona-3 .auto-title {
+  color: #478d7a;
+}
+
+.zona-3 .mes-anio {
+  color: #478d7a;
+}
+
+.zona-3 .nav-btn {
+  color: #478d7a;
+}
+
+
+/* Header with month and nav */
+.calendario-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  /* space between title and nav */
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.auto-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #54b198;
+  margin: 0;
+  user-select: none;
+}
+
+.nav-calendario {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  width: 100%;
+
+  justify-content: space-between;
+}
+
+.mes-anio {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #54b198;
+  user-select: none;
+}
+
+/* Navigation buttons */
+.nav-btn {
+  background: none;
+  border: none;
+  color: #54b198;
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  border-radius: 6px;
+}
+
+.nav-btn:hover,
+.nav-btn:focus {
+  background-color: #54b198;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 8px #54b198;
+}
+
+.nav-btn:first-child {
+  left: 0;
+}
+
+.nav-btn:last-child {
+  right: 0;
+}
+
+/* Days of week header */
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  color: #54b198;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+/* Day names */
+.dia-semana {
+  padding: 6px 0;
+}
+
+/* Empty day placeholder */
+.dia-vacio {
+  background: transparent;
+  /* height: 180px;  */
+}
+
+/* Days container as grid */
+.dias-mes {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 16px;
+}
+
+
+
+/* Day card */
+.dia-mes {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+
+
+/* Highlight today */
+.dia-mes.hoy {
+  border: 2px solid #54b198;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #54b198;
+}
+
+/* Day number */
+.dia-mes>div:first-child {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+  color: #222;
+}
+
+/* Horarios container */
+
+/* horarios-list as floating popup */
+.horarios-list {
+  max-height: 180px;
+  /* or any fixed height you prefer */
+  overflow-y: auto;
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #54b198;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.25);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 200;
+  user-select: none;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.horarios-list::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+/* Horarios buttons */
+
+.horarios-list button {
+  min-width: 48px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(84, 177, 152, 0.3);
+  user-select: none;
+}
+
+.horarios-list button:hover,
+.horarios-list button:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
+/* Botón que reemplaza al div */
+.dia-num-btn {
+  all: unset;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.15);
+  padding: 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  color: #222;
+  width: 50%;
+  text-align: center;
+}
+
+.disabled {
+  background-color: #a9a9a9;
+}
+
+/* Destacar hoy */
+.dia-num-btn.hoy {
+  border: 2px solid #54b198;
+  box-shadow: 0 0 12px #54b198;
+}
+
+
+
+/* SIMULACION */
+
+/* Backdrop container to cover entire viewport and dim background */
+.simulacion-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  /* semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* high z-index to overlay other content */
+}
+
+
+/* Modal card itself */
+.simulacion-modal {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 400px;
+  width: 90vw;
+  /* responsive width */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
+  padding: 20px 25px;
+  color: #222;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1001;
+  /* above backdrop */
+  position: relative;
+}
+
+.simulacion-list {
+  height: fit-content;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* max-height: 250px; */
+  overflow-y: auto;
+  border: 1px solid #54b198;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 6px rgba(84, 177, 152, 0.1);
+}
+
+.simulacion-item {
+  padding: 10px 15px;
+  border-bottom: 1px solid #d1e7e1;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3d7d6a;
+  transition: background-color 0.25s ease;
+  cursor: default;
+}
+
+.simulacion-item:last-child {
+  border-bottom: none;
+}
+
+.simulacion-item:hover {
+  background-color: #e6f0ec;
+}
+
+.btn-imprimir {
+  align-self: center;
+  background-color: #54b198;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.btn-imprimir:hover {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
+/* Close button "X" at top-right */
+.btn-close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #54b198;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 50%;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  user-select: none;
+  line-height: 1;
+}
+
+.btn-close:hover,
+.btn-close:focus {
+  background-color: #54b198;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 8px #54b198;
+}
+
+
+/* Ventana Reservado Backdrop */
+.ventana-reservado-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Ventana Reservado Modal */
+.ventana-reservado-modal {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 400px;
+  width: 90vw;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
+  padding: 20px 25px;
+  color: #222;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1001;
+  position: relative;
+}
+
+.ventana-reservado-modal > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ventana-reservado-modal p {
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+  color: #222;
+  line-height: 1.4;
+}
+
+.ventana-reservado-modal button {
+  align-self: center;
+  background-color: #54b198;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.ventana-reservado-modal button:hover,
+.ventana-reservado-modal button:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
