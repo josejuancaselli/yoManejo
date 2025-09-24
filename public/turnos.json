@@ -5,8 +5,29 @@
     "direccion": "Calle Falsa 123",
     "dni": "12345678",
     "turnos": [
-      { "dia": 23, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "1" },
-      { "dia": 24, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Mier", "zona": "1" }
+
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "14:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "15:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "16:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Jue", "zona": "1"}
+
+
     ]
   },
   {
@@ -15,8 +36,29 @@
     "direccion": "Av. Libertad 456",
     "dni": "87654321",
     "turnos": [
-      { "dia": 25, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Jue", "zona": "1" },
-      { "dia": 26, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Vie", "zona": "1" }
+
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "15:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "17:00", "diaSemana": "Mié", "zona": "1"}
+
+
     ]
   },
   {
@@ -26,8 +68,29 @@
     "dni": "11223344",
     
     "turnos": [
-      { "dia": 27, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Sáb", "zona": "1" },
-      { "dia": 28, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Dom", "zona": "1" }
+
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "15:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "17:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "18:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Sáb", "zona": "1"}
+
+
     ]
   },
   {
@@ -37,8 +100,29 @@
     "dni": "55667788",
     
     "turnos": [
-      { "dia": 29, "mes": 9, "anio": 2025, "hora": "14:00", "diaSemana": "Lun", "zona": "1" },
-      { "dia": 30, "mes": 9, "anio": 2025, "hora": "15:00", "diaSemana": "Mar", "zona": "1" }
+
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "15:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "14:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "16:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Vie", "zona": "1"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Sáb", "zona": "1"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Dom", "zona": "1"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Lun", "zona": "1"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "1"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Jue", "zona": "1"}
+
+
     ]
   },
   {
@@ -48,7 +132,29 @@
     "dni": "99887766",
     
     "turnos": [
-      { "dia": 30, "mes": 9, "anio": 2025, "hora": "16:00", "diaSemana": "Mar", "zona": "1" }
+
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Vie", "zona": "2"}
+
+
     ]
   },
     {
@@ -57,8 +163,29 @@
     "direccion": "Calle Loca 999",
     "dni": "66987854",
     "turnos": [
-      { "dia": 23, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "1" },
-      { "dia": 24, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mier", "zona": "1" }
+
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "15:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Jue", "zona": "2"}
+
+
     ]
   },
     {
@@ -67,8 +194,29 @@
     "direccion": "Av. SiempreViva 544",
     "dni": "12345678",
     "turnos": [
-      { "dia": 23, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "2" },
-      { "dia": 24, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Mier", "zona": "2" }
+
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "15:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "13:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "15:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "17:00", "diaSemana": "Mié", "zona": "2"}
+
+
     ]
   },
     {
@@ -77,8 +225,29 @@
     "direccion": "San Cristobal 62",
     "dni": "12345678",
     "turnos": [
-      { "dia": 23, "mes": 9, "anio": 2025, "hora": "10:00", "diaSemana": "Mar", "zona": "2" },
-      { "dia": 24, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mier", "zona": "2" }
+
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 24, "mes": 9, "anio": 2025, "hora": "14:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 25, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 26, "mes": 9, "anio": 2025, "hora": "14:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 27, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 28, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "8:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 29, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 30, "mes": 9, "anio": 2025, "hora": "12:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 1, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Mié", "zona": "2"},
+  {"dia": 2, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Jue", "zona": "2"},
+  {"dia": 3, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Vie", "zona": "2"},
+  {"dia": 4, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Sáb", "zona": "2"},
+  {"dia": 5, "mes": 10, "anio": 2025, "hora": "12:00", "diaSemana": "Dom", "zona": "2"},
+  {"dia": 6, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Lun", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "14:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 7, "mes": 10, "anio": 2025, "hora": "16:00", "diaSemana": "Mar", "zona": "2"},
+  {"dia": 8, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "2"}
+
+
     ]
   }
 ]
