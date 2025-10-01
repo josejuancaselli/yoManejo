@@ -3,7 +3,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 1750px;
   /* margin: 30px auto; */
-  background: white;
+  background: #fbfbfb;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
   /* padding: 25px 30px; */
@@ -133,7 +133,7 @@
 /*simulador inicio*/
 
 
-.simulacion-container{
+.simulacion-container {
   display: flex;
   align-items: center;
 }
@@ -332,10 +332,11 @@
 
 /* horarios-list as floating popup */
 .horarios-list {
-  max-height: 180px;
+  max-height: fit-content;
   /* or any fixed height you prefer */
-  overflow-y: auto;
+  /* overflow-y: auto; */
   margin: 0;
+  /* position: relative; */
   position: absolute;
   top: 85%;
   left: 50%;
@@ -356,6 +357,13 @@
   /* IE and Edge */
 }
 
+.horarios-wrapper {
+  position: relative;
+  display: inline-block;
+  top: 40%;
+  right: 50%;
+}
+
 .horarios-list::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera */
@@ -364,6 +372,7 @@
 /* Horarios buttons */
 
 .horarios-list button {
+  width: 100%;
   min-width: 48px;
   padding: 6px 10px;
   font-size: 0.75rem;
@@ -412,7 +421,11 @@
   box-shadow: 0 0 12px #54b198;
 }
 
+.botones-wrapper{
+    position: relative;
+  display: inline-block;
 
+}
 
 /* SIMULACION */
 
@@ -547,23 +560,28 @@
 
 /* Ventana Reservado Modal */
 .ventana-reservado-modal {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 400px;
-  width: 90vw;
-  background: white;
+  position: absolute;
+  top: 0;           /* align top edges */
+  left: 100%;       /* place immediately to the right of horarios-list */
+  margin-left: 8px; /* small gap between horarios-list and tooltip */
+  min-width: 200px;     /* fixed width */
+  
+  background: rgb(58, 58, 58);
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
-  padding: 20px 25px;
+  padding: 4px 0;
   color: #222;
   user-select: none;
+  z-index: 1001;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  z-index: 1001;
-  position: relative;
+  gap: 10px;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.ventana-reservado-modal > div {
+
+.ventana-reservado-modal>div {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -571,13 +589,13 @@
 
 .ventana-reservado-modal p {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 15px;
   margin: 0;
-  color: #222;
+  color: #cecece;
   line-height: 1.4;
 }
 
-.ventana-reservado-modal button {
+/* .ventana-reservado-modal button {
   align-self: center;
   background-color: #54b198;
   border: none;
@@ -597,5 +615,4 @@
   background-color: #3d7d6a;
   outline: none;
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-}
-
+} */

@@ -1,15 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 import Simulacion from "./Simulacion";
 import VentanaReservado from "./VentanaReservado";
+import DiasDelMes from "./DiasDelMes";
 
-const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, borrarTurno, setAlumnos }) => {
+const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, borrarTurno, setAlumnos }) => {
 
   const hoy = new Date();
   const [ventanaDia, setVentanaDia] = useState(null);
   const [fecha, setFecha] = useState({ mes: hoy.getMonth(), anio: hoy.getFullYear(), });
   const [ventanaReservado, setVentanaReservado] = useState(null)
   const ventanaRef = useRef(null); // ref para la ventana de horarios
-
+  const botonDiaRef = useRef(null); // botón del día
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
   const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -18,10 +19,10 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
   const primerDia = new Date(anioActual, mesActual, 1).getDay();
   const turnosAlumnos = alumnos.map(e => e.turnos).flat()
 
-  const toggleDia = (dia) => { // abre y cierra la ventana de horarios al clickear el dia
-    setVentanaDia((prevDia) => (prevDia === dia ? null : dia)); // si el dia ya está abierto, lo cierra, sino lo abre
-  }
-
+  const toggleDia = (dia, ref) => {
+    botonDiaRef.current = ref; // guarda ref del botón activo
+    setVentanaDia((prevDia) => (prevDia === dia ? null : dia));
+  };
 
   // avanzar un mes
   const siguienteMes = () => {
@@ -51,8 +52,7 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
     return fechaDia < hoySolo; // si es anterior a hoy, deshabilitar
   });
 
-
-  const obtenerHorarios = () => {
+  const obtenerHorarios = () => { 
     return Array.from({ length: 11 }, (_, i) => String(i + 8) + ":00");
   };
   const horarios = obtenerHorarios();
@@ -61,7 +61,12 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
   //efecto para cerrar ventana al hacer click afuera
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ventanaRef.current && !ventanaRef.current.contains(event.target)) {
+      if (
+        ventanaRef.current &&
+        !ventanaRef.current.contains(event.target) &&
+        botonDiaRef.current &&
+        !botonDiaRef.current.contains(event.target)
+      ) {
         setVentanaDia(null);
       }
     };
@@ -76,7 +81,6 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
   }, [ventanaDia]);
 
 
-
   const yaExiste = (dia, hora, mes, zona) => {
     return (turnosAlumnos.find((r) => r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona))
   }
@@ -88,7 +92,6 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
 
   // ✅ togglea turnos por zona
   const toggleHora = (dia, hora, mes, zona) => {
-
     const fechaCompleta = new Date(fecha.anio, fecha.mes, dia);
     const diaSemana = diasSemana[fechaCompleta.getDay()];
     const nuevoTurno = { diaSemana, dia, mes, anio: fecha.anio, hora, zona };
@@ -97,12 +100,11 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
       alumno.turnos.some(t =>
         t.dia === turno.dia &&
         t.mes === turno.mes &&
-        
         t.hora === turno.hora &&
         t.zona.toString() === turno.zona.toString()
       )
     );
-    
+
     if (estaReservado(dia, hora, mes, zona)) {
       borrarTurno(dia, hora, mes, zona)
     } else if (yaExiste(dia, hora, mes, zona)) {
@@ -115,7 +117,7 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
 
   return (
     <div className={`calendario-container zona-${zona}`}>
-      
+
       <div className="calendario-header">
         <h2 className="auto-title">AUTO {zona}</h2>
         <div className="nav-calendario">
@@ -126,75 +128,63 @@ const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, b
       </div>
 
       <div className="dias-semana">
-        {diasSemana.map((d, index) => (
+        {diasSemana.map((d, index) => ( //map dia de la semana con el nombre ("lunes", "martes", etc)
           <div key={index} className="dia-semana">{d}</div>
         ))}
       </div>
 
       <div className="dias-mes">
-        {Array.from({ length: primerDia }).map((_, i) => (
+        {Array.from({ length: primerDia }).map((_, i) => ( // map para render del dia vacio al principio de mes
           <div key={"empty-" + i} className="dia-vacio"></div>
         ))}
 
-        {diasDelMes.map((dia, index) => {
+        {diasDelMes.map((dia, index) => { // map para los dias de la semana
           const esHoy =
             dia === hoy.getDate() &&
             fecha.mes === hoy.getMonth() &&
             fecha.anio === hoy.getFullYear();
 
           return (
-            <div key={index} className={`dia-mes ${esHoy ? "hoy" : ""}`} >
-              <button
-                className={`dia-num-btn ${disabled.includes(dia) ? "disabled" : ""}`}
-                onClick={() => { toggleDia(dia) }}
-                disabled={disabled.includes(dia)}
-              >
-                {dia}
-              </button>
-              {ventanaDia === dia && (
-                <div
-                  ref={ventanaRef} // <- agregado para click afuera
-                  className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`}
-                  id={`horarios-${dia}`}
-                >
-                  {horarios.map((hora) => {
-                    const reservado = estaReservado(dia, hora, fecha.mes + 1, zona) || yaExiste(dia, hora, fecha.mes + 1, zona);
-                    return (
-                      <button
-                        key={hora}
-                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona)}
-                        style={{
-                          backgroundColor: reservado ? "rgba(196, 136, 131, 1)" : "#54b198",
-                          color: reservado ? "white" : "black",
-                        }}
-                      >
-                        {hora}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+            <div key={index} className={`dia-mes ${esHoy ? "hoy" : ""}`}>
+              <DiasDelMes
+                ventanaDia={ventanaDia}
+                botonDiaRef={botonDiaRef}
+                dia={dia}
+                disabled={disabled}
+                toggleDia={toggleDia}
+                ventanaRef={ventanaRef}
+                estaReservado={estaReservado}
+                horarios={horarios}
+                fecha={fecha}
+                zona={zona}
+                yaExiste={yaExiste}
+                alumnos={alumnos}
+                toggleHora={toggleHora}
+                setVentanaReservado={setVentanaReservado}
+              />
             </div>
           );
         })}
       </div>
+
+
+      {/* {ventanaReservado && (
+        <VentanaReservado
+          setVentanaReservado={setVentanaReservado}
+          ventanaReservado={ventanaReservado}
+        />
+      )} */}
 
       {simulacion && (
         <Simulacion
           setSimulacion={setSimulacion}
           setTurnos={setTurnos}
           turnos={turnos}
+        />
+      )}
 
-        />
-      )}
-      {ventanaReservado && (
-        <VentanaReservado
-          setVentanaReservado={setVentanaReservado}
-          ventanaReservado={ventanaReservado}
-        />
-      )}
     </div>
   );
 };
 
-export default Prueba;
+export default Calendario;

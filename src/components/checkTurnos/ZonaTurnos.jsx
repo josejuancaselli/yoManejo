@@ -62,6 +62,17 @@ const ZonaTurnos = () => {
                   alumnos={alumnos}
                   setAlumnos={setAlumnos}
                 />
+
+                {/* <Prueba
+                                  zona={zona} // 👈 se pasa la zona específica
+                  turnos={turnos}
+                  setTurnos={setTurnos}
+                  simulacion={simulacion}
+                  setSimulacion={setSimulacion}
+                  borrarTurno={borrarTurno}
+                  alumnos={alumnos}
+                  setAlumnos={setAlumnos}
+                /> */}
               </div>
             ))}
           </div>
