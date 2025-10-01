@@ -7,6 +7,7 @@ const DiasDelMes = ({ estaReservado, horarios, setVentanaReservado, ventanaRef, 
 
     return (
         <div
+
             className="dia-mes"
             onMouseEnter={() => setHorariosVisible(true)}
             onMouseLeave={() => setHorariosVisible(false)}

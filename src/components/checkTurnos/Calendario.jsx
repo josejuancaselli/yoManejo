@@ -12,6 +12,7 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
   const ventanaRef = useRef(null); // ref para la ventana de horarios
   const botonDiaRef = useRef(null); // botón del día
 
+
   const diasSemana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
   const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   const mesActual = fecha.mes;
@@ -52,7 +53,7 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
     return fechaDia < hoySolo; // si es anterior a hoy, deshabilitar
   });
 
-  const obtenerHorarios = () => { 
+  const obtenerHorarios = () => {
     return Array.from({ length: 11 }, (_, i) => String(i + 8) + ":00");
   };
   const horarios = obtenerHorarios();
@@ -145,8 +146,9 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
             fecha.anio === hoy.getFullYear();
 
           return (
-            <>
+            <div key={index} >
               <DiasDelMes
+
                 ventanaDia={ventanaDia}
                 botonDiaRef={botonDiaRef}
                 dia={dia}
@@ -162,7 +164,7 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
                 toggleHora={toggleHora}
                 setVentanaReservado={setVentanaReservado}
               />
-            </>
+            </div>
           );
         })}
       </div>
