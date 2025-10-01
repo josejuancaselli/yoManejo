@@ -175,7 +175,7 @@
   margin: 2px;
   border-radius: 10px;
   padding: 20px 15px 15px;
-  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.1);
+  box-shadow: 2px 2px 3px rgb(84 177 152);
   max-width: 500px;
   min-width: 499px;
 }
@@ -360,7 +360,7 @@
 .horarios-wrapper {
   position: relative;
   display: inline-block;
-  top: 40%;
+  top: 30%;
   right: 50%;
 }
 

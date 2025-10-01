@@ -145,7 +145,7 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
             fecha.anio === hoy.getFullYear();
 
           return (
-            <div key={index} className={`dia-mes ${esHoy ? "hoy" : ""}`}>
+            <>
               <DiasDelMes
                 ventanaDia={ventanaDia}
                 botonDiaRef={botonDiaRef}
@@ -162,18 +162,10 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
                 toggleHora={toggleHora}
                 setVentanaReservado={setVentanaReservado}
               />
-            </div>
+            </>
           );
         })}
       </div>
-
-
-      {/* {ventanaReservado && (
-        <VentanaReservado
-          setVentanaReservado={setVentanaReservado}
-          ventanaReservado={ventanaReservado}
-        />
-      )} */}
 
       {simulacion && (
         <Simulacion
