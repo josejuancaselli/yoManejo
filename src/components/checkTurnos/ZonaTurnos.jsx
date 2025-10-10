@@ -35,7 +35,7 @@ const ZonaTurnos = () => {
 
   return (
     <div className="zona-turnos-container">
-
+{console.log(turnos)}
       <div className="zonas-section">
         <div className="seleccion-zona">
           <h2>Zonas</h2>
@@ -81,6 +81,7 @@ const ZonaTurnos = () => {
             {turnos.map((e, index) => {
               return (
                 <div key={index} className="simulacion-container">
+                  
                   <p className="simulacion-item">
                     {e.diaSemana}
                   </p>
@@ -93,6 +94,7 @@ const ZonaTurnos = () => {
                   <p className="simulacion-item">
                     Zona {e.zona}
                   </p>
+                  
                   <button className="simulacion-delete-btn" onClick={() => { borrarTurno(e.dia, e.hora, e.mes, e.zona) }}>X</button>
                 </div>
               )

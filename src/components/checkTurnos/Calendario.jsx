@@ -92,19 +92,21 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
   };
 
   // ✅ togglea turnos por zona
-  const toggleHora = (dia, hora, mes, zona) => {
-    const fechaCompleta = new Date(fecha.anio, fecha.mes, dia);
+  const toggleHora = (dia, hora, mes, zona, direccion) => {
+    const fechaCompleta = new Date(fecha.anio, fecha.mes, dia); 
     const diaSemana = diasSemana[fechaCompleta.getDay()];
-    const nuevoTurno = { diaSemana, dia, mes, anio: fecha.anio, hora, zona };
-    const turno = { dia, hora, mes, zona };
+    const nuevoTurno = { diaSemana, dia, mes, anio: fecha.anio, hora, zona, direccion };
+    const turno = { dia, hora, mes, zona, direccion };
     const alumnoCorrespondiente = alumnos.find(alumno =>
       alumno.turnos.some(t =>
         t.dia === turno.dia &&
         t.mes === turno.mes &&
         t.hora === turno.hora &&
-        t.zona.toString() === turno.zona.toString()
+        t.zona.toString() === turno.zona.toString() &&
+        t.direccion === turno.direccion
       )
     );
+
 
     if (estaReservado(dia, hora, mes, zona)) {
       borrarTurno(dia, hora, mes, zona)
@@ -139,7 +141,7 @@ const Calendario = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumno
           <div key={"empty-" + i} className="dia-vacio"></div>
         ))}
 
-        {diasDelMes.map((dia, index) => { // map para los dias de la semana
+        {diasDelMes.map((dia, index) => {  
           const esHoy =
             dia === hoy.getDate() &&
             fecha.mes === hoy.getMonth() &&

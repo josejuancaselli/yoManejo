@@ -22,10 +22,10 @@
   {"dia": 29, "mes": 9, "anio": 2025, "hora": "13:00", "diaSemana": "Lun", "zona": "1"},
   {"dia": 30, "mes": 9, "anio": 2025, "hora": "9:00", "diaSemana": "Mar", "zona": "1"},
   {"dia": 30, "mes": 9, "anio": 2025, "hora": "11:00", "diaSemana": "Mar", "zona": "1"},
-  {"dia": 1, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
-  {"dia": 1, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "1"},
-  {"dia": 2, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Jue", "zona": "1"},
-  {"dia": 2, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Jue", "zona": "1"}
+  {"dia": 9, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 9, "mes": 10, "anio": 2025, "hora": "10:00", "diaSemana": "Mié", "zona": "1"},
+  {"dia": 9, "mes": 10, "anio": 2025, "hora": "9:00", "diaSemana": "Jue", "zona": "1"},
+  {"dia": 9, "mes": 10, "anio": 2025, "hora": "11:00", "diaSemana": "Jue", "zona": "1"}
 
 
     ]
@@ -64,7 +64,7 @@
   {
     "id": 3,
     "nombre": "Lucas Fernández",
-    "direccion": "Calle San Martín 789",
+    "direccion": "49 928",
     "dni": "11223344",
     
     "turnos": [

@@ -7,19 +7,21 @@ const DiasDelMes = ({ estaReservado, horarios, setVentanaReservado, ventanaRef, 
 
     return (
         <div
-
-            className="dia-mes"
-            onMouseEnter={() => setHorariosVisible(true)}
+            className="dia-mes "
+            onMouseEnter={() => {
+                !disabled.includes(dia) && setHorariosVisible(true)
+            }}
             onMouseLeave={() => setHorariosVisible(false)}
+
         >
-            <button
-                // ref={(el) => { if (ventanaDia === dia) botonDiaRef.current = el; }}
-                className={`dia-num-btn ${disabled.includes(dia) ? "disabled" : ""}`}
-                // onClick={() => { toggleDia(dia) }}
-                disabled={disabled.includes(dia)}
-            >
+            {/* este boton estas al pedo , lo tengo que sacar en algun momento*/}
+            <button className="dia-num-btn" style={{ 
+                backgroundColor: disabled.includes(dia) && "#a9a9a9",
+                cursor: disabled.includes(dia) ? "not-allowed" : "pointer"
+            }}>
                 {dia}
             </button>
+
 
             {horariosVisible && (
                 <div className="horarios-wrapper">
@@ -35,22 +37,6 @@ const DiasDelMes = ({ estaReservado, horarios, setVentanaReservado, ventanaRef, 
                     />
                 </div>
             )}
-
-            {/* {ventanaDia === dia && (
-                <BotonesHora
-                    ventanaRef={ventanaRef}
-                    ventanaDia={ventanaDia}
-                    dia={dia}
-                    horarios={horarios}
-                    estaReservado={estaReservado}
-                    yaExiste={yaExiste}
-                    fecha={fecha}
-                    alumnos={alumnos}
-                    setVentanaReservado={setVentanaReservado}
-                    toggleHora={toggleHora}
-                    zona={zona}
-                />
-            )} */}
         </div>
     )
 }
