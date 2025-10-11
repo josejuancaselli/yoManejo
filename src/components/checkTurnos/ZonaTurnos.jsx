@@ -8,10 +8,11 @@ const ZonaTurnos = () => {
 
   // ✅ ahora manejamos un array de zonas seleccionadas
   const [zonasSeleccionadas, setZonasSeleccionadas] = useState([]);
+  const [ventanaReservar, setVentanaReservar] = useState(false)
 
   // todos los turnos de todas las zonas
-  const [alumnos, setAlumnos] = useState([])
-  const [turnos, setTurnos] = useState([]);
+  const [alumnos, setAlumnos] = useState([]) // aca traigo la base de datos con todos los alumnos y sus turnos
+  const [turnoSim, setTurnoSim] = useState([]);
   const [simulacion, setSimulacion] = useState(false);
 
 
@@ -30,12 +31,12 @@ const ZonaTurnos = () => {
   };
 
   const borrarTurno = (dia, hora, mes, zona) => {
-    setTurnos(turnos.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona)));
+    setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona)));
   };
 
   return (
     <div className="zona-turnos-container">
-{console.log(turnos)}
+
       <div className="zonas-section">
         <div className="seleccion-zona">
           <h2>Zonas</h2>
@@ -44,7 +45,7 @@ const ZonaTurnos = () => {
             <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
             <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
           </div>
-          <button onClick={() => setSimulacion(true)} className="zona-btn">Simular</button>
+          <button onClick={() => setSimulacion(true)} className="zona-btn">+</button>
         </div>
 
         {/* ✅ ahora recorremos todas las zonas seleccionadas */}
@@ -54,13 +55,15 @@ const ZonaTurnos = () => {
               <div key={zona} className="zona-selected">
                 <Calendario
                   zona={zona} // 👈 se pasa la zona específica
-                  turnos={turnos}
-                  setTurnos={setTurnos}
+                  turnoSim={turnoSim}
+                  setTurnoSim={setTurnoSim}
                   simulacion={simulacion}
                   setSimulacion={setSimulacion}
                   borrarTurno={borrarTurno}
                   alumnos={alumnos}
                   setAlumnos={setAlumnos}
+                  ventanaReservar= {ventanaReservar}
+                  setVentanaReservar = {setVentanaReservar}
                 />
 
                 {/* <Prueba
@@ -78,7 +81,7 @@ const ZonaTurnos = () => {
           </div>
 
           <div className="simulacion-card">
-            {turnos.map((e, index) => {
+            {turnoSim.map((e, index) => {
               return (
                 <div key={index} className="simulacion-container">
                   

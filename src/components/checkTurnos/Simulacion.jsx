@@ -1,9 +1,8 @@
 import html2canvas from "html2canvas";
 
-const Simulacion = ({ setSimulacion, setTurnos, turnos }) => {
 
+const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, ventanaReservar }) => {
 
-    
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-modal");
         if (!element) return;
@@ -30,27 +29,27 @@ const Simulacion = ({ setSimulacion, setTurnos, turnos }) => {
         <div className="simulacion-modal-backdrop">
             <div className="simulacion-modal">
                 <button
-                    onClick={() => { setSimulacion(false); setTurnos([]); }}
+                    onClick={() => { setSimulacion(false); setTurnoSim([]); }}
                     className="btn-close"
                     aria-label="Cerrar"
                 >
                     ×
                 </button>
                 <ul className="simulacion-list">
-                    {turnos.map((e, index) => (
+                    {turnoSim.map((e, index) => (
                         <li key={index} className="simulacion-item">
-                            
-                            {e.diaSemana} - {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona} - {e.direccion}
+
+                            {e.diaSemana} - {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona}
                         </li>
                     ))}
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                    <button onClick={imprimirJPG} className="btn-imprimir">Imprimir</button>
-                    <button className="btn-imprimir">Reservar</button>
+                    <button onClick={imprimirJPG} className="btn-imprimir">Simular</button>
+                    <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false) }}>Reservar</button>
+
                 </div>
             </div>
-
         </div>
     )
 }

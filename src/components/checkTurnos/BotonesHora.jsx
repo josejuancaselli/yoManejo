@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import VentanaReservado from './VentanaReservado';
 
-const BotonesHora = ({ ventanaRef, zona, toggleHora, alumnos, fecha, yaExiste, estaReservado, horarios, dia, ventanaDia }) => {
+const BotonesHora = ({ ventanaRef, zona, toggleHora, alumnos, fecha, yaExiste, estaReservado, horarios, dia, ventanaDia, setVentanaReservado,ventanaReservado }) => {
 
     const [activeHora, setActiveHora] = useState(null);
-    const [ventanaReservado, setVentanaReservado] = useState(null)
+    
 
     return (
         <>
@@ -34,7 +34,7 @@ const BotonesHora = ({ ventanaRef, zona, toggleHora, alumnos, fecha, yaExiste, e
                     return (
 
                         <div key={hora} style={{ position: "relative", display: "inline-block" }}>
-                            {console.log(direAlumno)}
+                            
                             <button
                                 key={hora}
                                 className="horario-btn"

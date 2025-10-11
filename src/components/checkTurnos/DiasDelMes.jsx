@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BotonesHora from "./BotonesHora";
 
-const DiasDelMes = ({ estaReservado, horarios, setVentanaReservado, ventanaRef, alumnos, toggleHora, yaExiste, fecha, zona, ventanaDia, botonDiaRef, dia, toggleDia, disabled }) => {
+const DiasDelMes = ({ estaReservado, horarios, esHoy, ventanaRef, alumnos, toggleHora, yaExiste, fecha, zona, ventanaDia, botonDiaRef, dia, toggleDia, disabled, setVentanaReservado, ventanaReservado }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
 
@@ -31,9 +31,12 @@ const DiasDelMes = ({ estaReservado, horarios, setVentanaReservado, ventanaRef, 
                         alumnos={alumnos}
                         dia={dia}
                         estaReservado={estaReservado}
+                        ventanaReservado = {ventanaReservado}
+                        setVentanaReservado = {setVentanaReservado}
                         yaExiste={yaExiste}
                         fecha={fecha}
                         zona={zona}
+                        
                     />
                 </div>
             )}

@@ -34,6 +34,7 @@
   font-weight: 700;
   font-size: 1.3rem;
   margin-bottom: 18px;
+  color: #4c4b4b;
   border-bottom: 3px solid #54b198;
   padding-bottom: 6px;
 
@@ -193,12 +194,9 @@
 }
 
 .zona-3 .auto-title {
-  color: #478d7a;
+  color: #4c4b4b;
 }
 
-.zona-3 .mes-anio {
-  color: #478d7a;
-}
 
 .zona-3 .nav-btn {
   color: #478d7a;
@@ -219,7 +217,7 @@
 .auto-title {
   font-weight: 700;
   font-size: 1.6rem;
-  color: #54b198;
+  color: #4c4b4b;
   margin: 0;
   user-select: none;
 }
@@ -234,12 +232,6 @@
   justify-content: space-between;
 }
 
-.mes-anio {
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: #54b198;
-  user-select: none;
-}
 
 /* Navigation buttons */
 .nav-btn {
