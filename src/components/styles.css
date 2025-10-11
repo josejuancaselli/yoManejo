@@ -131,6 +131,140 @@
 }
 
 
+/* RESERVA */
+
+
+.reserva-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35); /* Semi-transparent black for overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* High z-index to overlay other content */
+}
+
+.reserva-modal {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 400px;
+  width: 90vw; /* Responsive width */
+  background: #f0fffe; /* Light teal background matching theme */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15); /* Subtle teal shadow */
+  padding: 20px 25px;
+  color: #222; /* Dark text for readability */
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between elements */
+  z-index: 1001; /* Above backdrop */
+  position: relative;
+}
+
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* Consistent spacing between form fields */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: inherit; /* Inherit from modal */
+}
+
+.reserva-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #4c4b4b; /* Dark gray for labels, matching theme */
+  margin-bottom: 6px; /* Small space below label */
+  text-align: left;
+  user-select: none;
+}
+
+.reserva-input {
+  font-family: inherit; /* Inherit Segoe UI */
+  font-size: 1rem; /* Readable font size */
+  padding: 14px 16px; /* "Fat" padding for height and comfort */
+  height: 50px; /* Explicit height to make inputs taller and "fat" */
+  border: 2px solid #d1e7e1; /* Light teal-gray border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fbfbfb; /* Light gray background for inputs */
+  color: #222; /* Dark text */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Include padding in width */
+  user-select: text; /* Allow text selection in inputs */
+}
+
+.reserva-input:focus {
+  outline: none; /* Remove default outline */
+  border-color: #54b198; /* Teal border on focus */
+  background-color: #f0fffe; /* Light teal background on focus */
+  box-shadow: 0 0 8px rgba(84, 177, 152, 0.3); /* Subtle teal glow */
+}
+
+.reserva-input::placeholder {
+  color: #a9a9a9; /* Light gray placeholder */
+  font-weight: 400;
+}
+
+.reserva-input:hover {
+  border-color: #96cfc1; /* Lighter teal on hover */
+}
+
+/* Submit Button: "Guardar turno" */
+.reserva-form button[type="submit"] {
+  background-color: #54b198; /* Primary teal background */
+  border: none;
+  color: #f0fffe; /* Light text */
+  font-weight: 600;
+  padding: 14px 24px; /* Generous padding for "fat" feel */
+  border-radius: 25px; /* Rounded pill shape */
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.25s ease, box-shadow 0.3s ease; /* Smooth hover */
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4); /* Subtle shadow */
+  user-select: none;
+  align-self: center; /* Center the button */
+  margin-top: 10px; /* Small top margin */
+}
+
+.reserva-form button[type="submit"]:hover,
+.reserva-form button[type="submit"]:focus {
+  background-color: #3d7d6a; /* Darker teal on hover */
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6); /* Enhanced shadow */
+}
+
+/* Close Button: "Cerrar" */
+.reserva-form button:not([type="submit"]) {
+  background-color: transparent;
+  border: 2px solid #54b198; /* Teal border for secondary button */
+  color: #54b198; /* Teal text */
+  font-weight: 600;
+  padding: 12px 20px; /* Slightly less padding than primary */
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(84, 177, 152, 0.2); /* Light shadow */
+  user-select: none;
+  align-self: center; /* Center the button */
+  margin-top: 8px; /* Small top margin */
+}
+
+.reserva-form button:not([type="submit"]):hover,
+.reserva-form button:not([type="submit"]):focus {
+  background-color: #54b198; /* Fill with teal on hover */
+  color: #f0fffe; /* Light text on hover */
+  border-color: #3d7d6a; /* Darker border */
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+
 /*simulador inicio*/
 
 
@@ -404,9 +538,10 @@
   text-align: center;
 }
 
-.dia-num-btn:hover{
+.dia-num-btn:hover {
   background-color: rgb(84 177 152);
 }
+
 .disabled {
   background-color: #a9a9a9;
 }

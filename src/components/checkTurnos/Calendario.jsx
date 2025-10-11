@@ -15,7 +15,9 @@ const Calendario = ({
   borrarTurno, // función para borrar un turno
   setAlumnos, // función para actualizar alumnos
   ventanaReservar, // boolean que controla si se muestra ventana de reservar
-  setVentanaReservar // función para abrir/cerrar ventanaReservar
+  setVentanaReservar, // función para abrir/cerrar ventanaReservar
+  setReserva,
+  reserva
 }) => {
 
   const hoy = new Date(); // fecha actual
@@ -127,8 +129,7 @@ const Calendario = ({
     }
   };
 
-  // Estado para los datos de reserva de una persona
-  const [reserva, setReserva] = useState({});
+
 
   return (
     <>
@@ -192,30 +193,11 @@ const Calendario = ({
           })}
         </div>
 
-        {/* Render de simulación */}
-        {simulacion && (
-          <Simulacion
-            setSimulacion={setSimulacion}
-            setTurnoSim={setTurnoSim}
-            turnoSim={turnoSim}
-            setVentanaReservar={setVentanaReservar}
-            ventanaReservar={ventanaReservar}
-          />
-        )}
+        
       </div>
 
-      {/* Render de ventana de reservar */}
-      {ventanaReservar && (
-        <div className="simulacion-modal-backdrop">
-          <Reservar
-            turnoSim={turnoSim}
-            setTurnoSim={setTurnoSim}
-            setVentanaReservar={setVentanaReservar}
-            reserva={reserva}
-            setReserva={setReserva}
-          />
-        </div>
-      )}
+
+
     </>
   );
 };

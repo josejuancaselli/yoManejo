@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Calendario from "./Calendario";
 import Prueba from "./Prueba";
+import Simulacion from "./Simulacion";
+import Reservar from "./Reservar";
 
 
 
@@ -9,6 +11,9 @@ const ZonaTurnos = () => {
   // ✅ ahora manejamos un array de zonas seleccionadas
   const [zonasSeleccionadas, setZonasSeleccionadas] = useState([]);
   const [ventanaReservar, setVentanaReservar] = useState(false)
+
+  // Estado para los datos de reserva de una persona
+  const [reserva, setReserva] = useState({});
 
   // todos los turnos de todas las zonas
   const [alumnos, setAlumnos] = useState([]) // aca traigo la base de datos con todos los alumnos y sus turnos
@@ -49,7 +54,7 @@ const ZonaTurnos = () => {
         </div>
 
         {/* ✅ ahora recorremos todas las zonas seleccionadas */}
-        <div>
+        <div className="zonas">
           <div style={{ display: "flex" }}>
             {zonasSeleccionadas.map((zona) => (
               <div key={zona} className="zona-selected">
@@ -61,30 +66,21 @@ const ZonaTurnos = () => {
                   setSimulacion={setSimulacion}
                   borrarTurno={borrarTurno}
                   alumnos={alumnos}
+                  reserva= {reserva}
+                  setReserva={setReserva}
                   setAlumnos={setAlumnos}
-                  ventanaReservar= {ventanaReservar}
-                  setVentanaReservar = {setVentanaReservar}
+                  ventanaReservar={ventanaReservar}
+                  setVentanaReservar={setVentanaReservar}
                 />
-
-                {/* <Prueba
-                                  zona={zona} // 👈 se pasa la zona específica
-                  turnos={turnos}
-                  setTurnos={setTurnos}
-                  simulacion={simulacion}
-                  setSimulacion={setSimulacion}
-                  borrarTurno={borrarTurno}
-                  alumnos={alumnos}
-                  setAlumnos={setAlumnos}
-                /> */}
               </div>
             ))}
-          </div>
 
+          </div>
           <div className="simulacion-card">
             {turnoSim.map((e, index) => {
               return (
                 <div key={index} className="simulacion-container">
-                  
+
                   <p className="simulacion-item">
                     {e.diaSemana}
                   </p>
@@ -97,14 +93,39 @@ const ZonaTurnos = () => {
                   <p className="simulacion-item">
                     Zona {e.zona}
                   </p>
-                  
+
                   <button className="simulacion-delete-btn" onClick={() => { borrarTurno(e.dia, e.hora, e.mes, e.zona) }}>X</button>
                 </div>
               )
             })}
           </div>
         </div>
+
       </div>
+
+      {/* Render de simulación */}
+      {simulacion && (
+        <Simulacion
+          setSimulacion={setSimulacion}
+          setTurnoSim={setTurnoSim}
+          turnoSim={turnoSim}
+          setVentanaReservar={setVentanaReservar}
+          ventanaReservar={ventanaReservar}
+        />
+      )}
+
+      {/* Render de ventana de reservar */}
+      {ventanaReservar && (
+        <div className="reserva-modal-backdrop">
+          <Reservar
+            turnoSim={turnoSim}
+            setTurnoSim={setTurnoSim}
+            setVentanaReservar={setVentanaReservar}
+            reserva={reserva}
+            setReserva={setReserva}
+          />
+        </div>
+      )}
     </div>
   );
 };
