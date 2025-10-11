@@ -1,7 +1,7 @@
 /* Container */
 .zona-turnos-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 1750px;
+  max-width: 100%;
   /* margin: 30px auto; */
   background: #fbfbfb;
   border-radius: 10px;
@@ -470,7 +470,7 @@
   background-color: #f0fffe;
   /* border: 1px solid #54b198; */
   border-radius: 10px;
-  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.25);
+box-shadow: 0 6px 15px rgb(44 44 44);
   padding: 10px 12px;
   display: flex;
   flex-direction: row;
@@ -730,6 +730,71 @@
   line-height: 1.4;
 }
 
+
+@media (max-width: 1536px){
+.zona-turnos-container{
+  max-width: 1536px;
+}
+
+  .zonas-section{
+    flex-direction: column;
+  }
+
+  .seleccion-zona{
+    height: 100px;
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+    flex-direction: row;
+  }
+
+  .seleccion-zona h2{
+        margin-left: 20px;
+  }
+
+  .seleccion-zona .zona-buttons{
+flex-direction: row;
+        margin: 0;
+        width: 15%;
+        padding: 0 50px;
+  }
+
+  .seleccion-zona .zona-btn {
+    width: 50px;
+  }
+
+.calendario-container{
+  max-width: 383px;
+    min-width: 355px;
+}
+
+.dia-num-btn{
+  flex-direction: column;
+  font-size: 0.8rem;
+  width: 12px;
+      height: 12px;
+}
+
+.zonas-section h2{
+  font-size: 1rem;
+
+}
+
+.nav-btn{
+  font-size: 0.8rem;
+}
+
+.dias-semana{
+  font-size: 0.7rem;
+}
+
+.horarios-list button{
+  font-size: 0.5rem;
+  min-width: 40px;
+}
+
+
+}
 /* .ventana-reservado-modal button {
   align-self: center;
   background-color: #54b198;
