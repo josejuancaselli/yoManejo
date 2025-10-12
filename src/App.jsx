@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element = {<Inicio/>} />
-          <Route path="/mauritrolo" element = {<ZonaTurnos/>} />
+          <Route path="/inicio" element = {<ZonaTurnos/>} />
           {/* <Route path="/turnos" element = {<TusPaski/>}/> */}
           
         </Routes>
