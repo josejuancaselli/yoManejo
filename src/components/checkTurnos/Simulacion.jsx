@@ -39,7 +39,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
                     {turnoSim.map((e, index) => (
                         <li key={index} className="simulacion-item">
 
-                            {e.diaSemana} - {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona}
+                            {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona}
                         </li>
                     ))}
                 </ul>

@@ -3,30 +3,32 @@ import Calendario from "./Calendario";
 import Prueba from "./Prueba";
 import Simulacion from "./Simulacion";
 import Reservar from "./Reservar";
+import { db } from "../../firebase/firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 
 
 const ZonaTurnos = () => {
-
-  // ✅ ahora manejamos un array de zonas seleccionadas
   const [zonasSeleccionadas, setZonasSeleccionadas] = useState([]);
   const [ventanaReservar, setVentanaReservar] = useState(false)
-
-  // Estado para los datos de reserva de una persona
   const [reserva, setReserva] = useState({});
-
-  // todos los turnos de todas las zonas
   const [alumnos, setAlumnos] = useState([]) // aca traigo la base de datos con todos los alumnos y sus turnos
   const [turnoSim, setTurnoSim] = useState([]);
   const [simulacion, setSimulacion] = useState(false);
 
-
   useEffect(() => {
-    fetch("/turnos.json")
-      .then(res => res.json())
-      .then(data => setAlumnos(data))
-      .catch(err => console.error("Error cargando turnos:", err));
-  }, []);
+    const fetchAlumnos = async () => {
+      try {
+        const alumnosCollection = collection(db, "alumnos")
+        const alumnosSnapshot = await getDocs(alumnosCollection)
+        const alumnosList = alumnosSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        setAlumnos(alumnosList)
+      } catch (error) {
+        console.error("Error cargando alumnos desde Firebase:", error)
+      }
+    }
+    fetchAlumnos()
+  }, [])
 
   // ✅ toggle para agregar o quitar zonas seleccionadas
   const toggleZona = (z) => {
@@ -66,7 +68,7 @@ const ZonaTurnos = () => {
                   setSimulacion={setSimulacion}
                   borrarTurno={borrarTurno}
                   alumnos={alumnos}
-                  reserva= {reserva}
+                  reserva={reserva}
                   setReserva={setReserva}
                   setAlumnos={setAlumnos}
                   ventanaReservar={ventanaReservar}
@@ -80,10 +82,6 @@ const ZonaTurnos = () => {
             {turnoSim.map((e, index) => {
               return (
                 <div key={index} className="simulacion-container">
-
-                  <p className="simulacion-item">
-                    {e.diaSemana}
-                  </p>
                   <p className="simulacion-item">
                     {e.dia}/{e.mes}
                   </p>

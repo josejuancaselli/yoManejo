@@ -5,20 +5,7 @@ import DiasDelMes from "./DiasDelMes"; // componente que renderiza los días del
 import Reservar from "./Reservar"; // componente para reservar un turno
 
 // Componente principal del calendario
-const Calendario = ({
-  zona, // número o id de zona
-  turnoSim, // array con turnos reservados actualmente
-  setTurnoSim, // función para actualizar turnos
-  simulacion, // boolean que controla si se muestra el componente Simulacion
-  setSimulacion, // función para actualizar simulacion
-  alumnos, // array de alumnos con sus turnos
-  borrarTurno, // función para borrar un turno
-  setAlumnos, // función para actualizar alumnos
-  ventanaReservar, // boolean que controla si se muestra ventana de reservar
-  setVentanaReservar, // función para abrir/cerrar ventanaReservar
-  setReserva,
-  reserva
-}) => {
+const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
 
   const hoy = new Date(); // fecha actual
   const [ventanaDia, setVentanaDia] = useState(null); // día seleccionado para mostrar horarios
@@ -74,9 +61,9 @@ const Calendario = ({
   });
 
   // Genera los horarios disponibles (8:00 a 18:00)
-  const obtenerHorarios = () => Array.from({ length: 11 }, (_, i) => `${i + 8}:00`);
-  const horarios = obtenerHorarios();
+  const obtenerHorarios = () => [...Array.from({ length: 5 }, (_, i) => `${i + 7}:45`), ...Array.from({ length: 5 }, (_, i) => `${i + 14}:00`),];
 
+  const horarios = obtenerHorarios();
   // Efecto para cerrar la ventana de horarios al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -105,11 +92,12 @@ const Calendario = ({
 
   // Toggle para agregar o quitar un turno
   const toggleHora = (dia, hora, mes, zona) => {
-    const fechaCompleta = new Date(fecha.anio, fecha.mes, dia); // fecha completa
-    const diaSemana = diasSemana[fechaCompleta.getDay()]; // nombre del día
-    const nuevoTurno = { diaSemana, dia, mes, anio: fecha.anio, hora, zona }; // objeto nuevo turno
+    // const fechaCompleta = new Date(fecha.anio, fecha.mes, dia); 
+    // const diaSemana = diasSemana[fechaCompleta.getDay()]; 
+    
+    const nuevoTurno = {dia, mes, anio: fecha.anio, hora, zona }; // objeto nuevo turno
     const turno = { dia, hora, mes, zona };
-
+    
     // busco si el turno ya pertenece a un alumno
     const alumnoCorrespondiente = alumnos.find(alumno =>
       alumno.turnos.some(t =>
@@ -133,9 +121,8 @@ const Calendario = ({
 
   return (
     <>
+      
       <div className={`calendario-container zona-${zona}`}>
-        {console.log(reserva)}
-        {console.log(turnoSim)}
 
         {/* Header del calendario con título y navegación de meses */}
         <div className="calendario-header">
@@ -172,12 +159,8 @@ const Calendario = ({
               <div key={index}>
                 <DiasDelMes
                   esHoy={esHoy}
-                  ventanaDia={ventanaDia}
-                  botonDiaRef={botonDiaRef}
                   dia={dia}
                   disabled={disabled}
-                  toggleDia={toggleDia}
-                  ventanaRef={ventanaRef}
                   ventanaReservado={ventanaReservado}
                   setVentanaReservado={setVentanaReservado}
                   estaReservado={estaReservado}
@@ -193,7 +176,7 @@ const Calendario = ({
           })}
         </div>
 
-        
+
       </div>
 
 

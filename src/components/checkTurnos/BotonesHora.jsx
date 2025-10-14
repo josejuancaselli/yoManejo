@@ -10,7 +10,7 @@ const BotonesHora = ({ ventanaRef, zona, toggleHora, alumnos, fecha, yaExiste, e
         <>
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
 
-                {horarios.map((hora) => {
+                {horarios.map((hora) => { 
 
                     const reservado = estaReservado(dia, hora, fecha.mes + 1, zona) || yaExiste(dia, hora, fecha.mes + 1, zona);
                     // buscamos alumno correspondiente si el turno ya existe

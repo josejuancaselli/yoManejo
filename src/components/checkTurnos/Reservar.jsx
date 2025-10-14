@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { collection, addDoc } from "firebase/firestore"
 import { useForm } from 'react-hook-form'
+import { db } from "../../firebase/firebaseConfig";
 
 const Reservar = ({ setVentanaReservar, turnoSim, setTurnoSim, reserva, setReserva }) => {
 
@@ -8,11 +9,26 @@ const Reservar = ({ setVentanaReservar, turnoSim, setTurnoSim, reserva, setReser
 
 
 
-    const enviar = (data) => {
-        setReserva({ ...data, turnos: turnos })
+const enviar = async (data) => {
+    try {
+        // 1️⃣ Armo el objeto completo de reserva
+        const nuevaReserva = { ...data, turnos: turnos }
+
+        // 2️⃣ Pusheo a Firebase
+        await addDoc(collection(db, "alumnos"), nuevaReserva)
+
+        // 3️⃣ Actualizo estado local
+        setReserva(nuevaReserva)
         setVentanaReservar(false)
         setTurnoSim([])
+        
+
+        console.log("Reserva guardada en Firebase ✅")
+    } catch (err) {
+        console.error("Error guardando reserva:", err)
     }
+}
+
 
     return (
         <>

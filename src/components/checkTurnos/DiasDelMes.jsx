@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BotonesHora from "./BotonesHora";
 
-const DiasDelMes = ({ estaReservado, horarios, esHoy, ventanaRef, alumnos, toggleHora, yaExiste, fecha, zona, ventanaDia, botonDiaRef, dia, toggleDia, disabled, setVentanaReservado, ventanaReservado }) => {
+const DiasDelMes = ({ estaReservado, horarios, esHoy, alumnos, toggleHora, yaExiste, fecha, zona, dia, disabled, setVentanaReservado, ventanaReservado }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
 
@@ -14,8 +14,8 @@ const DiasDelMes = ({ estaReservado, horarios, esHoy, ventanaRef, alumnos, toggl
             onMouseLeave={() => setHorariosVisible(false)}
 
         >
-            {/* este boton estas al pedo , lo tengo que sacar en algun momento*/}
-            <button className="dia-num-btn" style={{ 
+            {/* este boton estas al pedo , lo tengo que sacar en algun momento y convertirlo en un DIV*/}
+            <button className="dia-num-btn" style={{
                 backgroundColor: disabled.includes(dia) && "#a9a9a9",
                 cursor: disabled.includes(dia) ? "not-allowed" : "pointer"
             }}>
@@ -31,12 +31,12 @@ const DiasDelMes = ({ estaReservado, horarios, esHoy, ventanaRef, alumnos, toggl
                         alumnos={alumnos}
                         dia={dia}
                         estaReservado={estaReservado}
-                        ventanaReservado = {ventanaReservado}
-                        setVentanaReservado = {setVentanaReservado}
+                        ventanaReservado={ventanaReservado}
+                        setVentanaReservado={setVentanaReservado}
                         yaExiste={yaExiste}
                         fecha={fecha}
                         zona={zona}
-                        
+
                     />
                 </div>
             )}

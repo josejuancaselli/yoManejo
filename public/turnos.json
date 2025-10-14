@@ -4,6 +4,7 @@
     "nombre": "Juan Pérez",
     "direccion": "Calle Falsa 123",
     "dni": "12345678",
+    "observaciones": "es tuerto",
     "turnos": [
 
   {"dia": 24, "mes": 10, "anio": 2025, "hora": "8:00", "diaSemana": "Mié", "zona": "1"},
