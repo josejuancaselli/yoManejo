@@ -10,7 +10,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
   const hoy = new Date(); // fecha actual
   const [ventanaDia, setVentanaDia] = useState(null); // día seleccionado para mostrar horarios
   const [fecha, setFecha] = useState({ mes: hoy.getMonth(), anio: hoy.getFullYear() }); // mes y año actuales
-  const [ventanaReservado, setVentanaReservado] = useState(null); // ventana para mostrar info de turno reservado
+  const [ventanaDireccion, setVentanaDireccion] = useState(null); // ventana para mostrar info de turno reservado
   const ventanaRef = useRef(null); // referencia al contenedor de horarios (para click fuera)
   const botonDiaRef = useRef(null); // referencia al botón del día activo
 
@@ -93,39 +93,49 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
   const estaReservado = (dia, hora, mes, zona, anio) =>
     turnoSim.find(r => r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio);
 
+  const reservado = (dia, hora, mes, zona, anio) =>{
+    return yaExiste(dia, hora, mes, zona, anio) || estaReservado(dia, hora, mes, zona, anio);
+  }
+
   // Toggle para agregar o quitar un turno
-  const toggleHora = (dia, hora, mes, zona, anio) => {
-    // const fechaCompleta = new Date(fecha.anio, fecha.mes, dia); 
-    // const diaSemana = diasSemana[fechaCompleta.getDay()]; 
+  const toggleHora = (dia, hora, mes, zona) => {
+    const anio = fecha.anio; // lo tomás del estado de fecha
+    const nuevoTurno = { dia, mes, anio, hora, zona };
 
-    const nuevoTurno = { dia, mes, anio: fecha.anio, hora, zona }; // objeto nuevo turno
-    const turno = { dia, hora, mes, zona };
+    // 1️⃣ Si el turno ya está en tu lista de simulación, lo borramos (toggle OFF)
+    const yaSeleccionado = turnoSim.some(t => t.dia === dia && t.hora === hora && t.mes === mes && t.zona === zona && t.anio === anio);
 
-    // busco si el turno ya pertenece a un alumno
+    if (yaSeleccionado) {
+      setTurnoSim(turnoSim.filter(t => !(t.dia === dia && t.hora === hora && t.mes === mes && t.zona === zona && t.anio === anio)));
+      return;
+    }
+
+    // 2️⃣ Si el turno pertenece a un alumno real, mostramos la ventana de info
     const alumnoCorrespondiente = alumnos.find(alumno =>
       alumno.turnos.some(t =>
-        t.dia === turno.dia &&
-        t.mes === turno.mes &&
-        t.hora === turno.hora &&
-        t.zona.toString() === turno.zona.toString()
+        t.dia === dia &&
+        t.mes === mes &&
+        t.anio === anio &&
+        t.hora === hora &&
+        t.zona.toString() === zona.toString()
       )
     );
 
-    if (estaReservado(dia, hora, mes, zona)) {
-      borrarTurno(dia, hora, mes, zona, anio); // si ya estaba reservado, borro
-    } else if (yaExiste(dia, hora, mes, zona)) {
-      setVentanaReservado(alumnoCorrespondiente); // si pertenece a un alumno, muestro info
-    } else {
-      setTurnoSim([...turnoSim, nuevoTurno]); // si no existe, agrego
+    if (alumnoCorrespondiente) {
+      setVentanaDireccion(alumnoCorrespondiente);
+      return;
     }
+
+    // 3️⃣ Si no está ni reservado ni seleccionado, lo agregamos
+    setTurnoSim(prev => [...prev, nuevoTurno]);
   };
+
 
 
 
   return (
     <>
-      {console.log(turnosAlumnos)}
-      {console.log(turnoSim)}
+
       <div className={`calendario-container zona-${zona}`}>
 
         {/* Header del calendario con título y navegación de meses */}
@@ -165,17 +175,16 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
                   esHoy={esHoy}
                   dia={dia}
                   disabled={disabled}
-                  ventanaReservado={ventanaReservado}
-                  setVentanaReservado={setVentanaReservado}
-                  estaReservado={estaReservado}
+                  ventanaDireccion={ventanaDireccion}
+                  setVentanaDireccion={setVentanaDireccion}
                   horarios={horarios}
                   fecha={fecha}
-                  zona={zona}
-                  yaExiste={yaExiste}
+                  zona={zona}                  
                   alumnos={alumnos}
                   toggleHora={toggleHora}
                   horariosMañana={horariosMañana}
                   horariosTarde={horariosTarde}
+                  reservado={reservado}
                 />
               </div>
             );

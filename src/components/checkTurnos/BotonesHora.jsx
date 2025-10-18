@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 
-const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleHora, alumnos, fecha, yaExiste, estaReservado, horarios, dia, ventanaDia, setVentanaReservado, ventanaReservado }) => {
+const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleHora,reservado, alumnos, fecha, horarios, dia, ventanaDia, ventanaDireccion, setVentanaDireccion }) => {
 
     const [activeHora, setActiveHora] = useState(null);
     const [mañanaTarde, setMañanaTarde] = useState(null)
@@ -26,7 +26,6 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                         {horariosMañana().map((hora) => {
 
-                            const reservado = estaReservado(dia, hora, fecha.mes + 1, zona, fecha.anio) || yaExiste(dia, hora, fecha.mes + 1, zona, fecha.anio);
                             const turno = { dia, hora, mes: fecha.mes + 1, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
@@ -38,8 +37,6 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                 )
                             );
 
-                            const direAlumno = alumnoCorrespondiente && alumnoCorrespondiente.direccion
-
                             return (
 
                                 <div key={hora} style={{ position: "relative", display: "inline-block" }}>
@@ -47,27 +44,27 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona, direAlumno)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
-                                                setVentanaReservado(alumnoCorrespondiente);
+                                                setVentanaDireccion(alumnoCorrespondiente);
                                             }
                                         }}
                                         onMouseLeave={() => {
                                             setActiveHora(null);
-                                            setVentanaReservado(null)
+                                            setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado ? "white" : "black",
+                                            backgroundColor: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}
                                     </button>
-                                    {activeHora === hora && ventanaReservado && (
+                                    {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
-                                            <p>{ventanaReservado.direccion}</p>
+                                            <p>{ventanaDireccion.direccion}</p>
                                         </div>
                                     )}
                                 </div>
@@ -82,7 +79,6 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                     <>
                         {horariosTarde().map((hora) => {
 
-                            const reservado = estaReservado(dia, hora, fecha.mes + 1, zona, fecha.anio) || yaExiste(dia, hora, fecha.mes + 1, zona, fecha.anio);
                             const turno = { dia, hora, mes: fecha.mes + 1, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
@@ -94,8 +90,6 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                 )
                             );
 
-                            const direAlumno = alumnoCorrespondiente && alumnoCorrespondiente.direccion
-
                             return (
 
                                 <div key={hora} style={{ position: "relative", display: "inline-block" }}>
@@ -103,27 +97,27 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona, direAlumno)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
-                                                setVentanaReservado(alumnoCorrespondiente);
+                                                setVentanaDireccion(alumnoCorrespondiente);
                                             }
                                         }}
                                         onMouseLeave={() => {
                                             setActiveHora(null);
-                                            setVentanaReservado(null)
+                                            setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado ? "white" : "black",
+                                            backgroundColor: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}
                                     </button>
-                                    {activeHora === hora && ventanaReservado && (
+                                    {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
-                                            <p>{ventanaReservado.direccion}</p>
+                                            <p>{ventanaDireccion.direccion}</p>
                                         </div>
                                     )}
                                 </div>
@@ -132,7 +126,6 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                         })}
                     </>
                 )}
-
 
             </div>
         </>
