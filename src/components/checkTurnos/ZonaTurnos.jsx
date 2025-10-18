@@ -65,8 +65,7 @@ const ZonaTurnos = () => {
                   turnoSim={turnoSim}
                   setTurnoSim={setTurnoSim}
                   simulacion={simulacion}
-                  setSimulacion={setSimulacion}
-                  borrarTurno={borrarTurno}
+                  setSimulacion={setSimulacion}        
                   alumnos={alumnos}
                   reserva={reserva}
                   setReserva={setReserva}

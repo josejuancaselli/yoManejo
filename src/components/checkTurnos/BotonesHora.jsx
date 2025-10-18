@@ -26,7 +26,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                         {horariosMañana().map((hora) => {
 
-                            const turno = { dia, hora, mes: fecha.mes + 1, anio: fecha.anio, zona };
+                            const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
                                     t.dia === turno.dia &&
@@ -44,7 +44,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
@@ -56,8 +56,8 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                             setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "white" : "black",
+                                            backgroundColor: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}
@@ -79,7 +79,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                     <>
                         {horariosTarde().map((hora) => {
 
-                            const turno = { dia, hora, mes: fecha.mes + 1, anio: fecha.anio, zona };
+                            const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
                                     t.dia === turno.dia &&
@@ -97,7 +97,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes + 1, zona)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
@@ -109,8 +109,8 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                             setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado(dia,hora,fecha.mes +1, zona, fecha.anio) ? "white" : "black",
+                                            backgroundColor: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}

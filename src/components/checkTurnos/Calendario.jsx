@@ -1,21 +1,16 @@
 import { useEffect, useState, useRef } from "react"; // hooks de React
-import Simulacion from "./Simulacion"; // componente para la simulación de turnos
-
+import { useFechas } from "../../helpers/useFechas";
 import DiasDelMes from "./DiasDelMes"; // componente que renderiza los días del mes
-import Reservar from "./Reservar"; // componente para reservar un turno
+
 
 // Componente principal del calendario
-const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
+const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
 
-  const hoy = new Date(); // fecha actual
+  const { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes } = useFechas();
   const [ventanaDia, setVentanaDia] = useState(null); // día seleccionado para mostrar horarios
-  const [fecha, setFecha] = useState({ mes: hoy.getMonth(), anio: hoy.getFullYear() }); // mes y año actuales
   const [ventanaDireccion, setVentanaDireccion] = useState(null); // ventana para mostrar info de turno reservado
   const ventanaRef = useRef(null); // referencia al contenedor de horarios (para click fuera)
   const botonDiaRef = useRef(null); // referencia al botón del día activo
-
-  const diasSemana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"]; // nombres de los días
-  const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]; // nombres de los meses
 
   const turnosAlumnos = alumnos.map(e => e.turnos).flat(); // todos los turnos de todos los alumnos en un solo array
 
@@ -25,35 +20,16 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
     setVentanaDia((prevDia) => (prevDia === dia ? null : dia)); // si el día ya estaba abierto, lo cierro; si no, lo abro
   };
 
-  // Avanzar un mes
-  const siguienteMes = () => {
-    setFecha((prev) => {
-      if (prev.mes === 11) return { mes: 0, anio: prev.anio + 1 }; // si es diciembre, paso a enero del año siguiente
-      return { mes: prev.mes + 1, anio: prev.anio };
-    });
-  };
-
-  // Retroceder un mes
-  const mesAnterior = () => {
-    setFecha((prev) => {
-      if (prev.mes === 0) return { mes: 11, anio: prev.anio - 1 }; // si es enero, paso a diciembre del año anterior
-      return { mes: prev.mes - 1, anio: prev.anio };
-    });
-  };
-
-
-  const mesActual = fecha.mes; // mes actual
-  const anioActual = fecha.anio; // año actual
-  const primerDia = new Date(anioActual, mesActual, 1).getDay(); // día de la semana del primer día del mes
-
-  // Devuelve un array con los números de días del mes
-  const obtenerDiasDelMes = (mes, anio) => {
-    const cantidadDias = new Date(anio, mes + 1, 0).getDate(); // último día del mes
-    return Array.from({ length: cantidadDias }, (_, i) => i + 1); // array [1,2,...,cantidadDias]
-  };
-
-  const diasDelMes = obtenerDiasDelMes(mesActual, anioActual); // días del mes actual
-
+      const cambioMes = ((e) => {
+        setFecha((prev) => {
+            if (e === "siguiente") {
+                return prev.mes === 11 ? { mes: 0, anio: prev.anio + 1 } : { mes: prev.mes + 1, anio: prev.anio } // esto era la funcion d mes siguiente
+            } else if (e === "anterior") {
+                return prev.mes === 0 ? { mes: 11, anio: prev.anio - 1 } : { mes: prev.mes - 1, anio: prev.anio } // esto era la funcion d mes anterior
+            }
+            return prev;
+        })
+    })
   // Filtra días que no se pueden seleccionar (anteriores a hoy)
   const disabled = diasDelMes.filter((dia) => {
     const fechaDia = new Date(fecha.anio, fecha.mes, dia); // fecha del día
@@ -93,7 +69,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
   const estaReservado = (dia, hora, mes, zona, anio) =>
     turnoSim.find(r => r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio);
 
-  const reservado = (dia, hora, mes, zona, anio) =>{
+  const reservado = (dia, hora, mes, zona, anio) => {
     return yaExiste(dia, hora, mes, zona, anio) || estaReservado(dia, hora, mes, zona, anio);
   }
 
@@ -130,9 +106,6 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
     setTurnoSim(prev => [...prev, nuevoTurno]);
   };
 
-
-
-
   return (
     <>
 
@@ -142,9 +115,9 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
         <div className="calendario-header">
           <h2 className="auto-title">AUTO {zona}</h2>
           <div className="nav-calendario">
-            <button className="nav-btn" onClick={mesAnterior}>Anterior</button>
+            <button className="nav-btn" onClick={()=>cambioMes("anterior")}>Anterior</button>
             <h2>{meses[fecha.mes]} {fecha.anio}</h2>
-            <button className="nav-btn" onClick={siguienteMes}>Siguiente</button>
+            <button className="nav-btn" onClick={()=>cambioMes("siguiente")}>Siguiente</button>
           </div>
         </div>
 
@@ -179,7 +152,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, borrarTurno, }) => {
                   setVentanaDireccion={setVentanaDireccion}
                   horarios={horarios}
                   fecha={fecha}
-                  zona={zona}                  
+                  zona={zona}
                   alumnos={alumnos}
                   toggleHora={toggleHora}
                   horariosMañana={horariosMañana}

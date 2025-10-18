@@ -19,8 +19,6 @@ const Alumnos = () => {
         anio:""
     })
 
-
-
     useEffect(() => {
         const fetchAlumnos = async () => {
             try {
