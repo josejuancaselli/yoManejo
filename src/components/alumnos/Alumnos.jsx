@@ -10,12 +10,13 @@ const Alumnos = () => {
     const [busqueda, setBusqueda] = useState("") // aca guardo el valor del input de busqueda
     const [modoEdicion, setModoEdicion] = useState(false) // modo edicion para el formulario
     const [formAlumno, setFormAlumno] = useState({}) // aca guardo los datos del formulario para editar el alumno
+    
     const [nuevoTurno, setNuevoTurno] = useState({
         dia: "",
         mes: "",
         hora: "",
         zona: "",
-        id: ""
+        anio:""
     })
 
 
@@ -57,7 +58,7 @@ const Alumnos = () => {
         const { name, value } = e.target;
 
         // Detectamos si el campo debería ser numérico
-        const camposNumericos = ["dia", "mes", "anio"];
+        const camposNumericos = ["dia", "mes","anio"];
         const valor = camposNumericos.includes(name) || camposNumericos.includes(campoTurno) ? Number(value) : value;
 
         if (idxTurno !== null && campoTurno) {
@@ -107,10 +108,10 @@ const Alumnos = () => {
         }
     };
 
-    const borrarTurno = async (dia, hora, mes, zona, idAlumno) => {
+    const borrarTurno = async (dia, hora, mes, zona, anio, idAlumno) => {
         const arrayTurnosAlumno = formAlumno.turnos;
 
-        const turnoBorrado = arrayTurnosAlumno.filter((turno) => turno.dia !== dia && turno.hora !== hora && turno.mes !== mes && turno.zona !== zona)
+        const turnoBorrado = arrayTurnosAlumno.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
         try {
             await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
             alert("turno borrado con exito")
@@ -130,7 +131,7 @@ const Alumnos = () => {
             setFormAlumno(turnoActualizado);
             // 3️⃣ Limpia el formulario
             setNuevoTurno({ dia: "", mes: "", hora: "", zona: "" });
-            setInputAgregarTurno(false);
+            
         } catch (error) {
             console.error("Error agregando turno:", error);
         }
@@ -168,6 +169,8 @@ const Alumnos = () => {
                                     nuevoTurno={nuevoTurno}
                                     setNuevoTurno={setNuevoTurno}
                                     agregarTurno={agregarTurno}
+                                    inputAgregarTurno={inputAgregarTurno}
+                                    setInputAgregarTurno={setInputAgregarTurno}
                                 />
                             </div>
                         )

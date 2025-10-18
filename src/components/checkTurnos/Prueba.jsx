@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Simulacion from "./Simulacion";
-import VentanaReservado from "./VentanaReservado";
+
 import DiasDelMes from "./DiasDelMes";
 
 const Prueba = ({ zona, turnos, setTurnos, simulacion, setSimulacion, alumnos, borrarTurno, setAlumnos }) => {

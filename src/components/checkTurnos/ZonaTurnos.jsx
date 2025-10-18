@@ -37,8 +37,8 @@ const ZonaTurnos = () => {
     );
   };
 
-  const borrarTurno = (dia, hora, mes, zona) => {
-    setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona)));
+  const borrarTurno = (dia, hora, mes, zona, anio) => {
+    setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)));
   };
 
   return (
@@ -92,7 +92,7 @@ const ZonaTurnos = () => {
                     Zona {e.zona}
                   </p>
 
-                  <button className="simulacion-delete-btn" onClick={() => { borrarTurno(e.dia, e.hora, e.mes, e.zona) }}>X</button>
+                  <button className="simulacion-delete-btn" onClick={() => { borrarTurno(e.dia, e.hora, e.mes, e.zona, e.anio) }}>X</button>
                 </div>
               )
             })}

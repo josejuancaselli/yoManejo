@@ -1,24 +1,15 @@
 import { useState } from "react";
 import BotonesHora from "./BotonesHora";
 
-const DiasDelMes = ({ estaReservado, horarios, esHoy, alumnos, toggleHora, yaExiste, fecha, zona, dia, disabled, setVentanaReservado, ventanaReservado }) => {
+const DiasDelMes = ({ estaReservado, horarios, horariosMañana, horariosTarde, esHoy, alumnos, toggleHora, yaExiste, fecha, zona, dia, disabled, setVentanaReservado, ventanaReservado }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
 
     return (
-        <div
-            className="dia-mes "
-            onMouseEnter={() => {
-                !disabled.includes(dia) && setHorariosVisible(true)
-            }}
-            onMouseLeave={() => setHorariosVisible(false)}
+        <div className="dia-mes " onMouseEnter={() => { !disabled.includes(dia) && setHorariosVisible(true) }} onMouseLeave={() => setHorariosVisible(false)} >
 
-        >
             {/* este boton estas al pedo , lo tengo que sacar en algun momento y convertirlo en un DIV*/}
-            <button className="dia-num-btn" style={{
-                backgroundColor: disabled.includes(dia) && "#a9a9a9",
-                cursor: disabled.includes(dia) ? "not-allowed" : "pointer"
-            }}>
+            <button className="dia-num-btn" style={{ backgroundColor: disabled.includes(dia) && "#a9a9a9", cursor: disabled.includes(dia) ? "not-allowed" : "pointer" }}>
                 {dia}
             </button>
 
@@ -36,7 +27,8 @@ const DiasDelMes = ({ estaReservado, horarios, esHoy, alumnos, toggleHora, yaExi
                         yaExiste={yaExiste}
                         fecha={fecha}
                         zona={zona}
-
+                        horariosMañana={horariosMañana}
+                        horariosTarde={horariosTarde}
                     />
                 </div>
             )}
