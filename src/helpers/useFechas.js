@@ -20,7 +20,9 @@ export const useFechas = () => {
 
     const diasDelMes = obtenerDiasDelMes(mesActual, anioActual); // días del mes actual
 
+    const horariosMañana = () => [...Array.from({ length: 5 }, (_, i) => `${i + 7}:45`)];
+    const horariosTarde = () => [...Array.from({ length: 5 }, (_, i) => `${i + 14}:00`)];
+    const obtenerHorarios = () => [horariosMañana(), horariosTarde()].flat();
 
-
-    return { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes, obtenerDiasDelMes }
+    return { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes, obtenerDiasDelMes,obtenerHorarios }
 }

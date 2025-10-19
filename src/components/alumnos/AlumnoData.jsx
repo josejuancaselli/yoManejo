@@ -1,38 +1,24 @@
 import { useState } from "react";
 import { useFechas } from "../../helpers/useFechas";
+
 import AgregarTurno from "./AgregarTurno";
 import EditarAlumno from "./EditarAlumno";
 
 
 
-const AlumnoData = ({
-    toggleAlumno,
-    nuevoTurno,
-    setNuevoTurno,
-    agregarTurno,
-    borrarAlumno,
-    editarAlumno,
-    handleEditar,
-    formAlumno,
-    alumno,
-    modoEdicion,
-    setModoEdicion,
-    ventanaAlumno,
-    borrarTurno
-}) => {
+const AlumnoData = ({ nuevoTurno, ventanaAlumno, editarAlumnosetNuevoTurno, modoEdicion, editarAlumno, setModoEdicion, alumnoSeleccionado, handleEditar, agregarTurno, alumno, borrarTurnoReservado, inputAgregarTurno, setInputAgregarTurno, toggleAlumno, borrarAlumno }) => {
 
-    const [inputAgregarTurno, setInputAgregarTurno] = useState("")
-    const { diasDelMes, obtenerDiasDelMes, cambioMes, fecha, setFecha } = useFechas();
-    const horariosMañana = () => [...Array.from({ length: 5 }, (_, i) => `${i + 7}:45`)];
-    const horariosTarde = () => [...Array.from({ length: 5 }, (_, i) => `${i + 14}:00`)];
-    const obtenerHorarios = () => [horariosMañana(), horariosTarde()].flat();
+
+    const { obtenerDiasDelMes, fecha, obtenerHorarios } = useFechas();
+
+
 
 
 
     return (
         <>
-
-            <h2 onClick={() => toggleAlumno(alumno)}>{alumno.nombre}</h2>
+            {console.log("Este es el alumnoSeleccionado en AlumnoData", alumnoSeleccionado)}
+            <h2 onClick={() => { toggleAlumno(alumno), setModoEdicion(false) }}>{alumno.nombre}</h2>
 
             {ventanaAlumno && ventanaAlumno.id === alumno.id && (
                 <div>
@@ -44,9 +30,7 @@ const AlumnoData = ({
                             <p>Telefono: {alumno.telefono}</p>
                             <p>Correo: {alumno.correo}</p>
                             <p>Observaciones: {alumno.observaciones}</p>
-
                             <h3>Turnos:</h3>
-
                             <ul>
                                 {alumno.turnos.map((turno, index) => {
                                     return (
@@ -61,19 +45,17 @@ const AlumnoData = ({
                         </>
                     ) : (
                         <div>
-
                             <EditarAlumno
-                                formAlumno={formAlumno}
-                                handleEditar={handleEditar}                                
+                                alumnoSeleccionado={alumnoSeleccionado}
+                                handleEditar={handleEditar}
                                 obtenerDiasDelMes={obtenerDiasDelMes}
                                 obtenerHorarios={obtenerHorarios}
-                                borrarTurno={borrarTurno}
+                                borrarTurnoReservado={borrarTurnoReservado}
                                 editarAlumno={editarAlumno}
                                 alumno={alumno}
                                 setModoEdicion={setModoEdicion}
                                 setInputAgregarTurno={setInputAgregarTurno}
                             />
-
                         </div>
                     )}
 

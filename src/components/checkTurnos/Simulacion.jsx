@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 
 
-const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, ventanaReservar }) => {
+const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar }) => {
 
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-modal");
@@ -27,30 +27,44 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
     };
     return (
         <div className="simulacion-modal-backdrop">
+            {console.log(turnoSim)}
             <div className="simulacion-modal">
-                <button
-                    onClick={() => { setSimulacion(false); setTurnoSim([]); }}
-                    className="btn-close"
-                    aria-label="Cerrar"
-                >
+                <button onClick={() => { setSimulacion(false); setTurnoSim([]); }} className="btn-close" aria-label="Cerrar"                >
                     ×
                 </button>
                 <ul className="simulacion-list">
                     {turnoSim.map((e, index) => (
                         <li key={index} className="simulacion-item">
-
                             {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona}
                         </li>
                     ))}
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                    <button onClick={imprimirJPG} className="btn-imprimir">Simular</button>
-                    <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false) }}>Reservar</button>
-
+                    <button className="btn-imprimir" onClick={() => {
+                        if (turnoSim.length === 0) {
+                            alert("No hay turnos para simular");
+                            setSimulacion(false);
+                        } else {
+                            imprimirJPG();
+                        }
+                    }}>
+                        Simular
+                    </button>
+                    <button className="btn-imprimir" onClick={() => {
+                        if (turnoSim.length === 0) {
+                            alert("No hay turnos para reservar");
+                            setSimulacion(false);
+                        } else {
+                            setVentanaReservar(true);
+                            setSimulacion(false)
+                        }
+                    }}>
+                        Reservar
+                    </button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
