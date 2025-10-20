@@ -6,7 +6,7 @@ import EditarAlumno from "./EditarAlumno";
 
 
 
-const AlumnoData = ({ nuevoTurno, ventanaAlumno, editarAlumnosetNuevoTurno, modoEdicion, editarAlumno, setModoEdicion, alumnoSeleccionado, handleEditar, agregarTurno, alumno, borrarTurnoReservado, inputAgregarTurno, setInputAgregarTurno, toggleAlumno, borrarAlumno }) => {
+const AlumnoData = ({ nuevoTurno, ventanaAlumno, todosLosTurnos, alumnos, turnoModificandose, setTurnoModificandose, editarAlumno, setNuevoTurno, modoEdicion, setModoEdicion, alumnoSeleccionado, handleEditar, agregarTurno, alumno, borrarTurnoReservado, inputAgregarTurno, setInputAgregarTurno, toggleAlumno, borrarAlumno }) => {
 
 
     const { obtenerDiasDelMes, fecha, obtenerHorarios } = useFechas();
@@ -17,8 +17,9 @@ const AlumnoData = ({ nuevoTurno, ventanaAlumno, editarAlumnosetNuevoTurno, modo
 
     return (
         <>
-            {console.log("Este es el alumnoSeleccionado en AlumnoData", alumnoSeleccionado)}
-            <h2 onClick={() => { toggleAlumno(alumno), setModoEdicion(false) }}>{alumno.nombre}</h2>
+
+            <h2 onClick={() => { toggleAlumno(alumno), setModoEdicion(false) }}> {alumno.nombre} </h2>
+
 
             {ventanaAlumno && ventanaAlumno.id === alumno.id && (
                 <div>
@@ -52,9 +53,14 @@ const AlumnoData = ({ nuevoTurno, ventanaAlumno, editarAlumnosetNuevoTurno, modo
                                 obtenerHorarios={obtenerHorarios}
                                 borrarTurnoReservado={borrarTurnoReservado}
                                 editarAlumno={editarAlumno}
+                                alumnos={alumnos}
                                 alumno={alumno}
                                 setModoEdicion={setModoEdicion}
                                 setInputAgregarTurno={setInputAgregarTurno}
+                                turnoModificandose={turnoModificandose}
+                                setTurnoModificandose={setTurnoModificandose}
+                                todosLosTurnos={todosLosTurnos}
+
                             />
                         </div>
                     )}

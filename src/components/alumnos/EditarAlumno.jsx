@@ -2,7 +2,8 @@ import React from 'react'
 import { useAlumnos } from '../../helpers/useAlumnos'
 import { useFechas } from '../../helpers/useFechas'
 
-const EditarAlumno = ({ borrarTurnoReservado, alumnoSeleccionado, alumno, handleEditar, setModoEdicion, editarAlumno, setInputAgregarTurno, obtenerDiasDelMes, obtenerHorarios }) => {
+const EditarAlumno = ({ borrarTurnoReservado, turnoModificandose, todosLosTurnos,alumnos,setTurnoModificandose,alumnoSeleccionado, alumno, handleEditar, setModoEdicion, editarAlumno, setInputAgregarTurno, obtenerDiasDelMes, obtenerHorarios }) => {
+
 
 
 
@@ -10,8 +11,10 @@ const EditarAlumno = ({ borrarTurnoReservado, alumnoSeleccionado, alumno, handle
 
     return (
         <>
-            {console.log("Este alumno viene del map y es 'alumno'", alumno)}
-            {console.log("Este es el alumnoSeleccionado despues de clickear EDITAR", alumnoSeleccionado)}
+            {console.log("Estos son todos los turnos de los alumnos'", todosLosTurnos)}
+            {console.log("esto es alumnos'", alumnos.map(e => e.turnos).flat())}
+            {/* {console.log("esta es la valdiacion de si existe el turno en alumnos", validacion)} */}
+            {console.log("este es el turno modificandose", turnoModificandose)}
             <p> Nombre</p>
             <input name="nombre" value={alumnoSeleccionado.nombre} onChange={handleEditar} />
             <p> DNI</p>

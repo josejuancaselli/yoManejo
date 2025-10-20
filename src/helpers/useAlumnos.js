@@ -9,6 +9,16 @@ export const useAlumnos = () => {
     const [busquedaAlumno, setBusquedaAlumno] = useState("") // aca guardo el valor del input de busqueda
     const [modoEdicion, setModoEdicion] = useState(false) // modo edicion para el formulario
     const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({}) // aca guardo los datos del formulario para editar el alumno
+    const [turnoModificandose, setTurnoModificandose] = useState({}) // aca guardo los datos del formulario para editar el turno
+    const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat()
+    const validacion = todosLosTurnos.some((turno) =>
+        turno.dia === turnoModificandose.dia &&
+        turno.hora === turnoModificandose.hora &&
+        turno.mes === turnoModificandose.mes &&
+        turno.zona === turnoModificandose.zona &&
+        turno.anio === turnoModificandose.anio);
+
+
 
     useEffect(() => {
         const fetchAlumnos = async () => {
@@ -24,23 +34,23 @@ export const useAlumnos = () => {
         fetchAlumnos()
     }, [])
 
-    const toggleAlumno = (e) => { //funcion para abrir y cerrar la ventana de informacion del alumno
+    const toggleAlumno = (e) => {
         setVentanaAlumno((prev) => {
-            if (prev === null) { // si el estado es null, se abre la ventana
+            if (prev === null) {
                 return e;
-            }
-            else { // si el estado es true pasa lo siguiente
-                if (prev.id === e.id) { //si el id del alumno clickeado es igual al id del alumno que ya esta en el estdo, se cierra la ventana
+            } else {
+                if (prev.id === e.id) {
                     return null;
-                }
-                else { // si el id del alumno clickeado es diferente al id del alumno que ya esta en el estado, se cambia al nuevo alumno
+                } else {
                     return e;
                 }
             }
         });
-        
-        setAlumnoSeleccionado(e); // se setea el alumno clickeado
-    }
+
+        setAlumnoSeleccionado({ ...e, turnos: e.turnos ? e.turnos.map(t => ({ ...t })) : [] });
+
+    };
+
 
 
     const handleEditar = (e, idxTurno = null, campoTurno = null) => {
@@ -55,6 +65,7 @@ export const useAlumnos = () => {
             const turnosActualizados = [...alumnoSeleccionado.turnos];
             turnosActualizados[idxTurno][campoTurno] = valor;
             setAlumnoSeleccionado({ ...alumnoSeleccionado, turnos: turnosActualizados });
+            setTurnoModificandose({ ...turnoModificandose, [campoTurno]: valor });
         } else {
             // Campo simple del alumno
             setAlumnoSeleccionado({ ...alumnoSeleccionado, [name]: valor });
@@ -63,7 +74,18 @@ export const useAlumnos = () => {
 
     const editarAlumno = async (id) => {
         try {
-            await updateDoc(doc(db, "alumnos", id), alumnoSeleccionado);// traigo al alumno con el update y su id, luego cargo el alumno modificado con alumnoSeleccionado, el cual se edito en handleEditar
+            if (validacion) {
+
+                alert("El turno ya existe");
+                setTurnoModificandose({});
+                
+
+            } else {
+                await updateDoc(doc(db, "alumnos", id), alumnoSeleccionado);// traigo al alumno con el update y su id, luego cargo el alumno modificado con alumnoSeleccionado, el cual se edito en handleEditar
+                setTurnoModificandose({});
+                setModoEdicion(false);
+            }
+
         } catch (error) {
             console.error("Error actualizando alumno:", error);
         }
@@ -97,6 +119,6 @@ export const useAlumnos = () => {
 
     return {
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno, setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
-        toggleAlumno, handleEditar, editarAlumno,normalizar, handleBusquedaAlumno, borrarAlumno
+        toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose, setTurnoModificandose, todosLosTurnos
     }
 }

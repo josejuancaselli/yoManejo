@@ -25,7 +25,9 @@ const Alumnos = () => {
         editarAlumno,
         handleBusquedaAlumno,
         borrarAlumno,
-        normalizar } = useAlumnos()
+        normalizar,
+        turnoModificandose, setTurnoModificandose,todosLosTurnos,
+    } = useAlumnos()
 
     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
@@ -81,6 +83,7 @@ const Alumnos = () => {
                         <div key={index}>
                             <AlumnoData
                                 toggleAlumno={toggleAlumno}
+                                alumnos={alumnos}
                                 alumno={alumno}
                                 ventanaAlumno={ventanaAlumno}
                                 modoEdicion={modoEdicion}
@@ -96,6 +99,10 @@ const Alumnos = () => {
                                 agregarTurno={agregarTurno}
                                 inputAgregarTurno={inputAgregarTurno}
                                 setInputAgregarTurno={setInputAgregarTurno}
+                                turnoModificandose={turnoModificandose}
+                                setTurnoModificandose={setTurnoModificandose}
+                                todosLosTurnos={todosLosTurnos}
+                                
                             />
                         </div>
 
