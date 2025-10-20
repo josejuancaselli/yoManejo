@@ -18,7 +18,7 @@ const AlumnoData = ({ nuevoTurno, ventanaAlumno, todosLosTurnos, alumnos, turnoM
     return (
         <>
 
-            <h2 onClick={() => { toggleAlumno(alumno), setModoEdicion(false) }}> {alumno.nombre} </h2>
+            <h2 onClick={() => { toggleAlumno(alumno), setModoEdicion(false) }}> {alumno.nombre}</h2>
 
 
             {ventanaAlumno && ventanaAlumno.id === alumno.id && (
