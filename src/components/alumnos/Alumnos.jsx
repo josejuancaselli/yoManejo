@@ -78,24 +78,27 @@ const Alumnos = () => {
             <div>
                 {listaAlumnos.map((alumno, index) => {
                     return (
-                        <AlumnoData
-                            toggleAlumno={toggleAlumno}
-                            alumno={alumno}
-                            ventanaAlumno={ventanaAlumno}
-                            modoEdicion={modoEdicion}
-                            setModoEdicion={setModoEdicion}
-                            alumnoSeleccionado={alumnoSeleccionado}
-                            handleEditar={handleEditar}
-                            editarAlumno={editarAlumno}
-                            borrarAlumno={borrarAlumno}
-                            borrarTurnoReservado={borrarTurnoReservado}
-                            setAlumnoSeleccionado={setAlumnoSeleccionado}
-                            nuevoTurno={nuevoTurno}
-                            setNuevoTurno={setNuevoTurno}
-                            agregarTurno={agregarTurno}
-                            inputAgregarTurno={inputAgregarTurno}
-                            setInputAgregarTurno={setInputAgregarTurno}
-                        />
+                        <div key={index}>
+                            <AlumnoData
+                                toggleAlumno={toggleAlumno}
+                                alumno={alumno}
+                                ventanaAlumno={ventanaAlumno}
+                                modoEdicion={modoEdicion}
+                                setModoEdicion={setModoEdicion}
+                                alumnoSeleccionado={alumnoSeleccionado}
+                                handleEditar={handleEditar}
+                                editarAlumno={editarAlumno}
+                                borrarAlumno={borrarAlumno}
+                                borrarTurnoReservado={borrarTurnoReservado}
+                                setAlumnoSeleccionado={setAlumnoSeleccionado}
+                                nuevoTurno={nuevoTurno}
+                                setNuevoTurno={setNuevoTurno}
+                                agregarTurno={agregarTurno}
+                                inputAgregarTurno={inputAgregarTurno}
+                                setInputAgregarTurno={setInputAgregarTurno}
+                            />
+                        </div>
+
                     )
                 })}
             </div>
