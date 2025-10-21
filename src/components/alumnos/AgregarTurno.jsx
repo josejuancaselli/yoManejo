@@ -1,5 +1,5 @@
 
-const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, fecha, obtenerHorarios, agregarTurno, alumno, setInputAgregarTurno }) => {
+const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, alumnoSeleccionado, fecha, obtenerHorarios, agregarTurno, alumno, setInputAgregarTurno }) => {
 
 
     return (
@@ -53,7 +53,7 @@ const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, fecha, obt
             <label>Año</label>
             <input type="number" value={nuevoTurno.anio} onChange={(e) => setNuevoTurno({ ...nuevoTurno, anio: Number(e.target.value) })} />
 
-            <button onClick={() => { agregarTurno(alumno.id) }}>Confirmar</button>
+            <button onClick={() => { agregarTurno(alumnoSeleccionado.id) }}>Confirmar</button>
             <button onClick={() => setInputAgregarTurno(false)}>Cancelar</button>
         </>
     )

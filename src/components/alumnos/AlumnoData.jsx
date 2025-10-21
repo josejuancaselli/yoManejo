@@ -6,7 +6,27 @@ import EditarAlumno from "./EditarAlumno";
 
 
 
-const AlumnoData = ({ nuevoTurno, ventanaAlumno, todosLosTurnos, alumnos, turnoModificandose, setTurnoModificandose, editarAlumno, setNuevoTurno, modoEdicion, setModoEdicion, alumnoSeleccionado, handleEditar, agregarTurno, alumno, borrarTurnoReservado, inputAgregarTurno, setInputAgregarTurno, toggleAlumno, borrarAlumno }) => {
+const AlumnoData = ({
+    nuevoTurno,
+    ventanaAlumno,
+    todosLosTurnos,
+    alumnos,
+    turnoModificandose,
+    setTurnoModificandose,
+    editarAlumno,
+    setNuevoTurno,
+    modoEdicion,
+    setModoEdicion,
+    alumnoSeleccionado,
+    handleEditar,
+    agregarTurno,
+    alumno,
+    borrarTurnoReservado,
+    inputAgregarTurno,
+    setInputAgregarTurno,
+    toggleAlumno,
+    borrarAlumno
+}) => {
 
 
     const { obtenerDiasDelMes, fecha, obtenerHorarios } = useFechas();

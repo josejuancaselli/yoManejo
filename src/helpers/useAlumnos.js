@@ -51,8 +51,6 @@ export const useAlumnos = () => {
 
     };
 
-
-
     const handleEditar = (e, idxTurno = null, campoTurno = null) => {
         const { name, value } = e.target;
 
@@ -75,11 +73,8 @@ export const useAlumnos = () => {
     const editarAlumno = async (id) => {
         try {
             if (validacion) {
-
                 alert("El turno ya existe");
                 setTurnoModificandose({});
-                
-
             } else {
                 await updateDoc(doc(db, "alumnos", id), alumnoSeleccionado);// traigo al alumno con el update y su id, luego cargo el alumno modificado con alumnoSeleccionado, el cual se edito en handleEditar
                 setTurnoModificandose({});
@@ -118,7 +113,9 @@ export const useAlumnos = () => {
 
 
     return {
-        alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno, setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
-        toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose, setTurnoModificandose, todosLosTurnos
+        alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
+        setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
+        toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose,
+        setTurnoModificandose, todosLosTurnos
     }
 }
