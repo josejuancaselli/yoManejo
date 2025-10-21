@@ -98,7 +98,6 @@ const ZonaTurnos = () => {
 
   return (
     <div className="zona-turnos-container">
-
       <div className="zonas-section">
         <div className="seleccion-zona">
           <h2>Zonas</h2>
@@ -122,60 +121,6 @@ const ZonaTurnos = () => {
             )}
           </div>
         </div>
-
-        {dataAlumno && (
-          <div>
-            {!modoEdicion ? (
-              <>
-                {alumnoSeleccionado && (
-                  <div>
-                    <h3>{alumnoSeleccionado.nombre}</h3>
-                    <p>Direccion: {alumnoSeleccionado.direccion}</p>
-                    <p>DNI: {alumnoSeleccionado.dni}</p>
-                    <p>Telefono: {alumnoSeleccionado.telefono}</p>
-                    <p>Correo: {alumnoSeleccionado.correo}</p>
-                    <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
-                    <h3>Turnos:</h3>
-                    <ul>
-                      {alumnoSeleccionado.turnos.map((turno, index) => {
-                        return (
-                          <li key={index}>
-                            {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
-                          </li>
-                        )
-                      })}
-                    </ul>
-                    <button onClick={() => setModoEdicion(true)}>Editar</button>
-                    <button onClick={() => { setDataAlumno(false); setAlumnoSeleccionado(null) }}>Cerrar</button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                {alumnoSeleccionado && (
-                  <>
-                    <EditarAlumno
-                      nuevoTurno={nuevoTurno}
-                      setNuevoTurno={setNuevoTurno}
-                      alumnoSeleccionado={alumnoSeleccionado}
-                      handleEditar={handleEditar}
-                      obtenerDiasDelMes={obtenerDiasDelMes}
-                      obtenerHorarios={obtenerHorarios}
-                      borrarTurnoReservado={borrarTurnoReservado}
-                      editarAlumno={editarAlumno}
-                      setModoEdicion={setModoEdicion}
-                      setInputAgregarTurno={setInputAgregarTurno}
-                      inputAgregarTurno={inputAgregarTurno}
-                      agregarTurno={agregarTurno}
-                    />
-                  </>
-                )}
-              </>
-            )}
-          </div>
-        )}
-
-        {/* ✅ ahora recorremos todas las zonas seleccionadas */}
         <div className="zonas">
           <div style={{ display: "flex" }}>
             {zonasSeleccionadas.map((zona) => (
@@ -195,7 +140,6 @@ const ZonaTurnos = () => {
                 />
               </div>
             ))}
-
           </div>
           <div className="simulacion-card">
             {turnoSim.map((e, index) => {
@@ -219,6 +163,58 @@ const ZonaTurnos = () => {
       {ventanaReservar && (
         <div className="reserva-modal-backdrop">
           <Reservar turnoSim={turnoSim} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} />
+        </div>
+      )}
+
+      {dataAlumno && (
+        <div className="alumno-modal">
+          {!modoEdicion ? (
+            <>
+              {alumnoSeleccionado && (
+                <div className="alumno-modal-content">
+                  <h3>{alumnoSeleccionado.nombre}</h3>
+                  <p>Direccion: {alumnoSeleccionado.direccion}</p>
+                  <p>DNI: {alumnoSeleccionado.dni}</p>
+                  <p>Telefono: {alumnoSeleccionado.telefono}</p>
+                  <p>Correo: {alumnoSeleccionado.correo}</p>
+                  <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+                  <h3>Turnos:</h3>
+                  <ul>
+                    {alumnoSeleccionado.turnos.map((turno, index) => {
+                      return (
+                        <li key={index}>
+                          {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <button onClick={() => setModoEdicion(true)}>Editar</button>
+                  <button onClick={() => { setDataAlumno(false); setAlumnoSeleccionado(null) }}>Cerrar</button>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {alumnoSeleccionado && (
+                <>
+                  <EditarAlumno
+                    nuevoTurno={nuevoTurno}
+                    setNuevoTurno={setNuevoTurno}
+                    alumnoSeleccionado={alumnoSeleccionado}
+                    handleEditar={handleEditar}
+                    obtenerDiasDelMes={obtenerDiasDelMes}
+                    obtenerHorarios={obtenerHorarios}
+                    borrarTurnoReservado={borrarTurnoReservado}
+                    editarAlumno={editarAlumno}
+                    setModoEdicion={setModoEdicion}
+                    setInputAgregarTurno={setInputAgregarTurno}
+                    inputAgregarTurno={inputAgregarTurno}
+                    agregarTurno={agregarTurno}
+                  />
+                </>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>

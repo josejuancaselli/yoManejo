@@ -56,40 +56,42 @@ const EditarAlumno = ({
     };
 
     return (
-        <div>
-            <h2>Editar Alumno</h2>
+        <div className="editar-alumno-modal">
+            
 
-            <p>Nombre</p>
+            
             <input
                 name="nombre"
                 value={alumnoSeleccionado.nombre}
                 onChange={handleEditar}
             />
+            
             <p>DNI</p>
             <input
                 name="dni"
                 value={alumnoSeleccionado.dni}
                 onChange={handleEditar}
             />
-            <p>Dirección</p>
+            
+            <label>Dirección</label>
             <input
                 name="direccion"
                 value={alumnoSeleccionado.direccion}
                 onChange={handleEditar}
             />
-            <p>Correo</p>
+            <label>Correo</label>
             <input
                 name="correo"
                 value={alumnoSeleccionado.correo}
                 onChange={handleEditar}
             />
-            <p>Teléfono</p>
+            <label>Teléfono</label>
             <input
                 name="telefono"
                 value={alumnoSeleccionado.telefono}
                 onChange={handleEditar}
             />
-            <p>Observaciones</p>
+            <label>Observaciones</label>
             <input
                 name="observaciones"
                 value={alumnoSeleccionado.observaciones}
@@ -97,14 +99,14 @@ const EditarAlumno = ({
             />
 
             <h3>Turnos</h3>
-            <div>
+            <div className="turnos-editables">
                 <ul>
                     {turnosEditables.map((turno, index) => (
                         <li key={index}>
                             {/* Modo lectura si no estamos editando este turno */}
                             {editarTurnos !== index ? (
-                                <div>
-                                    <div>
+                                <div className="turno-editable">
+                                    <div className="turno-editable-info">
                                         <p>
                                             {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}{" "}
                                         </p>
@@ -117,7 +119,7 @@ const EditarAlumno = ({
                                 </div>
                             ) : (
                                 // Modo edición
-                                <div>
+                                <div className="turno-editable">
                                     <label>Día</label>
                                     <select
                                         value={turno.dia}
@@ -171,7 +173,7 @@ const EditarAlumno = ({
                                         <option value="3">3</option>
                                     </select>
 
-                                    <div style={{ marginTop: "5px" }}>
+                                    <div>
                                         <button onClick={() => setEditarTurnos(null)}>Cerrar Edición</button>
                                     </div>
                                 </div>
