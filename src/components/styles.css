@@ -1085,7 +1085,9 @@ flex-direction: row;
 /* Turno editable info (read mode) */
 .turno-editable-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 

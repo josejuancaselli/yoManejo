@@ -8,6 +8,7 @@ import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { useAlumnos } from "../../helpers/useAlumnos";
 import { useFechas } from "../../helpers/useFechas";
 import EditarAlumno from "../alumnos/EditarAlumno";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 
 
 const ZonaTurnos = () => {
@@ -20,6 +21,7 @@ const ZonaTurnos = () => {
   const [renderBusqueda, setRenderBusqueda] = useState(false)
   const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
   const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
+  const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
 
   const { alumnos, setAlumnos, alumnosFiltrados,
     setAlumnosFiltrados, ventanaAlumno,
@@ -172,29 +174,41 @@ const ZonaTurnos = () => {
             <>
               {alumnoSeleccionado && (
                 <div className="alumno-modal-content">
-                  <h3>{alumnoSeleccionado.nombre}</h3>
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198" }}>
+                    <h3>{alumnoSeleccionado.nombre}</h3>
+                    <button onClick={() => setModoEdicion("infoAlumno")}><FaEdit /></button>
+                  </div>
+
                   <p>Direccion: {alumnoSeleccionado.direccion}</p>
                   <p>DNI: {alumnoSeleccionado.dni}</p>
                   <p>Telefono: {alumnoSeleccionado.telefono}</p>
                   <p>Correo: {alumnoSeleccionado.correo}</p>
                   <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+
                   <h3>Turnos:</h3>
-                  <ul>
-                    {alumnoSeleccionado.turnos.map((turno, index) => {
-                      return (
-                        <li key={index}>
-                          {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
-                        </li>
-                      )
-                    })}
-                  </ul>
-                  <button onClick={() => setModoEdicion(true)}>Editar</button>
+                  <div>
+                    <ul>
+                      {alumnoSeleccionado.turnos.map((turno, index) => {
+                        return (
+                          <li key={index}>
+                            <p>
+                              {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} - {turno.hora} hs - Zona {turno.zona}{" "}
+                            </p>
+                            
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    <button onClick={() => setModoEdicion("turnosAlumno")}>Editar</button>
+                  </div>
                   <button onClick={() => { setDataAlumno(false); setAlumnoSeleccionado(null) }}>Cerrar</button>
+                  {console.log(modoEdicion)}
+                  {console.log(alumnoSeleccionado.nombre)}
                 </div>
               )}
             </>
           ) : (
-            <>
+            <div className="editar-alumno-modal">
               {alumnoSeleccionado && (
                 <>
                   <EditarAlumno
@@ -207,13 +221,17 @@ const ZonaTurnos = () => {
                     borrarTurnoReservado={borrarTurnoReservado}
                     editarAlumno={editarAlumno}
                     setModoEdicion={setModoEdicion}
+                    modoEdicion={modoEdicion}
                     setInputAgregarTurno={setInputAgregarTurno}
                     inputAgregarTurno={inputAgregarTurno}
                     agregarTurno={agregarTurno}
+                    editarTurnoAlumno={editarTurnoAlumno}
+                    setEditarTurnoAlumno={setEditarTurnoAlumno}
                   />
+
                 </>
               )}
-            </>
+            </div>
           )}
         </div>
       )}

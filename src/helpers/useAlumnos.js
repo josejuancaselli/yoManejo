@@ -7,7 +7,7 @@ export const useAlumnos = () => {
     const [alumnosFiltrados, setAlumnosFiltrados] = useState([]) // aca guardo los alumnos filtrados por la busqueda
     const [ventanaAlumno, setVentanaAlumno] = useState(null) // aca guardo el alumno que se muestra en la ventana de informacion
     const [busquedaAlumno, setBusquedaAlumno] = useState("") // aca guardo el valor del input de busqueda
-    const [modoEdicion, setModoEdicion] = useState(false) // modo edicion para el formulario
+    const [modoEdicion, setModoEdicion] = useState(null) // modo edicion para el formulario
     const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({}) // aca guardo los datos del formulario para editar el alumno
     const [turnoModificandose, setTurnoModificandose] = useState({}) // aca guardo los datos del formulario para editar el turno
     const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat()

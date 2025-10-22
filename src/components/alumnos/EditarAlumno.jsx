@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useFechas } from "../../helpers/useFechas";
 import AgregarTurno from "./AgregarTurno";
+import { FaEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
+
 
 const EditarAlumno = ({
 
@@ -24,12 +27,16 @@ const EditarAlumno = ({
     toggleAlumno,
     borrarAlumno,
     obtenerHorarios,
-    obtenerDiasDelMes
+    obtenerDiasDelMes,
+    editarTurnoAlumno,
+    setEditarTurnoAlumno
 }) => {
 
 
     // Estado para controlar qué turno se está editando
     const [editarTurnos, setEditarTurnos] = useState(null);
+
+
 
     // Estado que mantiene una copia editable de los turnos
     const [turnosEditables, setTurnosEditables] = useState([]);
@@ -53,138 +60,155 @@ const EditarAlumno = ({
 
         // También actualizamos alumnoSeleccionado para mantener todo sincronizado
         handleEditar(e, index, campo);
+
     };
 
     return (
-        <div className="editar-alumno-modal">
-            
+        <>
+            {modoEdicion === "infoAlumno" && (
+                <>
+                    <input name="nombre" value={alumnoSeleccionado.nombre} onChange={handleEditar} />
+                    <p>DNI</p>
+                    <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
+                    <label>Dirección</label>
+                    <input name="direccion" value={alumnoSeleccionado.direccion} onChange={handleEditar} />
+                    <label>Correo</label>
+                    <input name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
+                    <label>Teléfono</label>
+                    <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
+                    <label>Observaciones</label>
+                    <input name="observaciones" value={alumnoSeleccionado.observaciones} onChange={handleEditar} />
+                    <button onClick={() => editarAlumno(alumnoSeleccionado.id)}>Guardar Alumno</button>
+                    <button onClick={() => setModoEdicion(null)}>Cancelar</button>
+                    <h3>Turnos:</h3>
+                    <ul>
+                        {alumnoSeleccionado.turnos.map((turno, index) => {
+                            return (
+                                <li key={index}>
+                                    {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
+                                </li>
+                            )
+                        })}
+                    </ul>
 
-            
-            <input
-                name="nombre"
-                value={alumnoSeleccionado.nombre}
-                onChange={handleEditar}
-            />
-            
-            <p>DNI</p>
-            <input
-                name="dni"
-                value={alumnoSeleccionado.dni}
-                onChange={handleEditar}
-            />
-            
-            <label>Dirección</label>
-            <input
-                name="direccion"
-                value={alumnoSeleccionado.direccion}
-                onChange={handleEditar}
-            />
-            <label>Correo</label>
-            <input
-                name="correo"
-                value={alumnoSeleccionado.correo}
-                onChange={handleEditar}
-            />
-            <label>Teléfono</label>
-            <input
-                name="telefono"
-                value={alumnoSeleccionado.telefono}
-                onChange={handleEditar}
-            />
-            <label>Observaciones</label>
-            <input
-                name="observaciones"
-                value={alumnoSeleccionado.observaciones}
-                onChange={handleEditar}
-            />
+                </>
+            )}
 
-            <h3>Turnos</h3>
-            <div className="turnos-editables">
-                <ul>
-                    {turnosEditables.map((turno, index) => (
-                        <li key={index}>
-                            {/* Modo lectura si no estamos editando este turno */}
-                            {editarTurnos !== index ? (
-                                <div className="turno-editable">
-                                    <div className="turno-editable-info">
-                                        <p>
-                                            {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}{" "}
-                                        </p>
-                                        <button onClick={() => setEditarTurnos(index)}>Editar Turno</button>
-                                        <button onClick={() => borrarTurnoReservado(turno.dia, turno.hora, turno.mes, turno.zona, turno.anio, alumnoSeleccionado.id)}>
-                                            Borrar Turno
-                                        </button>
-                                    </div>
-
-                                </div>
+            {modoEdicion === "turnosAlumno" && (
+                <>
+                    <h3>{alumnoSeleccionado.nombre}</h3>
+                    <p>Direccion: {alumnoSeleccionado.direccion}</p>
+                    <p>DNI: {alumnoSeleccionado.dni}</p>
+                    <p>Telefono: {alumnoSeleccionado.telefono}</p>
+                    <p>Correo: {alumnoSeleccionado.correo}</p>
+                    <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+                    <button onClick={() => setModoEdicion(alumnoSeleccionado.nombre)}>Editar</button>
+                    <h3>Turnos:</h3>
+                    <div>
+                        {
+                            editarTurnoAlumno ? (
+                                <>
+                                    <h3>Turnos:</h3>
+                                    <ul>
+                                        {alumnoSeleccionado.turnos.map((turno, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                    <button onClick={() => setEditarTurnoAlumno(true)}>Editar</button>
+                                </>
                             ) : (
-                                // Modo edición
-                                <div className="turno-editable">
-                                    <label>Día</label>
-                                    <select
-                                        value={turno.dia}
-                                        onChange={(e) => handleEditarTurno(e, index, "dia")}
-                                    >
-                                        {obtenerDiasDelMes(turno.mes, turno.anio).map((d, i) => (
-                                            <option key={i} value={d}>
-                                                {d}
-                                            </option>
-                                        ))}
-                                    </select>
+                                <>
+                                    <h3>Turnos</h3>
+                                    <div className="turnos-editables">
+                                        <ul>
+                                            {turnosEditables.map((turno, index) => (
+                                                <li key={index}>
 
-                                    <label>Mes</label>
-                                    <select
-                                        value={turno.mes}
-                                        onChange={(e) => handleEditarTurno(e, index, "mes")}
-                                    >
-                                        {[...Array(12).keys()].map((m) => (
-                                            <option key={m} value={m}>
-                                                {m + 1}
-                                            </option>
-                                        ))}
-                                    </select>
 
-                                    <label>Año</label>
-                                    <input
-                                        type="number"
-                                        value={turno.anio}
-                                        onChange={(e) => handleEditarTurno(e, index, "anio")}
-                                    />
+                                                    {editarTurnos !== index ? (
+                                                        <div className="turno-editable">
+                                                            <div className="turno-editable-info">
+                                                                <p>
+                                                                    {String(turno.dia).padStart(2, "0")}/{String(turno.mes +1).padStart(2,"0")} - {turno.hora} hs - Zona {turno.zona}{" "}
+                                                                </p>
+                                                                <div>
+                                                                    <button onClick={() => setEditarTurnos(index)}><FaEdit /></button>
+                                                                    <button onClick={() => borrarTurnoReservado(
+                                                                        turno.dia,
+                                                                        turno.hora,
+                                                                        turno.mes,
+                                                                        turno.zona,
+                                                                        turno.anio,
+                                                                        alumnoSeleccionado.id)}>
+                                                                        <FaRegTrashAlt />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                    <label>Hora</label>
-                                    <select
-                                        value={turno.hora}
-                                        onChange={(e) => handleEditarTurno(e, index, "hora")}
-                                    >
-                                        {obtenerHorarios().map((h, i) => (
-                                            <option key={i} value={h}>
-                                                {h}
-                                            </option>
-                                        ))}
-                                    </select>
+                                                    ) : (
 
-                                    <label>Zona</label>
-                                    <select
-                                        value={turno.zona}
-                                        onChange={(e) => handleEditarTurno(e, index, "zona")}
-                                    >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                                                        <div className="turno-editable">
+                                                            <label>Día</label>
+                                                            <select value={turno.dia} onChange={(e) => handleEditarTurno(e, index, "dia")}>
+                                                                {obtenerDiasDelMes(turno.mes, turno.anio).map((d, i) => (
+                                                                    <option key={i} value={d}>
+                                                                        {d}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
 
-                                    <div>
-                                        <button onClick={() => setEditarTurnos(null)}>Cerrar Edición</button>
+                                                            <label>Mes</label>
+                                                            <select value={turno.mes} onChange={(e) => handleEditarTurno(e, index, "mes")} >
+                                                                {[...Array(12).keys()].map((m) => (
+                                                                    <option key={m} value={m}>
+                                                                        {m + 1}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <label>Año</label>
+                                                            <input type="number" value={turno.anio} onChange={(e) => handleEditarTurno(e, index, "anio")} />
+
+                                                            <label>Hora</label>
+                                                            <select value={turno.hora} onChange={(e) => handleEditarTurno(e, index, "hora")} >
+                                                                {obtenerHorarios().map((h, i) => (
+                                                                    <option key={i} value={h}>
+                                                                        {h}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <label>Zona</label>
+                                                            <select value={turno.zona} onChange={(e) => handleEditarTurno(e, index, "zona")} >
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                            </select>
+
+                                                            <div>
+                                                                <button onClick={() => setModoEdicion(null)}>Cerrar Edición</button>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <button onClick={() => setInputAgregarTurno(true)}>Agregar Turno</button>
+                                        <button onClick={() => editarAlumno(alumnoSeleccionado.id)}>Guardar Alumno</button>
+                                        <button onClick={() => setModoEdicion(null)}>Cancelar</button>
                                     </div>
-                                </div>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-                <button onClick={() => setInputAgregarTurno(true)}>Agregar Turno</button>
-            </div>
-            <button onClick={() => editarAlumno(alumnoSeleccionado.id)}>Guardar Alumno</button>
-            <button onClick={() => setModoEdicion(false)}>Cancelar</button>
+                                </>
+                            )
+                        }
+
+                    </div>
+                </>
+            )}
 
             {inputAgregarTurno && (
                 <AgregarTurno
@@ -198,7 +222,7 @@ const EditarAlumno = ({
                     obtenerHorarios={obtenerHorarios}
                 />
             )}
-        </div>
+        </>
 
     );
 };
