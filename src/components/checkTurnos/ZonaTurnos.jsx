@@ -23,6 +23,7 @@ const ZonaTurnos = () => {
   const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
 
+
   const { alumnos, setAlumnos, alumnosFiltrados,
     setAlumnosFiltrados, ventanaAlumno,
     setVentanaAlumno, busquedaAlumno,
@@ -33,6 +34,7 @@ const ZonaTurnos = () => {
     editarAlumno, normalizar, handleBusquedaAlumno,
     borrarAlumno, turnoModificandose, setTurnoModificandose,
     todosLosTurnos,
+    refresh, setRefresh, validacion,
   } = useAlumnos()
 
   const { obtenerDiasDelMes, obtenerHorarios } = useFechas()
@@ -73,30 +75,47 @@ const ZonaTurnos = () => {
   }
 
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
-    const arrayTurnosAlumno = alumnoSeleccionado.turnos;
-    const turnoBorrado = arrayTurnosAlumno.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
+
+    const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
     try {
       await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
       alert("turno borrado con exito")
+      setRefresh(prev => !prev)
+      setAlumnoSeleccionado((prev) => ({ ...prev, turnos: turnoBorrado, }));
     } catch (error) {
       console.error("Error borrando turno:", error);
     }
   }
 
-  const agregarTurno = async (idAlumno) => {
-    const id = alumnoSeleccionado.turnos.length + 1
-    try {
-      const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] }
-      // 1️⃣ Actualiza en Firebase con el nuevo objeto
-      await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
-      // 2️⃣ Actualiza el estado local
-      setAlumnoSeleccionado(turnoActualizado);
-      // 3️⃣ Limpia el formulario
-      setNuevoTurno({ dia: "", mes: "", hora: "", zona: "" });
-    } catch (error) {
-      console.error("Error agregando turno:", error);
-    }
-  };
+const agregarTurno = async (idAlumno) => {
+  const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
+
+  const validacion = todosLosTurnos.some((turno) =>
+    turno.dia === Number(nuevoTurno.dia) &&
+    turno.hora === nuevoTurno.hora &&
+    turno.mes === Number(nuevoTurno.mes) &&
+    turno.zona === nuevoTurno.zona &&
+    turno.anio === Number(nuevoTurno.anio)
+  );
+
+  if (validacion) {
+    alert("Turno ya existente");
+    setInputAgregarTurno(false);
+    return;
+  }
+
+  try {
+    const id = alumnoSeleccionado.turnos.length + 1;
+    const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] };
+
+    await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
+    setAlumnoSeleccionado(turnoActualizado);
+    setNuevoTurno({ dia: "", mes: "0", hora: "", anio: new Date().getFullYear(), zona: "" });
+  } catch (error) {
+    console.error("Error agregando turno:", error);
+  }
+};
+
 
   return (
     <div className="zona-turnos-container">
@@ -118,7 +137,7 @@ const ZonaTurnos = () => {
                     <div onClick={() => { { capturarAlumno(alumno.id) } }}>{alumno.nombre}</div>
                   </li>
                 ))}
-                <button onClick={() => setAlumnosFiltrados([])}>X</button>
+                <button onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}>X</button>
               </ul>
             )}
           </div>
@@ -194,16 +213,16 @@ const ZonaTurnos = () => {
                             <p>
                               {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} - {turno.hora} hs - Zona {turno.zona}{" "}
                             </p>
-                            
+
                           </li>
                         )
                       })}
                     </ul>
                     <button onClick={() => setModoEdicion("turnosAlumno")}>Editar</button>
                   </div>
-                  <button onClick={() => { setDataAlumno(false); setAlumnoSeleccionado(null) }}>Cerrar</button>
-                  {console.log(modoEdicion)}
-                  {console.log(alumnoSeleccionado.nombre)}
+                  <button onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                  <button onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+
                 </div>
               )}
             </>

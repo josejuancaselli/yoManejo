@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { db } from "../firebase/firebaseConfig"
 
 export const useAlumnos = () => {
+    const [refresh, setRefresh] = useState(false) // aca guardo el alumno guardado en la base de datos y dispara el useEffect de [setAlumnoGuardado]
     const [alumnos, setAlumnos] = useState([]) // aca traigo la base de datos con todos los alumnos y sus turnos
     const [alumnosFiltrados, setAlumnosFiltrados] = useState([]) // aca guardo los alumnos filtrados por la busqueda
     const [ventanaAlumno, setVentanaAlumno] = useState(null) // aca guardo el alumno que se muestra en la ventana de informacion
@@ -32,7 +33,7 @@ export const useAlumnos = () => {
             }
         }
         fetchAlumnos()
-    }, [])
+    }, [refresh])
 
     const toggleAlumno = (e) => {
         setVentanaAlumno((prev) => {
@@ -77,6 +78,7 @@ export const useAlumnos = () => {
                 setTurnoModificandose({});
             } else {
                 await updateDoc(doc(db, "alumnos", id), alumnoSeleccionado);// traigo al alumno con el update y su id, luego cargo el alumno modificado con alumnoSeleccionado, el cual se edito en handleEditar
+                setRefresh(prev => !prev); // 👈 esto “dispara” el useEffect
                 setTurnoModificandose({});
                 setModoEdicion(false);
             }
@@ -116,6 +118,6 @@ export const useAlumnos = () => {
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
         setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
         toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose,
-        setTurnoModificandose, todosLosTurnos
+        setTurnoModificandose, todosLosTurnos,refresh, setRefresh, validacion
     }
 }
