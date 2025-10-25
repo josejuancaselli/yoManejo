@@ -145,12 +145,10 @@ const ZonaTurnos = () => {
       t.hora === turnoEditado.hora &&
       t.zona === turnoEditado.zona
     );
-
     if (existeDuplicado) {
       alert("Ya existe un turno con esa fecha, hora y zona.");
       return; // Salimos sin guardar el cambio
     }
-
     // --- Si no hay duplicado, actualizamos ---
     nuevosTurnos[index] = turnoEditado;
     setTurnosEditables(nuevosTurnos);
