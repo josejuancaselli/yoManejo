@@ -15,7 +15,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
         <>
 
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
-                <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                     <button onClick={() => toggleMañanaTarde("mañana")}>Mañana</button>
                     <button onClick={() => toggleMañanaTarde("tarde")}>Tarde</button>
                 </div>
@@ -39,7 +39,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block" }}>
+                                <div key={hora} style={{ position: "relative", display: "inline-block", marginBottom:"auto" }}>
 
                                     <button
                                         key={hora}
@@ -92,7 +92,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block" }}>
+                                <div key={hora} style={{ position: "relative", display: "inline-block", marginTop:"auto" }}>
 
                                     <button
                                         key={hora}

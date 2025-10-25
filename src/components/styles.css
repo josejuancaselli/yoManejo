@@ -491,7 +491,8 @@
 .dias-mes {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 40px;
 }
 
 
