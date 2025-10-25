@@ -33,11 +33,19 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar }
                     ×
                 </button>
                 <ul className="simulacion-list">
-                    {turnoSim.map((e, index) => (
-                        <li key={index} className="simulacion-item">
-                            {e.dia}/{e.mes} - {e.hora} hs - Zona {e.zona}
-                        </li>
-                    ))}
+                    {[...turnoSim]
+                        .sort((a, b) => {
+                            const fechaA = new Date(a.anio, a.mes, a.dia, parseInt(a.hora));
+                            const fechaB = new Date(b.anio, b.mes, b.dia, parseInt(b.hora));
+                            return fechaA - fechaB; // menor a mayor
+                        })
+                        .map((e, index) => (
+                            <li key={index} className="simulacion-item" style={{ color: "#377363" }}>
+                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2,"0")}/{e.anio} - {e.hora} hs - Zona {e.zona}
+                            </li>
+                        ))}
+
+
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
@@ -51,15 +59,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar }
                     }}>
                         Simular
                     </button>
-                    <button className="btn-imprimir" onClick={() => {
-                        if (turnoSim.length === 0) {
-                            alert("No hay turnos para reservar");
-                            setSimulacion(false);
-                        } else {
-                            setVentanaReservar(true);
-                            setSimulacion(false)
-                        }
-                    }}>
+                    <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false) }}>
                         Reservar
                     </button>
                 </div>

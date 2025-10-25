@@ -162,6 +162,7 @@ const ZonaTurnos = () => {
     <div className="zona-turnos-container">
       <div className="zonas-section">
         <div className="seleccion-zona">
+
           <h2>Zonas</h2>
           <div className="zona-buttons">
             <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
@@ -169,20 +170,44 @@ const ZonaTurnos = () => {
             <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
           </div>
           <button onClick={() => setSimulacion(true)} className="zona-btn">+</button>
+
           <div className="searchbar-wrapper">
             <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} /> {/* BUSCADOR*/}
             {renderBusqueda && (
-              <ul className="alumnos-list">
-                {alumnosFiltrados.map((alumno) => (
-                  <li key={alumno.id} className="alumno-item">
-                    <div onClick={() => { { capturarAlumno(alumno.id) } }}>{alumno.nombre}</div>
-                  </li>
-                ))}
+              <div style={{ display: "flex" }}>
+                <ul className="alumnos-list">
+                  {alumnosFiltrados.map((alumno) => (
+                    <li key={alumno.id} className="alumno-item">
+                      <div onClick={() => { { capturarAlumno(alumno.id) } }}>{alumno.nombre}</div>
+                    </li>
+                  ))}
+
+                </ul>
                 <button onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}>X</button>
-              </ul>
+              </div>
             )}
           </div>
+          {turnoSim.length > 0 && (
+            <>
+              <ul className="simulacion-card">
+                {turnoSim.map((e, index) => {
+                  return (
+                    <li key={index} className="simulacion-container">
+                      <p className="simulacion-item">
+                        {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")} - {e.hora} hs - Zona {e.zona}
+                      </p>
+                      <button className="simulacion-delete-btn" onClick={() => { borrarTurnoSimulado(e.dia, e.hora, e.mes, e.zona, e.anio) }}><IoIosClose /></button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </>
+          )}
+
         </div>
+
+
+
         <div className="zonas">
           <div style={{ display: "flex" }}>
             {zonasSeleccionadas.map((zona) => (
@@ -203,18 +228,7 @@ const ZonaTurnos = () => {
               </div>
             ))}
           </div>
-          <div className="simulacion-card">
-            {turnoSim.map((e, index) => {
-              return (
-                <div key={index} className="simulacion-container">
-                  <p className="simulacion-item"> {e.dia}/{e.mes} </p>
-                  <p className="simulacion-item"> {e.hora} hs </p>
-                  <p className="simulacion-item"> Zona {e.zona} </p>
-                  <button className="simulacion-delete-btn" onClick={() => { borrarTurnoSimulado(e.dia, e.hora, e.mes, e.zona, e.anio) }}>X</button>
-                </div>
-              )
-            })}
-          </div>
+
         </div>
       </div>
 
@@ -239,9 +253,9 @@ const ZonaTurnos = () => {
                     <div style={{ display: "flex" }}>
                       <h3>{alumnoSeleccionado.nombre}</h3>
                     </div>
-                    <button className="turno-btn-cerrar" style={{marginBottom:"40px"}} onClick={() => { setDataAlumno(false) }}><IoIosClose /></button>
+                    <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => { setDataAlumno(false) }}><IoIosClose /></button>
                   </div>
-                  <div style={{display:"flex", justifyContent:"space-between"}}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div >
                       <p>Direccion: {alumnoSeleccionado.direccion}</p>
                       <p>DNI: {alumnoSeleccionado.dni}</p>
