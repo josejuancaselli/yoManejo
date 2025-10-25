@@ -535,7 +535,7 @@
   position: absolute;
   top: 85%;
   left: 50%;
-  transform: translateY(10%);
+  transform: translateY(0%);
   background-color: #f0fffe;
   /* border: 1px solid #54b198; */
   border-radius: 10px;
@@ -568,6 +568,7 @@
 /* Horarios buttons */
 
 .horarios-list button {
+  margin: 2px 0;
   width: 100%;
   min-width: 48px;
   padding: 6px 10px;
