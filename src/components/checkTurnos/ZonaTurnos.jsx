@@ -9,6 +9,7 @@ import { useAlumnos } from "../../helpers/useAlumnos";
 import { useFechas } from "../../helpers/useFechas";
 import EditarAlumno from "../alumnos/EditarAlumno";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 import TurnoData from "../alumnos/TurnoData";
 
 
@@ -229,20 +230,26 @@ const ZonaTurnos = () => {
 
       {dataAlumno && (
         <div className="alumno-modal">
+
           {!modoEdicion ? (
             <>
               {alumnoSeleccionado && (
                 <div className="alumno-modal-content">
                   <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
-                    <h3>{alumnoSeleccionado.nombre}</h3>
-                    <button className="alumno-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
+                    <div style={{ display: "flex" }}>
+                      <h3>{alumnoSeleccionado.nombre}</h3>
+                    </div>
+                    <button className="turno-btn-cerrar" style={{marginBottom:"40px"}} onClick={() => { setDataAlumno(false) }}><IoIosClose /></button>
                   </div>
-                  <div>
-                    <p>Direccion: {alumnoSeleccionado.direccion}</p>
-                    <p>DNI: {alumnoSeleccionado.dni}</p>
-                    <p>Telefono: {alumnoSeleccionado.telefono}</p>
-                    <p>Correo: {alumnoSeleccionado.correo}</p>
-                    <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+                  <div style={{display:"flex", justifyContent:"space-between"}}>
+                    <div >
+                      <p>Direccion: {alumnoSeleccionado.direccion}</p>
+                      <p>DNI: {alumnoSeleccionado.dni}</p>
+                      <p>Telefono: {alumnoSeleccionado.telefono}</p>
+                      <p>Correo: {alumnoSeleccionado.correo}</p>
+                      <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+                    </div>
+                    <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
                   </div>
                   <div className="turnos-editables">
                     <h3>Turnos:</h3>
@@ -269,9 +276,9 @@ const ZonaTurnos = () => {
                       setEditarTurnos={setEditarTurnos}
                     />
                   </div>
-                  <div style={{display:"flex", justifyContent:"space-evenly"}}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                    <button className="btn-cerrar"onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+                    <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
                   </div>
                 </div>
               )}
@@ -322,9 +329,9 @@ const ZonaTurnos = () => {
                       setEditarTurnos={setEditarTurnos}
                     />
                   </div>
-                  <div style={{display:"flex", justifyContent:"space-evenly"}}>
+                  <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                     <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                    <button className="btn-cerrar"onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+                    <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
                   </div>
                 </>
               )}

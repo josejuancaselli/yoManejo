@@ -1386,7 +1386,7 @@ input[type=number]::-webkit-outer-spin-button {
   transition: background-color 0.25s ease, box-shadow 0.3s ease;
   user-select: none;
   align-self: center;
-  margin: 10px 10px;
+  
 }
 
 .turnos-btn-editar:hover,
@@ -1394,12 +1394,6 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #3d7d6a;
   outline: none;
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-}
-
-.turno-btn-agregar {
-  margin-left: auto;
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .turnos-btn-borrar,.turno-cerrar {
@@ -1415,7 +1409,7 @@ input[type=number]::-webkit-outer-spin-button {
   transition: background-color 0.25s ease, box-shadow 0.3s ease;
   user-select: none;
   align-self: center;
-  margin: 10px 0;
+  margin: 10px 10px;
 }
 
 .turnos-btn-borrar:hover,
