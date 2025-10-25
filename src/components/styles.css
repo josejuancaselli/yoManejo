@@ -102,12 +102,12 @@
 }
 
 .seleccion-zona .zona-buttons {
-flex-direction: row;
-    margin: 0;
-    width: 15%;
-    padding: 0 50px;
+  flex-direction: row;
+  margin: 0;
+  width: 15%;
+  padding: 0 50px;
   gap: 18px;
-  
+
 }
 
 .seleccion-zona .zona-btn {
@@ -808,61 +808,61 @@ flex-direction: row;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgb(124 124 124 / 23%);
   /* Semi-transparent black for overlay */
   display: flex;
-  justify-content: flex-end; /* Align to the right side */
+  justify-content: flex-end;
+  /* Align to the right side */
   align-items: center;
   z-index: 1000;
   /* High z-index to overlay other content */
-  pointer-events: none; /* Allow clicks to pass through to background */
+  pointer-events: none;
+  /* Allow clicks to pass through to background */
 }
 
 /* Updated .alumno-modal-content - Ensure content is interactive */
 .alumno-modal-content {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 450px; /* Medium size, adjustable */
-  width: 90vw; /* Responsive, but capped at max-width */
-  background: #f0fffe; /* Light teal background matching theme */
+  max-width: 500px;
+  width: 90vw;
+  background: #f0fffe;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15); /* Subtle teal shadow */
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
   padding: 20px 25px;
-  color: #222; /* Dark text for readability */
+  color: #222;
   user-select: none;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between elements */
-  z-index: 1001; /* Above backdrop */
+  gap: 15px;
+  z-index: 1001;
   position: relative;
-  margin-right: 20px; /* Small margin from the right edge */
-  max-height: 80vh; /* Limit height to 80% of viewport */
-  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
-  pointer-events: auto; /* Ensure content is clickable */
+  margin-right: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  pointer-events: auto;
 }
 
 /* Updated .editar-alumno-modal - Same as above */
 .editar-alumno-modal {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 450px; /* Medium size, adjustable */
-  width: 90vw; /* Responsive, but capped at max-width */
-  background: #f0fffe; /* Light teal background matching theme */
+  max-width: 450px;
+  width: 90vw;
+  background: #f0fffe;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15); /* Subtle teal shadow */
+  box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
   padding: 20px 25px;
-  color: #222; /* Dark text for readability */
+  color: #222;
   user-select: none;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between elements */
-  z-index: 1001; /* Above backdrop */
+  gap: 15px;
+  z-index: 1001;
   position: relative;
-  margin-right: 20px; /* Small margin from the right edge */
-  max-height: 80vh; /* Limit height to 80% of viewport */
-  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
-  pointer-events: auto; /* Ensure content is clickable */
+  margin-right: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  pointer-events: auto;
 }
-
-/* The rest of the styles remain the same as before */
 
 /* Headings in modal */
 .alumno-modal-content h3 {
@@ -870,8 +870,10 @@ flex-direction: row;
   font-size: 1.2rem;
   margin-bottom: 20px;
   color: #4c4b4b;
-  border-bottom: 3px solid #54b198;
-  padding-bottom: 6px;
+  margin: 0;
+  align-content: end;
+
+
 }
 
 /* Paragraphs in modal */
@@ -893,23 +895,16 @@ flex-direction: row;
   gap: 8px;
 }
 
-.alumno-modal-content li {
-  padding: 8px 12px;
-  background-color: #fbfbfb;
-  border-radius: 8px;
-  border: 1px solid #d1e7e1;
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #222;
-  transition: background-color 0.25s ease;
-}
+
 
 .alumno-modal-content li:hover {
   background-color: #e6f0ec;
 }
 
 /* Buttons in modal */
-.alumno-modal-content button {
+.alumno-btn-editar,
+.btn-guardar,
+.btn-cerrar {
   font-family: inherit;
   font-weight: 600;
   padding: 12px 22px;
@@ -920,33 +915,33 @@ flex-direction: row;
   user-select: none;
   align-self: center;
   margin-top: 10px;
-}
-
-/* Editar button (primary) */
-.alumno-modal-content button:first-of-type {
-  background-color: #54b198;
-  border: none;
-  color: #f0fffe;
-  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
-}
-
-.alumno-modal-content button:first-of-type:hover,
-.alumno-modal-content button:first-of-type:focus {
-  background-color: #3d7d6a;
-  outline: none;
-  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-}
-
-/* Cerrar button (secondary) */
-.alumno-modal-content button:last-of-type {
   background-color: transparent;
   border: 2px solid #54b198;
   color: #54b198;
   box-shadow: 0 2px 4px rgba(84, 177, 152, 0.2);
 }
 
-.alumno-modal-content button:last-of-type:hover,
-.alumno-modal-content button:last-of-type:focus {
+
+.btn-cerrar:hover,
+.btn-cerrar:focus {
+  background-color: #414d49;
+  color: #f0fffe;
+  border-color: #414d49;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+.btn-guardar:hover,
+.btn-guardar:focus {
+  background-color: #54b198;
+  color: #f0fffe;
+  border-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+.alumno-btn-editar:hover,
+.alumno-btn-editar:focus {
   background-color: #54b198;
   color: #f0fffe;
   border-color: #3d7d6a;
@@ -959,11 +954,14 @@ flex-direction: row;
 /* Main heading */
 .editar-alumno-modal h2 {
   font-weight: 700;
-  font-size: 1.4rem; /* Slightly larger than h3 for main title */
+  font-size: 1.4rem;
+  /* Slightly larger than h3 for main title */
   color: #4c4b4b;
-  margin: 0 0 15px 0; /* Bottom margin to separate */
+  margin: 0 0 15px 0;
+  /* Bottom margin to separate */
   text-align: center;
-  border-bottom: 3px solid #54b198; /* Thicker border for emphasis */
+  border-bottom: 3px solid #54b198;
+  /* Thicker border for emphasis */
   padding-bottom: 8px;
 }
 
@@ -972,7 +970,8 @@ flex-direction: row;
   font-weight: 600;
   font-size: 1rem;
   color: #4c4b4b;
-  margin: 0 0 6px 0; /* Small bottom margin before input */
+  margin: 0 0 6px 0;
+  /* Small bottom margin before input */
   text-align: left;
   user-select: none;
 }
@@ -982,25 +981,35 @@ flex-direction: row;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 500;
-  padding: 0; /* No padding to look like text */
-  height: auto; /* Auto height */
-  border: none; /* No border initially */
-  border-radius: 0; /* No radius */
-  background-color: transparent; /* Transparent background */
+  padding: 0;
+  /* No padding to look like text */
+  height: auto;
+  /* Auto height */
+  border: none;
+  /* No border initially */
+  border-radius: 0;
+  /* No radius */
+  background-color: transparent;
+  /* Transparent background */
   color: #222;
   width: 100%;
   box-sizing: border-box;
   transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   user-select: text;
-  outline: none; /* Remove default outline */
+  outline: none;
+  /* Remove default outline */
 }
 
 .editar-alumno-modal input:focus {
-  border: 2px solid #54b198; /* Add border on focus */
+  border: 2px solid #54b198;
+  /* Add border on focus */
   border-radius: 8px;
-  background-color: #f0fffe; /* Light teal background on focus */
-  padding: 8px 12px; /* Add padding on focus */
-  box-shadow: 0 0 8px rgba(84, 177, 152, 0.3); /* Subtle glow */
+  background-color: #f0fffe;
+  /* Light teal background on focus */
+  padding: 8px 12px;
+  /* Add padding on focus */
+  box-shadow: 0 0 8px rgba(84, 177, 152, 0.3);
+  /* Subtle glow */
 }
 
 /* Selects: Similar to inputs, blend in until focused */
@@ -1035,16 +1044,10 @@ flex-direction: row;
   font-weight: 700;
   font-size: 1.2rem;
   color: #4c4b4b;
-  margin: 15px 0 10px 0; /* Margins for spacing */
+  margin: 15px 0 10px 0;
+  /* Margins for spacing */
   border-bottom: 2px solid #54b198;
   padding-bottom: 6px;
-}
-
-/* Turnos editables container */
-.turnos-editables {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 /* Turnos list */
@@ -1054,7 +1057,8 @@ flex-direction: row;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Slightly more gap for edit mode */
+  gap: 12px;
+  /* Slightly more gap for edit mode */
 }
 
 .editar-alumno-modal li {
@@ -1073,30 +1077,6 @@ flex-direction: row;
 
 .editar-alumno-modal li:hover {
   background-color: #e6f0ec;
-}
-
-/* Turno editable container */
-.turno-editable {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* Turno editable info (read mode) */
-.turno-editable-info {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.turno-editable-info p {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #222;
-  margin: 0;
-  line-height: 1.4;
 }
 
 /* Labels inside turno edit */
@@ -1165,7 +1145,8 @@ flex-direction: row;
 /* Borrar Turno button (destructive, red) */
 .editar-alumno-modal li button:nth-of-type(2) {
   background-color: transparent;
-  border: 2px solid #d9534f; /* Red border for delete */
+  border: 2px solid #d9534f;
+  /* Red border for delete */
   color: #d9534f;
   box-shadow: 0 2px 4px rgba(217, 83, 79, 0.2);
 }
@@ -1196,32 +1177,10 @@ flex-direction: row;
   box-shadow: 0 3px 8px rgba(84, 177, 152, 0.4);
 }
 
-/* Agregar Turno button (inside .turnos-editables) */
-.turnos-editables > button {
-  background-color: #54b198;
-  border: none;
-  color: #f0fffe;
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
-  transition: background-color 0.25s ease, box-shadow 0.3s ease;
-  user-select: none;
-  align-self: center;
-  margin: 10px 0;
-}
 
-.turnos-editables > button:hover,
-.turnos-editables > button:focus {
-  background-color: #3d7d6a;
-  outline: none;
-  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-}
 
 /* Main action buttons: Guardar Alumno and Cancelar */
-.editar-alumno-modal > button {
+.editar-alumno-modal>button {
   font-family: inherit;
   font-weight: 600;
   padding: 12px 20px;
@@ -1235,30 +1194,30 @@ flex-direction: row;
 }
 
 /* Guardar Alumno (primary) */
-.editar-alumno-modal > button:first-of-type {
+.editar-alumno-modal>button:first-of-type {
   background-color: #54b198;
   border: none;
   color: #f0fffe;
   box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
 }
 
-.editar-alumno-modal > button:first-of-type:hover,
-.editar-alumno-modal > button:first-of-type:focus {
+.editar-alumno-modal>button:first-of-type:hover,
+.editar-alumno-modal>button:first-of-type:focus {
   background-color: #3d7d6a;
   outline: none;
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
 }
 
 /* Cancelar (secondary) */
-.editar-alumno-modal > button:last-of-type {
+.editar-alumno-modal>button:last-of-type {
   background-color: transparent;
   border: 2px solid #54b198;
   color: #54b198;
   box-shadow: 0 2px 4px rgba(84, 177, 152, 0.2);
 }
 
-.editar-alumno-modal > button:last-of-type:hover,
-.editar-alumno-modal > button:last-of-type:focus {
+.editar-alumno-modal>button:last-of-type:hover,
+.editar-alumno-modal>button:last-of-type:focus {
   background-color: #54b198;
   color: #f0fffe;
   border-color: #3d7d6a;
@@ -1266,6 +1225,205 @@ flex-direction: row;
   box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
 }
 
+/* Turnos editables container */
+.turnos-editables {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.turnos-editables h3 {
+  border-bottom: 3px solid #54b198;
+}
+
+/* Agregar Turno button (inside .turnos-editables) */
+/* .turnos-editables button {
+  background-color: #54b198;
+  border: none;
+  color: #f0fffe;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+  align-self: center;
+  margin: 10px 0;
+} */
+
+
+
+/* Selects inside turno edit: Minimalistic, blend in like text until focused */
+.turno-editable-select {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0;
+  /* No padding initially for minimal look */
+  height: auto;
+  border: none;
+  /* No border initially */
+  border-radius: 0;
+  /* No radius initially */
+  background-color: transparent;
+  /* Transparent background */
+  color: #222;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.turno-editable-select:focus {
+  border: 2px solid #54b198;
+  /* Add border on focus */
+  border-radius: 8px;
+  background-color: #f0fffe;
+  /* Light teal background on focus */
+
+  box-shadow: 0 0 8px rgba(84, 177, 152, 0.3);
+  /* Subtle glow */
+}
+
+/* Inputs inside turno edit: Same minimalistic style as selects */
+.turno-editable-select input[type="number"] {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0;
+  /* No padding initially */
+  height: auto;
+  border: none;
+  /* No border initially */
+  border-radius: 0;
+  /* No radius initially */
+  background-color: transparent;
+  /* Transparent background */
+  color: #222;
+  width: 100px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: text;
+  outline: none;
+  /* Remove default outline */
+}
+
+.turno-editable-select input[type="number"]:focus {
+  border: 2rpx solid #54b198;
+  /* Add border on focus */
+  border-radius: 8px;
+  background-color: #f0fffe;
+  /* Light teal background on focus */
+
+  box-shadow: 0 0 8px rgba(84, 177, 152, 0.3);
+  /* Subtle glow */
+}
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  /* Quita las flechas en Chrome, Safari, Edge */
+  margin: 0;
+}
+
+.turno-editable {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+/* Turno editable info (read mode) */
+.turno-editable-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.turno-editable-info p {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #222;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
+.turno-item {
+  padding: 8px 12px;
+  background-color: #fbfbfb;
+  border-radius: 8px;
+  border: 1px solid #d1e7e1;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #222;
+  transition: background-color 0.25s ease;
+}
+
+/* Editar button (primary) */
+.turnos-btn-editar,
+.turno-btn-cerrar,
+.turno-btn-agregar,
+.turno-guardar {
+  background-color: #54b198;
+  border: none;
+  color: #f0fffe;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+  font-family: inherit;
+  /* font-weight: 600; */
+  padding: 7px 10px;
+  ;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+  align-self: center;
+  margin: 10px 10px;
+}
+
+.turnos-btn-editar:hover,
+.turnos-btn-editar:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
+.turno-btn-agregar {
+  margin-left: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.turnos-btn-borrar,.turno-cerrar {
+  background-color: #be4545;
+  border: none;
+  color: #f0fffe;
+  /* font-weight: 600; */
+  padding: 7px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(84, 177, 152, 0.4);
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+  align-self: center;
+  margin: 10px 0;
+}
+
+.turnos-btn-borrar:hover,
+.turnos-btn-borrar:focus {
+  background-color: #8f3636;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
 
 @media (max-width: 1536px) {
   .zona-turnos-container {

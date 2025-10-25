@@ -9,6 +9,7 @@ import { useAlumnos } from "../../helpers/useAlumnos";
 import { useFechas } from "../../helpers/useFechas";
 import EditarAlumno from "../alumnos/EditarAlumno";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import TurnoData from "../alumnos/TurnoData";
 
 
 const ZonaTurnos = () => {
@@ -22,6 +23,8 @@ const ZonaTurnos = () => {
   const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
   const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
+  const [editarTurnos, setEditarTurnos] = useState(null);
+  const [turnosEditables, setTurnosEditables] = useState([]);
 
 
   const { alumnos, setAlumnos, alumnosFiltrados,
@@ -87,35 +90,74 @@ const ZonaTurnos = () => {
     }
   }
 
-const agregarTurno = async (idAlumno) => {
-  const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
+  const agregarTurno = async (idAlumno) => {
+    const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
 
-  const validacion = todosLosTurnos.some((turno) =>
-    turno.dia === Number(nuevoTurno.dia) &&
-    turno.hora === nuevoTurno.hora &&
-    turno.mes === Number(nuevoTurno.mes) &&
-    turno.zona === nuevoTurno.zona &&
-    turno.anio === Number(nuevoTurno.anio)
-  );
+    const validacion = todosLosTurnos.some((turno) =>
+      turno.dia === Number(nuevoTurno.dia) &&
+      turno.hora === nuevoTurno.hora &&
+      turno.mes === Number(nuevoTurno.mes) &&
+      turno.zona === nuevoTurno.zona &&
+      turno.anio === Number(nuevoTurno.anio)
+    );
 
-  if (validacion) {
-    alert("Turno ya existente");
-    setInputAgregarTurno(false);
-    return;
-  }
+    if (validacion) {
+      alert("Turno ya existente");
+      setInputAgregarTurno(false);
+      return;
+    }
 
-  try {
-    const id = alumnoSeleccionado.turnos.length + 1;
-    const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] };
+    try {
+      const id = alumnoSeleccionado.turnos.length + 1;
+      const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] };
 
-    await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
-    setAlumnoSeleccionado(turnoActualizado);
-    setNuevoTurno({ dia: "", mes: "0", hora: "", anio: new Date().getFullYear(), zona: "" });
-  } catch (error) {
-    console.error("Error agregando turno:", error);
-  }
-};
+      await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
+      setAlumnoSeleccionado(turnoActualizado);
+      setNuevoTurno({ dia: "", mes: "0", hora: "", anio: new Date().getFullYear(), zona: "" });
+    } catch (error) {
+      console.error("Error agregando turno:", error);
+    }
+  };
 
+
+  // Cargamos los turnos al entrar en modo edición o al cambiar el alumno seleccionado
+  useEffect(() => {
+    if (alumnoSeleccionado.turnos) {
+      setTurnosEditables(alumnoSeleccionado.turnos.map((t) => ({ ...t })));
+    }
+  }, [alumnoSeleccionado]);
+
+  // Función para actualizar un turno editable
+  const handleEditarTurno = (e, index, campo) => {
+    const valor = ["dia", "mes", "anio"].includes(campo)
+      ? Number(e.target.value)
+      : e.target.value;
+
+    const nuevosTurnos = [...turnosEditables];
+    const turnoEditado = { ...nuevosTurnos[index], [campo]: valor };
+
+    // --- Validación de duplicados ---
+    const existeDuplicado = nuevosTurnos.some((t, i) =>
+      i !== index &&
+      t.dia === turnoEditado.dia &&
+      t.mes === turnoEditado.mes &&
+      t.anio === turnoEditado.anio &&
+      t.hora === turnoEditado.hora &&
+      t.zona === turnoEditado.zona
+    );
+
+    if (existeDuplicado) {
+      alert("Ya existe un turno con esa fecha, hora y zona.");
+      return; // Salimos sin guardar el cambio
+    }
+
+    // --- Si no hay duplicado, actualizamos ---
+    nuevosTurnos[index] = turnoEditado;
+    setTurnosEditables(nuevosTurnos);
+
+    // Mantener sincronizado con alumnoSeleccionado
+    handleEditar(e, index, campo);
+  };
 
   return (
     <div className="zona-turnos-container">
@@ -193,36 +235,46 @@ const agregarTurno = async (idAlumno) => {
             <>
               {alumnoSeleccionado && (
                 <div className="alumno-modal-content">
-                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198" }}>
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>
-                    <button onClick={() => setModoEdicion("infoAlumno")}><FaEdit /></button>
+                    <button className="alumno-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
                   </div>
-
-                  <p>Direccion: {alumnoSeleccionado.direccion}</p>
-                  <p>DNI: {alumnoSeleccionado.dni}</p>
-                  <p>Telefono: {alumnoSeleccionado.telefono}</p>
-                  <p>Correo: {alumnoSeleccionado.correo}</p>
-                  <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
-
-                  <h3>Turnos:</h3>
                   <div>
-                    <ul>
-                      {alumnoSeleccionado.turnos.map((turno, index) => {
-                        return (
-                          <li key={index}>
-                            <p>
-                              {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} - {turno.hora} hs - Zona {turno.zona}{" "}
-                            </p>
-
-                          </li>
-                        )
-                      })}
-                    </ul>
-                    <button onClick={() => setModoEdicion("turnosAlumno")}>Editar</button>
+                    <p>Direccion: {alumnoSeleccionado.direccion}</p>
+                    <p>DNI: {alumnoSeleccionado.dni}</p>
+                    <p>Telefono: {alumnoSeleccionado.telefono}</p>
+                    <p>Correo: {alumnoSeleccionado.correo}</p>
+                    <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
                   </div>
-                  <button onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                  <button onClick={() => { setDataAlumno(false) }}>Cerrar</button>
-
+                  <div className="turnos-editables">
+                    <h3>Turnos:</h3>
+                    <TurnoData
+                      nuevoTurno={nuevoTurno}
+                      setNuevoTurno={setNuevoTurno}
+                      alumnoSeleccionado={alumnoSeleccionado}
+                      handleEditar={handleEditar}
+                      obtenerDiasDelMes={obtenerDiasDelMes}
+                      obtenerHorarios={obtenerHorarios}
+                      borrarTurnoReservado={borrarTurnoReservado}
+                      editarAlumno={editarAlumno}
+                      setModoEdicion={setModoEdicion}
+                      modoEdicion={modoEdicion}
+                      setInputAgregarTurno={setInputAgregarTurno}
+                      inputAgregarTurno={inputAgregarTurno}
+                      agregarTurno={agregarTurno}
+                      editarTurnoAlumno={editarTurnoAlumno}
+                      setEditarTurnoAlumno={setEditarTurnoAlumno}
+                      handleEditarTurno={handleEditarTurno}
+                      turnosEditables={turnosEditables}
+                      setTurnosEditables={setTurnosEditables}
+                      editarTurnos={editarTurnos}
+                      setEditarTurnos={setEditarTurnos}
+                    />
+                  </div>
+                  <div style={{display:"flex", justifyContent:"space-evenly"}}>
+                    <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                    <button className="btn-cerrar"onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+                  </div>
                 </div>
               )}
             </>
@@ -247,7 +299,35 @@ const agregarTurno = async (idAlumno) => {
                     editarTurnoAlumno={editarTurnoAlumno}
                     setEditarTurnoAlumno={setEditarTurnoAlumno}
                   />
-
+                  <div className="turnos-editables">
+                    <h3>Turnos:</h3>
+                    <TurnoData
+                      nuevoTurno={nuevoTurno}
+                      setNuevoTurno={setNuevoTurno}
+                      alumnoSeleccionado={alumnoSeleccionado}
+                      handleEditar={handleEditar}
+                      obtenerDiasDelMes={obtenerDiasDelMes}
+                      obtenerHorarios={obtenerHorarios}
+                      borrarTurnoReservado={borrarTurnoReservado}
+                      editarAlumno={editarAlumno}
+                      setModoEdicion={setModoEdicion}
+                      modoEdicion={modoEdicion}
+                      setInputAgregarTurno={setInputAgregarTurno}
+                      inputAgregarTurno={inputAgregarTurno}
+                      agregarTurno={agregarTurno}
+                      editarTurnoAlumno={editarTurnoAlumno}
+                      setEditarTurnoAlumno={setEditarTurnoAlumno}
+                      handleEditarTurno={handleEditarTurno}
+                      turnosEditables={turnosEditables}
+                      setTurnosEditables={setTurnosEditables}
+                      editarTurnos={editarTurnos}
+                      setEditarTurnos={setEditarTurnos}
+                    />
+                  </div>
+                  <div style={{display:"flex", justifyContent:"space-evenly"}}>
+                    <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                    <button className="btn-cerrar"onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+                  </div>
                 </>
               )}
             </div>
