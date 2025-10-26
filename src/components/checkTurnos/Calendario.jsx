@@ -11,8 +11,17 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
   const [ventanaDireccion, setVentanaDireccion] = useState(null); // ventana para mostrar info de turno reservado
   const ventanaRef = useRef(null); // referencia al contenedor de horarios (para click fuera)
   const botonDiaRef = useRef(null); // referencia al botón del día activo
+  const [activeHora, setActiveHora] = useState(null);
+  const [mañanaTarde, setMañanaTarde] = useState([])
 
   const turnosAlumnos = alumnos.map(e => e.turnos).flat(); // todos los turnos de todos los alumnos en un solo array
+  const toggleMañanaTarde = (tipo) => {
+    setMañanaTarde((prev) =>
+      prev.includes(tipo)
+        ? prev.filter((t) => t !== tipo) // si ya estaba, lo saca
+        : [...prev, tipo] // si no estaba, lo agrega
+    );
+  };
 
   // Toggle de la ventana de horarios de un día
   const toggleDia = (dia, ref) => {
@@ -20,16 +29,16 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
     setVentanaDia((prevDia) => (prevDia === dia ? null : dia)); // si el día ya estaba abierto, lo cierro; si no, lo abro
   };
 
-      const cambioMes = ((e) => {
-        setFecha((prev) => {
-            if (e === "siguiente") {
-                return prev.mes === 11 ? { mes: 0, anio: prev.anio + 1 } : { mes: prev.mes + 1, anio: prev.anio } // esto era la funcion d mes siguiente
-            } else if (e === "anterior") {
-                return prev.mes === 0 ? { mes: 11, anio: prev.anio - 1 } : { mes: prev.mes - 1, anio: prev.anio } // esto era la funcion d mes anterior
-            }
-            return prev;
-        })
+  const cambioMes = ((e) => {
+    setFecha((prev) => {
+      if (e === "siguiente") {
+        return prev.mes === 11 ? { mes: 0, anio: prev.anio + 1 } : { mes: prev.mes + 1, anio: prev.anio } // esto era la funcion d mes siguiente
+      } else if (e === "anterior") {
+        return prev.mes === 0 ? { mes: 11, anio: prev.anio - 1 } : { mes: prev.mes - 1, anio: prev.anio } // esto era la funcion d mes anterior
+      }
+      return prev;
     })
+  })
   // Filtra días que no se pueden seleccionar (anteriores a hoy)
   const disabled = diasDelMes.filter((dia) => {
     const fechaDia = new Date(fecha.anio, fecha.mes, dia); // fecha del día
@@ -110,14 +119,36 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
     <>
 
       <div className={`calendario-container zona-${zona}`}>
-
+        {console.log(mañanaTarde)}
         {/* Header del calendario con título y navegación de meses */}
         <div className="calendario-header">
-          <h2 className="auto-title">AUTO {zona}</h2>
+         
+            
+            <h2 className="auto-title">AUTO {zona}</h2>
+         
+          <div style={{display:"flex", flexDirection:"row"}}>
+              <button
+                onClick={() => toggleMañanaTarde("mañana")}
+                style={mañanaTarde.includes("mañana")
+                  ? { backgroundColor: "#65c065ff" }
+                  : { backgroundColor: "#a0a5a0ff" }}
+              >
+                Mañana
+              </button>
+
+              <button
+                onClick={() => toggleMañanaTarde("tarde")}
+                style={mañanaTarde.includes("tarde")
+                  ? { backgroundColor: "#65c065ff" }
+                  : { backgroundColor: "#a0a5a0ff" }}
+              >
+                Tarde
+              </button>
+            </div>
           <div className="nav-calendario">
-            <button className="nav-btn" onClick={()=>cambioMes("anterior")}>Anterior</button>
+            <button className="nav-btn" onClick={() => cambioMes("anterior")}>Anterior</button>
             <h2>{meses[fecha.mes]} {fecha.anio}</h2>
-            <button className="nav-btn" onClick={()=>cambioMes("siguiente")}>Siguiente</button>
+            <button className="nav-btn" onClick={() => cambioMes("siguiente")}>Siguiente</button>
           </div>
         </div>
 
@@ -158,6 +189,10 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
                   horariosMañana={horariosMañana}
                   horariosTarde={horariosTarde}
                   reservado={reservado}
+                  activeHora={activeHora}
+                  setActiveHora={setActiveHora}
+                  mañanaTarde={mañanaTarde}
+                  setMañanaTarde={setMañanaTarde}
                 />
               </div>
             );

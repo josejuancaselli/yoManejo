@@ -1,13 +1,9 @@
 import React, { useRef, useState } from 'react'
 
 
-const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleHora,reservado, alumnos, fecha, horarios, dia, ventanaDia, ventanaDireccion, setVentanaDireccion }) => {
+const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosMañana, horariosTarde, toggleHora, reservado, alumnos, fecha, horarios, dia, ventanaDia, ventanaDireccion, setVentanaDireccion }) => {
 
-    const [activeHora, setActiveHora] = useState(null);
-    const [mañanaTarde, setMañanaTarde] = useState(null)
-    const toggleMañanaTarde = (tipo) => {
-        setMañanaTarde(prev => prev === tipo ? null : tipo)
-    }
+
 
 
 
@@ -15,13 +11,8 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
         <>
 
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <button onClick={() => toggleMañanaTarde("mañana")}>Mañana</button>
-                    <button onClick={() => toggleMañanaTarde("tarde")}>Tarde</button>
-                </div>
 
-
-                {mañanaTarde === "mañana" && (
+                {mañanaTarde.includes("mañana")  && (
                     <>
 
                         {horariosMañana().map((hora) => {
@@ -39,7 +30,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", marginBottom:"auto" }}>
+                                <div key={hora} style={{ position: "relative", display: "inline-block", marginBottom: "auto" }}>
 
                                     <button
                                         key={hora}
@@ -56,8 +47,8 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                             setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "white" : "black",
+                                            backgroundColor: reservado(dia, hora, fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia, hora, fecha.mes, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}
@@ -75,7 +66,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                 )}
 
 
-                {mañanaTarde === "tarde" && (
+                {mañanaTarde.includes("tarde") && (
                     <>
                         {horariosTarde().map((hora) => {
 
@@ -92,7 +83,7 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", marginTop:"auto" }}>
+                                <div key={hora} style={{ position: "relative", display: "inline-block", marginTop: "auto" }}>
 
                                     <button
                                         key={hora}
@@ -109,8 +100,8 @@ const BotonesHora = ({ ventanaRef, zona, horariosMañana, horariosTarde, toggleH
                                             setVentanaDireccion(null)
                                         }}
                                         style={{
-                                            backgroundColor: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
-                                            color: reservado(dia,hora,fecha.mes, zona, fecha.anio) ? "white" : "black",
+                                            backgroundColor: reservado(dia, hora, fecha.mes, zona, fecha.anio) ? "rgba(196, 136, 131, 1)" : "#54b198",
+                                            color: reservado(dia, hora, fecha.mes, zona, fecha.anio) ? "white" : "black",
                                         }}
                                     >
                                         {hora}
