@@ -37,7 +37,6 @@ const TurnoData = ({
     return (
         <>
             <ul>
-
                 {turnosEditables.map((turno, index) => (
                     <li key={index} className='turno-item'>
                         {editarTurnos !== index ? (

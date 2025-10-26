@@ -41,22 +41,13 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar }
                         })
                         .map((e, index) => (
                             <li key={index} className="simulacion-item" style={{ color: "#377363" }}>
-                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2,"0")}/{e.anio} - {e.hora} hs - Zona {e.zona}
+                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Zona {e.zona}
                             </li>
                         ))}
-
-
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                    <button className="btn-imprimir" onClick={() => {
-                        if (turnoSim.length === 0) {
-                            alert("No hay turnos para simular");
-                            setSimulacion(false);
-                        } else {
-                            imprimirJPG();
-                        }
-                    }}>
+                    <button className="btn-imprimir" onClick={() => turnoSim.length === 0 ? (() => { alert("No hay turnos para simular"); setSimulacion(false); })() : imprimirJPG()}>
                         Simular
                     </button>
                     <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false) }}>
