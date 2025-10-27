@@ -4,7 +4,7 @@ import DiasDelMes from "./DiasDelMes"; // componente que renderiza los días del
 
 
 // Componente principal del calendario
-const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
+const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, horariosTarde, horarios }) => {
 
   const { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes } = useFechas();
   const [ventanaDia, setVentanaDia] = useState(null); // día seleccionado para mostrar horarios
@@ -12,7 +12,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
   const ventanaRef = useRef(null); // referencia al contenedor de horarios (para click fuera)
   const botonDiaRef = useRef(null); // referencia al botón del día activo
   const [activeHora, setActiveHora] = useState(null);
-  const [mañanaTarde, setMañanaTarde] = useState([])
+  const [mañanaTarde, setMañanaTarde] = useState([]);
 
   const turnosAlumnos = alumnos.map(e => e.turnos).flat(); // todos los turnos de todos los alumnos en un solo array
   const toggleMañanaTarde = (tipo) => {
@@ -46,12 +46,6 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
     return fechaDia < hoySolo; // true si día anterior a hoy
   });
 
-  // Genera los horarios disponibles (8:00 a 18:00)
-  const horariosMañana = () => [...Array.from({ length: 5 }, (_, i) => `${i + 7}:45`)];
-  const horariosTarde = () => [...Array.from({ length: 5 }, (_, i) => `${i + 14}:00`)];
-  const obtenerHorarios = () => [horariosMañana(), horariosTarde()].flat();
-
-  const horarios = obtenerHorarios();
   // Efecto para cerrar la ventana de horarios al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -117,34 +111,33 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos }) => {
 
   return (
     <>
-
+      <div className="zona-tabs">
+        <button
+          className={`mañana-tab tab-zona-${zona}`}
+          onClick={() => toggleMañanaTarde("mañana")}
+          style={mañanaTarde.includes("mañana") && { zona }
+            ? {  }
+            : { filter: "brightness(90%)" }
+          }
+        >
+          Mañana
+        </button>
+        <button
+          className={`tarde-tab tab-zona-${zona}`}
+          onClick={() => toggleMañanaTarde("tarde")}
+          style={mañanaTarde.includes("tarde") && { zona }
+            ? {}
+            : {filter: "brightness(90%)"}
+          }
+        >
+          Tarde
+        </button>
+      </div>
       <div className={`calendario-container zona-${zona}`}>
-        {console.log(mañanaTarde)}
+
         {/* Header del calendario con título y navegación de meses */}
         <div className="calendario-header">
-         
-            
-            <h2 className="auto-title">AUTO {zona}</h2>
-         
-          <div style={{display:"flex", flexDirection:"row"}}>
-              <button
-                onClick={() => toggleMañanaTarde("mañana")}
-                style={mañanaTarde.includes("mañana")
-                  ? { backgroundColor: "#65c065ff" }
-                  : { backgroundColor: "#a0a5a0ff" }}
-              >
-                Mañana
-              </button>
-
-              <button
-                onClick={() => toggleMañanaTarde("tarde")}
-                style={mañanaTarde.includes("tarde")
-                  ? { backgroundColor: "#65c065ff" }
-                  : { backgroundColor: "#a0a5a0ff" }}
-              >
-                Tarde
-              </button>
-            </div>
+          <h2 className="auto-title">AUTO {zona}</h2>
           <div className="nav-calendario">
             <button className="nav-btn" onClick={() => cambioMes("anterior")}>Anterior</button>
             <h2>{meses[fecha.mes]} {fecha.anio}</h2>

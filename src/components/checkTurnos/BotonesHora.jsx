@@ -12,8 +12,8 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
 
-                {mañanaTarde.includes("mañana")  && (
-                    <>
+                {mañanaTarde.includes("mañana") && (
+                    <div style={{ display: "flex", flexDirection: "row" }}>
 
                         {horariosMañana().map((hora) => {
 
@@ -30,8 +30,8 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", marginBottom: "auto" }}>
-
+                                <div key={hora} style={{ position: "relative", display: "inline-block", margin:"0 2px" }}>
+                                    
                                     <button
                                         key={hora}
                                         className="horario-btn"
@@ -62,12 +62,14 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                             );
                         })}
-                    </>
+                    </div>
                 )}
 
 
                 {mañanaTarde.includes("tarde") && (
-                    <>
+                    
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        
                         {horariosTarde().map((hora) => {
 
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
@@ -83,8 +85,8 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", marginTop: "auto" }}>
-
+                                <div key={hora} style={{ position: "relative", display: "inline-block", margin:"0 2px" }}>
+                                    
                                     <button
                                         key={hora}
                                         className="horario-btn"
@@ -115,7 +117,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                             );
                         })}
-                    </>
+                    </div>
                 )}
 
             </div>

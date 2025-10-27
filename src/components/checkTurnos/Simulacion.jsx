@@ -27,7 +27,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar }
     };
     return (
         <div className="simulacion-modal-backdrop">
-            {console.log(turnoSim)}
+            
             <div className="simulacion-modal">
                 <button onClick={() => { setSimulacion(false); setTurnoSim([]); }} className="btn-close" aria-label="Cerrar"                >
                     ×

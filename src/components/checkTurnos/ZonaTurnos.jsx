@@ -41,7 +41,7 @@ const ZonaTurnos = () => {
     refresh, setRefresh, validacion,
   } = useAlumnos()
 
-  const { obtenerDiasDelMes, obtenerHorarios } = useFechas()
+  const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
 
   const handleBusqueda = (e) => {
     const valor = e.target.value.toLowerCase();
@@ -159,22 +159,13 @@ const ZonaTurnos = () => {
   };
 
 
-  
+
   return (
     <div className="zona-turnos-container">
       <div className="zonas-section">
         <div className="seleccion-zona">
-
-          <h2>Zonas</h2>
-          <div className="zona-buttons">
-            <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
-            <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
-            <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
-          </div>
-          <button onClick={() => setSimulacion(true)} className="zona-btn">+</button>
-
           <div className="searchbar-wrapper">
-            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} /> {/* BUSCADOR*/}
+            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} /> 
             {renderBusqueda && (
               <div style={{ display: "flex" }}>
                 <ul className="alumnos-list">
@@ -189,6 +180,17 @@ const ZonaTurnos = () => {
               </div>
             )}
           </div>
+          <div className="zona-buttons-wrapper">
+            <h2>Zonas</h2>
+            <div className="zona-buttons">
+              <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
+              <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
+              <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
+              <button onClick={() => setSimulacion(true)} className="zona-btn" style={{borderRadius:"10px", backgroundColor:"#333433"}}>+</button>
+            </div>
+          </div>
+
+
           {turnoSim.length > 0 && (
             <>
               <ul className="simulacion-card">
@@ -211,7 +213,7 @@ const ZonaTurnos = () => {
 
 
         <div className="zonas">
-          <div style={{ display: "flex" }}>
+          <>
             {zonasSeleccionadas.map((zona) => (
               <div key={zona} className="zona-selected">
                 <Calendario
@@ -226,10 +228,14 @@ const ZonaTurnos = () => {
                   setAlumnos={setAlumnos}
                   ventanaReservar={ventanaReservar}
                   setVentanaReservar={setVentanaReservar}
+                  horariosMañana={horariosMañana}
+                  horariosTarde={horariosTarde}
+                  obtenerHorarios={obtenerHorarios}
+                  horarios={horarios}
                 />
               </div>
             ))}
-          </div>
+          </>
 
         </div>
       </div>
@@ -293,7 +299,7 @@ const ZonaTurnos = () => {
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                    <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
                     <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
                   </div>
                 </div>
