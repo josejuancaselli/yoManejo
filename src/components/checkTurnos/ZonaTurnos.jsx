@@ -165,18 +165,18 @@ const ZonaTurnos = () => {
       <div className="zonas-section">
         <div className="seleccion-zona">
           <div className="searchbar-wrapper">
-            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} /> 
+            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} placeholder="Buscar alumno..."/>
             {renderBusqueda && (
-              <div style={{ display: "flex" }}>
+              <div className="alumnos-search-wrapper">
                 <ul className="alumnos-list">
                   {alumnosFiltrados.map((alumno) => (
-                    <li key={alumno.id} className="alumno-item">
-                      <div onClick={() => { { capturarAlumno(alumno.id) } }}>{alumno.nombre}</div>
+                    <li key={alumno.id} className="alumno-item" onClick={() => { { capturarAlumno(alumno.id) } }}>
+                      {alumno.nombre}
                     </li>
                   ))}
 
                 </ul>
-                <button onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}>X</button>
+                <button className="turno-btn-cerrar" onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}><IoIosClose /></button>
               </div>
             )}
           </div>
@@ -186,7 +186,7 @@ const ZonaTurnos = () => {
               <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
               <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
               <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
-              <button onClick={() => setSimulacion(true)} className="zona-btn" style={{borderRadius:"10px", backgroundColor:"#333433"}}>+</button>
+              <button onClick={() => setSimulacion(true)} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
             </div>
           </div>
 
