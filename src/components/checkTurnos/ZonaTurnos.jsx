@@ -306,9 +306,13 @@ const ZonaTurnos = () => {
               )}
             </>
           ) : (
-            <div className="editar-alumno-modal">
+            
+            <div  className="alumno-modal-content">
+              < >
               {alumnoSeleccionado && (
                 <>
+                < >
+                  {/* className="editar-alumno-modal"  */}
                   <EditarAlumno
                     nuevoTurno={nuevoTurno}
                     setNuevoTurno={setNuevoTurno}
@@ -326,6 +330,7 @@ const ZonaTurnos = () => {
                     editarTurnoAlumno={editarTurnoAlumno}
                     setEditarTurnoAlumno={setEditarTurnoAlumno}
                   />
+                  </>
                   <div className="turnos-editables">
                     <h3>Turnos:</h3>
                     <TurnoData
@@ -357,6 +362,7 @@ const ZonaTurnos = () => {
                   </div>
                 </>
               )}
+              </>
             </div>
           )}
         </div>
