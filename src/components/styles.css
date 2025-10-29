@@ -1023,54 +1023,6 @@
   background-color: #e6f0ec;
 }
 
-/* Buttons in modal */
-.alumno-btn-editar,
-.btn-guardar,
-.btn-cerrar {
-  font-family: inherit;
-  font-weight: 600;
-  padding: 12px 22px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.25s ease, box-shadow 0.3s ease;
-  user-select: none;
-  align-self: center;
-  margin-top: 10px;
-  background-color: transparent;
-  border: 2px solid #54b198;
-  color: #54b198;
-  box-shadow: 0 2px 4px rgba(84, 177, 152, 0.2);
-}
-
-
-.btn-cerrar:hover,
-.btn-cerrar:focus {
-  background-color: #414d49;
-  color: #f0fffe;
-  border-color: #414d49;
-  outline: none;
-  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
-}
-
-.btn-guardar:hover,
-.btn-guardar:focus {
-  background-color: #54b198;
-  color: #f0fffe;
-  border-color: #3d7d6a;
-  outline: none;
-  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
-}
-
-.alumno-btn-editar:hover,
-.alumno-btn-editar:focus {
-  background-color: #54b198;
-  color: #f0fffe;
-  border-color: #3d7d6a;
-  outline: none;
-  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
-}
-
 /* Edit form specific styles inside .editar-alumno-modal */
 
 /* Main heading */
@@ -1340,6 +1292,54 @@
 
 .editar-alumno-modal>button:last-of-type:hover,
 .editar-alumno-modal>button:last-of-type:focus {
+  background-color: #54b198;
+  color: #f0fffe;
+  border-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+/* Buttons in modal */
+.alumno-btn-editar,
+.btn-guardar,
+.btn-cerrar {
+  font-family: inherit;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.25s ease, box-shadow 0.3s ease;
+  user-select: none;
+  align-self: center;
+  margin-top: 10px;
+  background-color: transparent;
+  border: 2px solid #54b198;
+  color: #54b198;
+  box-shadow: 0 2px 4px rgba(84, 177, 152, 0.2);
+}
+
+
+.btn-cerrar:hover,
+.btn-cerrar:focus {
+  background-color: #414d49;
+  color: #f0fffe;
+  border-color: #414d49;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+.btn-guardar:hover,
+.btn-guardar:focus {
+  background-color: #54b198;
+  color: #f0fffe;
+  border-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+.alumno-btn-editar:hover,
+.alumno-btn-editar:focus {
   background-color: #54b198;
   color: #f0fffe;
   border-color: #3d7d6a;
