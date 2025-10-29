@@ -1,5 +1,6 @@
 import { FaCheck } from "react-icons/fa";
 import { FaEdit, FaRegTrashAlt } from 'react-icons/fa'
+import { FaSave } from "react-icons/fa";
 
 const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, alumnoSeleccionado, fecha, obtenerHorarios, agregarTurno, alumno, setInputAgregarTurno }) => {
 
@@ -70,7 +71,7 @@ const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, alumnoSele
 
 
 
-            <button className="turno-guardar" onClick={() => { { agregarTurno(alumnoSeleccionado.id), setInputAgregarTurno(false) } }}><FaCheck /></button> 
+            <button className="turno-guardar" onClick={() => { { agregarTurno(alumnoSeleccionado.id), setInputAgregarTurno(false) } }}><FaSave /></button> 
             <button className="turno-cerrar" onClick={() => setInputAgregarTurno(false)}><FaRegTrashAlt /></button>{/* cerrar ventana */}
         </div>
     )

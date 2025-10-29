@@ -51,6 +51,7 @@ const Inicio = () => {
         <div >
           <Link className='auto-title' to="/inicio">Ir a Turnos</Link>
           <Link className='auto-title' to="/alumnos">Alumnos</Link>
+          <Link className='auto-title' to="/profesores">Profesores</Link>
           <button onClick={cerrarSesion}>Cerrar sesión</button>
         </div>
       )}
