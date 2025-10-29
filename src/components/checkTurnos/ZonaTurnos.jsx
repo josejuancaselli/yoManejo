@@ -370,7 +370,7 @@ const ZonaTurnos = () => {
                         setEditarTurnos={setEditarTurnos}
                       />
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
                       <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
                     </div>

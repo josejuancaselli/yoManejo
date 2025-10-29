@@ -90,7 +90,7 @@ const EditarAlumno = ({
                     {console.log(alumnoSeleccionado.id)}
                     <>
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
-                            <div style={{ display: "flex" }}>
+                            <div className="editar-alumno-modal">
                                 <input name="nombre" value={alumnoSeleccionado.nombre} onChange={handleEditar} />
                             </div>
 
