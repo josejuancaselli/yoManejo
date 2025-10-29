@@ -165,7 +165,7 @@ const ZonaTurnos = () => {
       <div className="zonas-section">
         <div className="seleccion-zona">
           <div className="searchbar-wrapper">
-            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} placeholder="Buscar alumno..."/>
+            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} placeholder="Buscar alumno..." />
             {renderBusqueda && (
               <div className="alumnos-search-wrapper">
                 <ul className="alumnos-list">
@@ -264,12 +264,27 @@ const ZonaTurnos = () => {
                     <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => { setDataAlumno(false) }}><IoIosClose /></button>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div >
-                      <p>Direccion: {alumnoSeleccionado.direccion}</p>
-                      <p>DNI: {alumnoSeleccionado.dni}</p>
-                      <p>Telefono: {alumnoSeleccionado.telefono}</p>
-                      <p>Correo: {alumnoSeleccionado.correo}</p>
-                      <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
+                    <div className="editar-alumno-modal">
+                      <div>
+                        <p>Direccion:</p>
+                        <p>{alumnoSeleccionado.direccion}</p>
+                      </div>
+                      <div>
+                        <p>DNI: </p>
+                        <p>{alumnoSeleccionado.dni}</p>
+                      </div>
+                      <div>
+                        <p>Telefono: </p>
+                        <p>{alumnoSeleccionado.telefono}</p>
+                      </div>
+                      <div>
+                        <p>Correo: </p>
+                        <p>{alumnoSeleccionado.correo}</p>
+                      </div>
+                      <div>
+                        <p>Observaciones: </p>
+                        <p style={{height: "70px"}}>{alumnoSeleccionado.observaciones}</p>
+                      </div>
                     </div>
                     <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
                   </div>
@@ -306,61 +321,61 @@ const ZonaTurnos = () => {
               )}
             </>
           ) : (
-            <div  className="alumno-modal-content">
+            <div className="alumno-modal-content">
               < >
-              {alumnoSeleccionado && (
-                <>
-                < >
-                  {/* className="editar-alumno-modal"  */}
-                  <EditarAlumno
-                    nuevoTurno={nuevoTurno}
-                    setNuevoTurno={setNuevoTurno}
-                    alumnoSeleccionado={alumnoSeleccionado}
-                    handleEditar={handleEditar}
-                    obtenerDiasDelMes={obtenerDiasDelMes}
-                    obtenerHorarios={obtenerHorarios}
-                    borrarTurnoReservado={borrarTurnoReservado}
-                    editarAlumno={editarAlumno}
-                    setModoEdicion={setModoEdicion}
-                    modoEdicion={modoEdicion}
-                    setInputAgregarTurno={setInputAgregarTurno}
-                    inputAgregarTurno={inputAgregarTurno}
-                    agregarTurno={agregarTurno}
-                    editarTurnoAlumno={editarTurnoAlumno}
-                    setEditarTurnoAlumno={setEditarTurnoAlumno}
-                  />
+                {alumnoSeleccionado && (
+                  <>
+                    < >
+                      {/* className="editar-alumno-modal"  */}
+                      <EditarAlumno
+                        nuevoTurno={nuevoTurno}
+                        setNuevoTurno={setNuevoTurno}
+                        alumnoSeleccionado={alumnoSeleccionado}
+                        handleEditar={handleEditar}
+                        obtenerDiasDelMes={obtenerDiasDelMes}
+                        obtenerHorarios={obtenerHorarios}
+                        borrarTurnoReservado={borrarTurnoReservado}
+                        editarAlumno={editarAlumno}
+                        setModoEdicion={setModoEdicion}
+                        modoEdicion={modoEdicion}
+                        setInputAgregarTurno={setInputAgregarTurno}
+                        inputAgregarTurno={inputAgregarTurno}
+                        agregarTurno={agregarTurno}
+                        editarTurnoAlumno={editarTurnoAlumno}
+                        setEditarTurnoAlumno={setEditarTurnoAlumno}
+                      />
+                    </>
+                    <div className="turnos-editables">
+                      <h3>Turnos:</h3>
+                      <TurnoData
+                        nuevoTurno={nuevoTurno}
+                        setNuevoTurno={setNuevoTurno}
+                        alumnoSeleccionado={alumnoSeleccionado}
+                        handleEditar={handleEditar}
+                        obtenerDiasDelMes={obtenerDiasDelMes}
+                        obtenerHorarios={obtenerHorarios}
+                        borrarTurnoReservado={borrarTurnoReservado}
+                        editarAlumno={editarAlumno}
+                        setModoEdicion={setModoEdicion}
+                        modoEdicion={modoEdicion}
+                        setInputAgregarTurno={setInputAgregarTurno}
+                        inputAgregarTurno={inputAgregarTurno}
+                        agregarTurno={agregarTurno}
+                        editarTurnoAlumno={editarTurnoAlumno}
+                        setEditarTurnoAlumno={setEditarTurnoAlumno}
+                        handleEditarTurno={handleEditarTurno}
+                        turnosEditables={turnosEditables}
+                        setTurnosEditables={setTurnosEditables}
+                        editarTurnos={editarTurnos}
+                        setEditarTurnos={setEditarTurnos}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                      <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                      <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+                    </div>
                   </>
-                  <div className="turnos-editables">
-                    <h3>Turnos:</h3>
-                    <TurnoData
-                      nuevoTurno={nuevoTurno}
-                      setNuevoTurno={setNuevoTurno}
-                      alumnoSeleccionado={alumnoSeleccionado}
-                      handleEditar={handleEditar}
-                      obtenerDiasDelMes={obtenerDiasDelMes}
-                      obtenerHorarios={obtenerHorarios}
-                      borrarTurnoReservado={borrarTurnoReservado}
-                      editarAlumno={editarAlumno}
-                      setModoEdicion={setModoEdicion}
-                      modoEdicion={modoEdicion}
-                      setInputAgregarTurno={setInputAgregarTurno}
-                      inputAgregarTurno={inputAgregarTurno}
-                      agregarTurno={agregarTurno}
-                      editarTurnoAlumno={editarTurnoAlumno}
-                      setEditarTurnoAlumno={setEditarTurnoAlumno}
-                      handleEditarTurno={handleEditarTurno}
-                      turnosEditables={turnosEditables}
-                      setTurnosEditables={setTurnosEditables}
-                      editarTurnos={editarTurnos}
-                      setEditarTurnos={setEditarTurnos}
-                    />
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                    <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                    <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
-                  </div>
-                </>
-              )}
+                )}
               </>
             </div>
           )}

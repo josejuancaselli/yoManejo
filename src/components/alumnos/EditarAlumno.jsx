@@ -97,32 +97,34 @@ const EditarAlumno = ({
                             <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => setModoEdicion(null)}><IoIosClose /></button>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <div className="editar-alumno-modal">
-                                <div>
-                                    <p>DNI:</p>
-                                    <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
-                                </div>
+                            <div className="editar-alumno-modal-1">
+
                                 <div>
                                     <p>Dirección:</p>
                                     <input name="direccion" value={alumnoSeleccionado.direccion} onChange={handleEditar} />
                                 </div>
                                 <div>
-                                    <p>Correo:</p>
-                                    <input name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
+                                    <p>DNI:</p>
+                                    <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
                                 </div>
                                 <div>
                                     <p>Teléfono:</p>
                                     <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
                                 </div>
                                 <div>
+                                    <p>Correo:</p>
+                                    <textarea name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
+                                </div>
+
+                                <div>
                                     <p>Observaciones:</p>
-                                    <input name="observaciones" value={alumnoSeleccionado.observaciones} onChange={handleEditar} />
+                                    <textarea style={{height: "70px"}} name="observaciones" value={alumnoSeleccionado.observaciones} onChange={handleEditar} />
                                 </div>
                             </div>
                             <button className="turnos-btn-editar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setModoEdicion(false) }}><FaSave /></button>
                         </div>
                     </>
-                    
+
                 </>
             )}
 
