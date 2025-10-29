@@ -124,27 +124,9 @@ const EditarAlumno = ({
                             <button className="turnos-btn-editar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setModoEdicion(false) }}><FaSave /></button>
                         </div>
                     </>
-
                 </>
-            )}
-
-            {modoEdicion === "turnosAlumno" && (
-                <>
-                    <h3>{alumnoSeleccionado.nombre}</h3>
-                    <p>Direccion: {alumnoSeleccionado.direccion}</p>
-                    <p>DNI: {alumnoSeleccionado.dni}</p>
-                    <p>Telefono: {alumnoSeleccionado.telefono}</p>
-                    <p>Correo: {alumnoSeleccionado.correo}</p>
-                    <p>Observaciones: {alumnoSeleccionado.observaciones}</p>
-                    <button onClick={() => setModoEdicion(alumnoSeleccionado.nombre)}>Editar</button>
-                    <h3>Turnos:</h3>
-
-                </>
-            )}
-
-
+            )}       
         </>
-
     );
 };
 
