@@ -79,7 +79,6 @@ const ZonaTurnos = () => {
   }
 
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
-
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
     try {
       await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
@@ -93,7 +92,6 @@ const ZonaTurnos = () => {
 
   const agregarTurno = async (idAlumno) => {
     const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
-
     const validacion = todosLosTurnos.some((turno) =>
       turno.dia === Number(nuevoTurno.dia) &&
       turno.hora === nuevoTurno.hora &&
@@ -114,7 +112,7 @@ const ZonaTurnos = () => {
 
       await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
       setAlumnoSeleccionado(turnoActualizado);
-      setNuevoTurno({ dia: "", mes: "0", hora: "", anio: new Date().getFullYear(), zona: "" });
+      setNuevoTurno({ dia: "", mes: "", hora: "", anio: "", zona: "" });
     } catch (error) {
       console.error("Error agregando turno:", error);
     }

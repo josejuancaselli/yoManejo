@@ -50,37 +50,8 @@ const EditarAlumno = ({
         }
     }, [alumnoSeleccionado]);
 
-    // Función para actualizar un turno editable
-    const handleEditarTurno = (e, index, campo) => {
-        const valor = ["dia", "mes", "anio"].includes(campo)
-            ? Number(e.target.value)
-            : e.target.value;
 
-        const nuevosTurnos = [...turnosEditables];
-        const turnoEditado = { ...nuevosTurnos[index], [campo]: valor };
-
-        // --- Validación de duplicados ---
-        const existeDuplicado = nuevosTurnos.some((t, i) =>
-            i !== index &&
-            t.dia === turnoEditado.dia &&
-            t.mes === turnoEditado.mes &&
-            t.anio === turnoEditado.anio &&
-            t.hora === turnoEditado.hora &&
-            t.zona === turnoEditado.zona
-        );
-
-        if (existeDuplicado) {
-            alert("Ya existe un turno con esa fecha, hora y zona.");
-            return; // Salimos sin guardar el cambio
-        }
-
-        // --- Si no hay duplicado, actualizamos ---
-        nuevosTurnos[index] = turnoEditado;
-        setTurnosEditables(nuevosTurnos);
-
-        // Mantener sincronizado con alumnoSeleccionado
-        handleEditar(e, index, campo);
-    };
+    
 
 
     return (

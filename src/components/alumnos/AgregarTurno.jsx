@@ -67,10 +67,7 @@ const AgregarTurno = ({ nuevoTurno, setNuevoTurno, obtenerDiasDelMes, alumnoSele
                     <option value="3">3</option>
                 </select>
             </div>
-
-
-
-
+            
             <button className="turno-guardar" onClick={() => { { agregarTurno(alumnoSeleccionado.id), setInputAgregarTurno(false) } }}><FaSave /></button> 
             <button className="turno-cerrar" onClick={() => setInputAgregarTurno(false)}><FaRegTrashAlt /></button>{/* cerrar ventana */}
         </div>
