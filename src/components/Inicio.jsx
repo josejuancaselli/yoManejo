@@ -36,9 +36,9 @@ const Inicio = () => {
   }, [])
 
   return (
-    <>
+    <div className='inicio-container'>
       {ventanaPassword && (
-        <div>
+        <div className='ventana-password'>
           <input type="password"
             placeholder='Ingrese la clave de acceso'
             value={clave}
@@ -48,14 +48,14 @@ const Inicio = () => {
 
 
       {admin && (
-        <div >
+        <div className='nav-bar'>
           <Link className='auto-title' to="/inicio">Ir a Turnos</Link>
           <Link className='auto-title' to="/alumnos">Alumnos</Link>
           <Link className='auto-title' to="/profesores">Profesores</Link>
           <button onClick={cerrarSesion}>Cerrar sesión</button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
