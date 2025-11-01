@@ -9,7 +9,7 @@ const PruebaProfesores = () => {
     const [auto, setAuto] = useState(null)
     const [turno, setTurno] = useState(null)
     const [topico, setTopico] = useState(null)
-    const colores = ["#ff3838", "#38ff38", "#ffb225", "#ffff23", "#f9f9f9"]
+    const colores = ["#d74545", "#2bcb2b", "#ddab4f", "#e7e74b", "#f9f9f9"]
     const [evaluacion, setEvaluacion] = useState({})
 
     const autos = ["1", "2", "3", "automatico"]
