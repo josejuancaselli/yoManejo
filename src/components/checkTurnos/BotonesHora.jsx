@@ -16,7 +16,6 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                     <div style={{ display: "flex", flexDirection: "row" }}>
 
                         {horariosMañana().map((hora) => {
-
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
@@ -28,10 +27,11 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                 )
                             );
 
+
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", margin:"0 2px" }}>
-                                    
+                                <div key={hora} style={{ position: "relative", display: "inline-block", margin: "0 2px" }}>
+
                                     <button
                                         key={hora}
                                         className="horario-btn"
@@ -40,6 +40,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
                                                 setVentanaDireccion(alumnoCorrespondiente);
+
                                             }
                                         }}
                                         onMouseLeave={() => {
@@ -67,9 +68,9 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
 
                 {mañanaTarde.includes("tarde") && (
-                    
+
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        
+
                         {horariosTarde().map((hora) => {
 
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
@@ -85,8 +86,8 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                             return (
 
-                                <div key={hora} style={{ position: "relative", display: "inline-block", margin:"0 2px" }}>
-                                    
+                                <div key={hora} style={{ position: "relative", display: "inline-block", margin: "0 2px" }}>
+
                                     <button
                                         key={hora}
                                         className="horario-btn"
@@ -108,6 +109,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     >
                                         {hora}
                                     </button>
+                                    
                                     {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
                                             <p>{ventanaDireccion.direccion}</p>

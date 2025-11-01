@@ -1,18 +1,24 @@
 import React, { useMemo, useState } from 'react'
 import { useFechas } from '../../helpers/useFechas'
 import { useAlumnos } from '../../helpers/useAlumnos'
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { db } from '../../firebase/firebaseConfig';
+import "./profesores.css"
 
 const PruebaProfesores = () => {
     const [auto, setAuto] = useState(null)
     const [turno, setTurno] = useState(null)
-    const [evaluacion, setEvaluacion] = useState(null)
-    const [colores, setColores] = useState({})
+    const [topico, setTopico] = useState(null)
+    const colores = ["red", "green", "orange", "yellow", "#f9f9f9"]
+    const [evaluacion, setEvaluacion] = useState({})
 
-    const autos = ["1", "2", "3"]
+    const autos = ["1", "2", "3", "automatico"]
 
 
     const { fecha, hoy } = useFechas()
     const { alumnos } = useAlumnos()
+
+
 
     const turnosDeHoy = alumnos.flatMap(alumno => alumno.turnos.filter((t) =>
         t.dia === hoy.getDate() &&
@@ -27,83 +33,102 @@ const PruebaProfesores = () => {
     })
 
     const cambiarColor = (idAlumno, aspecto, color) => {
-        setColores(prev => ({ ...prev, [idAlumno]: { ...prev[idAlumno], [aspecto]: color } }))
+        setEvaluacion(prev => ({ ...prev, [idAlumno]: { ...prev[idAlumno], [aspecto]: color } }))
     }
 
-    return (
-        <div>
+    const terminarClase = async (id) => {
+        try {
+            await updateDoc(doc(db, "alumnos", id), { evaluacion: evaluacion[id] });
+            setTopico(null);
+            setTurno(null);
+            setEvaluacion({});
+            console.log("Evaluación actualizada correctamente para el alumno:", id);
+        } catch (error) {
+            console.error("Error al actualizar la evaluación:", error);
+        }
+    };
 
-            <h2>{hoy.getDate()} - {fecha.mes + 1} - {fecha.anio}</h2>
-            <div>
+
+    return (
+        <div className='profe_wrapper'>
+            <h2 className='profe-fecha'>{String(hoy.getDate()).padStart(2, "0")} - {String(fecha.mes + 1).padStart(2, "0")} - {fecha.anio}</h2>
+            <div className='profe-btn-wrapper'>
                 {autos.map((e, index) => {
                     return (
-                        <button key={index} onClick={() => { setAuto(e), setTurno(null) }}>Auto: {e}</button>
+                        <button key={index} onClick={() => { setAuto(e), setTurno(null) }}>Coche {e}</button>
                     )
                 })}
             </div>
 
-            <h3>Auto: {auto}</h3>
-            <div>
+            <h3 className='profe-auto'>Coche {auto}</h3>
+            <div className='profe-alm-wrapper'>
                 {turnosOrdenados.filter(t => t.zona === auto).map((e, index) => {
                     return (
-                        <div key={index} onClick={() => setTurno(e)} style={{ display: "flex", gap: "10px" }}>
-                            <p>{e.hora}</p>
-                            <p>{e.direccion}</p>
+                        <div key={index} onClick={() => setTurno(e)} className='profe-data-alm'>
+                            <p>{e.hora}</p>                            
+                            <p>{e.nombre}</p>
+                            <p style={{fontSize:"1.1rem", fontWeight:"bold", marginLeft:"auto"}}>{e.direccion}</p>
                         </div>
                     )
                 })}
             </div>
             {turno && (
+                <>
+                    <div className='profe-turno-wrapper'>
 
-                <div style={{ backgroundColor: "beige" }}>
-                    {console.log("Turno ID:", turno.id)}
-                    {console.log("Volante:", colores[turno.id]?.posicion)}  
-                    {console.log(colores)}
-                    <div style={{ border: "solid 1px black" }}>
-                        <p>{turno.hora}</p>
-                        <p>{turno.direccion}</p>
-                        <p>{turno.nombre}</p>
-                        <p>{turno.telefono}</p>
-                    </div>
-                    <div style={{ border: "solid 1px black" }}>
-                        <h2>DOMINIO BASICO</h2>
-                        <ul>
-                            <li style={{ backgroundColor: colores[turno.id]?.volante }} onClick={() => setEvaluacion("volante")}> Volante</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.embriague }} onClick={() => setEvaluacion("embriague")}> Embriague</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.caja }} onClick={() => setEvaluacion("caja")}> Caja</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.freno }} onClick={() => setEvaluacion("freno")}> Freno/Acelerador</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.posicion }} onClick={() => setEvaluacion("posicion")}> Posicion Manejo</li>
-                        </ul>
-                    </div>
-                    <div style={{ border: "solid 1px black" }}>
-                        <h2>CIRCULACION</h2>
-                        <ul>
-                            <li style={{ backgroundColor: colores[turno.id]?.carril }} onClick={() => setEvaluacion("carril")}> carril</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.velocidad }} onClick={() => setEvaluacion("velocidad")}> velocidad</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.señalizacion }} onClick={() => setEvaluacion("señalizacion")}> señalizacion</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.calles }} onClick={() => setEvaluacion("calles")}> calles</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.avenidas }} onClick={() => setEvaluacion("avenidas")}> avenidas</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.rotondas }} onClick={() => setEvaluacion("rotondas")}> rotondas</li>
-                        </ul>
-                    </div>
-                    <div style={{ border: "solid 1px black" }}>
-                        <h2>ESTACIONAMIENTO</h2>
-                        <ul>
-                            <li style={{ backgroundColor: colores[turno.id]?.paraleloDerecho }} onClick={() => setEvaluacion("paraleloDerecho")}> Paralelo Derecho</li>
-                            <li style={{ backgroundColor: colores[turno.id]?.paraleloIzquierdo }} onClick={() => setEvaluacion("paraleloIzquierdo")}> Paralelo Izquierdo</li>
-
-                        </ul>
-                    </div>
-                    <button onClick={() => setTurno(null)}>Cerrar</button>
-                    {evaluacion && (
-                        <div>
-                            <div style={{ backgroundColor: "red", height: "30px", width: "30px" }} onClick={() => { cambiarColor(turno.id, evaluacion, "red"), setEvaluacion(null) }}></div>
-                            <div style={{ backgroundColor: "green", height: "30px", width: "30px" }} onClick={() => { cambiarColor(turno.id, evaluacion, "green"), setEvaluacion(null) }}></div>
-
+                        <div className='evaluacion'>
+                            <p>{turno.hora}</p>
+                            <p>{turno.direccion}</p>
+                            <p>{turno.nombre}</p>
+                            <p>{turno.telefono}</p>
                         </div>
-                    )}
-                </div>
+                        <div className='evaluacion'>
+                            <h2>DOMINIO BASICO</h2>
+                            <ul>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.volante }} onClick={() => setTopico("volante")}> Volante</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.embriague }} onClick={() => setTopico("embriague")}> Embriague</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.caja }} onClick={() => setTopico("caja")}> Caja</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.freno }} onClick={() => setTopico("freno")}> Freno/Acelerador</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.posicion }} onClick={() => setTopico("posicion")}> Posicion Manejo</li>
+                            </ul>
+                        </div>
+                        <div className='evaluacion'>
+                            <h2>CIRCULACION</h2>
+                            <ul>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.carril }} onClick={() => setTopico("carril")}> carril</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.velocidad }} onClick={() => setTopico("velocidad")}> velocidad</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.señalizacion }} onClick={() => setTopico("señalizacion")}> señalizacion</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.calles }} onClick={() => setTopico("calles")}> calles</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.avenidas }} onClick={() => setTopico("avenidas")}> avenidas</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.rotondas }} onClick={() => setTopico("rotondas")}> rotondas</li>
+                            </ul>
+                        </div>
+                        <div className='evaluacion'>
+                            <h2>ESTACIONAMIENTO</h2>
+                            <ul>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloDerecho }} onClick={() => setTopico("paraleloDerecho")}> Paralelo Derecho</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloIzquierdo }} onClick={() => setTopico("paraleloIzquierdo")}> Paralelo Izquierdo</li>
+
+                            </ul>
+                        </div>
+                        <button onClick={() => setTurno(null)}>X</button>
+                        {topico && (
+                            <div className='profe-color'>
+                                {colores.map((e, index) => {
+                                    return (
+                                        <div key={index} style={{ backgroundColor: `${e}` }} onClick={() => { cambiarColor(turno.id, topico, `${e}`), setTopico(null) }}>
+
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
+                    </div>
+                    <button onClick={() => terminarClase(turno.id)}>Terminar Clase</button>
+                </>
             )}
+            <div>
+            </div>
         </div>
     )
 }

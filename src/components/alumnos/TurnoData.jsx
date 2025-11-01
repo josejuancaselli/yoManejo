@@ -43,7 +43,7 @@ const TurnoData = ({
                             <div className="turno-editable">
                                 <div className="turno-editable-info">
                                     <p>
-                                        {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} - {turno.hora} hs - Zona {turno.zona}{" "}
+                                        {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} - {turno.hora} hs - Coche {turno.zona}{" "}
                                     </p>
                                     <div>
 
@@ -108,7 +108,7 @@ const TurnoData = ({
                                 </div>
 
                                 <div>
-                                    <label>Zona</label>
+                                    <label>Coche</label>
                                     <select className="turno-editable-select" value={turno.zona} onChange={(e) => handleEditarTurno(e, index, "zona")} >
                                         <option value="1">1</option>
                                         <option value="2">2</option>

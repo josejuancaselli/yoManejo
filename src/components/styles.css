@@ -1404,7 +1404,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 
-/* .ventana-reservado-modal button {
+.ventana-reservado-modal button {
   align-self: center;
   background-color: #54b198;
   border: none;
@@ -1424,4 +1424,4 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #3d7d6a;
   outline: none;
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-} */
+}

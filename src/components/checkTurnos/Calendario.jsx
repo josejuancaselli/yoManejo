@@ -137,7 +137,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
 
         {/* Header del calendario con título y navegación de meses */}
         <div className="calendario-header">
-          <h2 className="auto-title">AUTO {zona}</h2>
+          <h2 className="auto-title">Coche {zona}</h2>
           <div className="nav-calendario">
             <button className="nav-btn" onClick={() => cambioMes("anterior")}>Anterior</button>
             <h2>{meses[fecha.mes]} {fecha.anio}</h2>

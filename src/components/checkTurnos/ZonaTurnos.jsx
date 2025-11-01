@@ -184,6 +184,7 @@ const ZonaTurnos = () => {
               <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
               <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
               <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
+              <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
               <button onClick={() => setSimulacion(true)} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
             </div>
           </div>

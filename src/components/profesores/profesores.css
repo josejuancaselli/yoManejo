@@ -1,0 +1,509 @@
+/* Styles for the profe_wrapper component, optimized for full-screen mobile display without horizontal overflow */
+
+
+body {
+
+  margin: 0;
+}
+
+.profe_wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* Full viewport height for mobile screen occupation */
+  width: 100vw;
+  /* Full viewport width */
+  max-width: 100vw;
+  /* Ensure no overflow */
+  background-color: #f0fffe;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  padding: 15px;
+  /* Reduced padding */
+  box-sizing: border-box;
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+  overflow-y: auto;
+  /* Allow vertical scrolling if content overflows */
+  gap: 15px;
+  /* Reduced gap */
+}
+
+.profe-fecha {
+  font-size: 1.2rem;
+  /* Reduced font size */
+  font-weight: 700;
+  color: #4c4b4b;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 8px;
+  /* Reduced padding */
+  border-bottom: 3px solid #54b198;
+  width: 100%;
+  /* Ensure it doesn't exceed */
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  /* Prevent long text overflow */
+}
+
+.profe-btn-wrapper {
+  display: flex;
+  flex-direction: row;
+  /* Horizontal layout as requested */
+  flex-wrap: nowrap;
+  /* Prevent wrapping to keep it in a row */
+  gap: 8px;
+  /* Reduced gap */
+  justify-content: space-around;
+  /* Distribute space evenly */
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+  overflow-y: hidden;
+  /* Prevent vertical scroll */
+  padding: 5px 0;
+  /* Optional padding for better touch */
+  box-sizing: border-box;
+
+}
+
+.profe-btn-wrapper button {
+  border: none;
+  border-radius: 20px;
+  /* Reduced radius */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  background-color: #54b198;
+  color: #f0fffe;
+  box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
+  flex: 1;
+  /* Allow buttons to grow and shrink equally to fill space */
+  text-align: center;
+  /* Center text */
+  white-space: normal;
+  /* Allow text to wrap to next line */
+  overflow-wrap: break-word;
+  /* Break long words if needed */
+  word-break: break-word;
+  /* Ensure words break at boundaries */
+  line-height: 1.2;
+  /* Improve readability for wrapped text */
+  font-size: 0.7rem;
+  /* Smaller font for compactness */
+  padding: 11px 8px;
+  /* Smaller padding */
+  min-width: 60px;
+  /* Smaller minimum width */
+  max-width: 120px;
+  /* Smaller maximum width */
+  min-height: 35px;
+  /* Smaller minimum height */
+}
+
+.profe-btn-wrapper button:hover,
+.profe-btn-wrapper button:focus {
+  background-color: #3d7d6a;
+  box-shadow: 0 6px 14px rgba(61, 125, 106, 0.6);
+}
+
+.profe-auto {
+  font-size: 1.1rem;
+  /* Reduced font size */
+  font-weight: 700;
+  color: #4c4b4b;
+  text-align: center;
+  margin: 0;
+  padding: 8px 0;
+  /* Reduced padding */
+  border-bottom: 2px solid #54b198;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  /* Prevent long text overflow */
+}
+
+.profe-alm-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  /* Reduced gap */
+  flex: 1;
+  /* Take remaining space */
+  overflow-y: auto;
+  /* Scroll if many items */
+  overflow-x: hidden;
+  /* Prevent horizontal */
+  width: 100%;
+  max-width: 100vw;
+}
+
+.profe-data-alm {
+  background: #f9f9f9;
+  border-radius: 10px;
+  /* Reduced radius */
+  box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
+  padding: 12px;
+  /* Reduced padding */
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+  /* Reduced gap */
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  /* Prevent overflow */
+  box-sizing: border-box;
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+.profe-data-alm:hover {
+  box-shadow: 0 6px 14px rgba(84, 177, 152, 0.5);
+  transform: translateY(-2px);
+}
+
+.profe-data-alm p {
+  margin: 0;
+  font-size: 0.9rem;
+  /* Reduced font size */
+  color: #222;
+  overflow-wrap: break-word;
+  /* Prevent long text overflow */
+}
+
+.profe-data-alm p:first-child {
+  font-weight: 600;
+  color: #54b198;
+}
+
+/* Full-screen scrollable container for profe-turno-wrapper */
+.profe-turno-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Full screen height */
+  max-width: 100vw;
+  background-color: #f0fffe;
+  z-index: 1000;
+  overflow-y: scroll;
+  /* Vertical scrolling only */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  scroll-snap-type: y mandatory;
+  /* Snap to sections vertically */
+  scroll-behavior: smooth;
+  /* Smooth scrolling */
+  padding: 0;
+  /* No padding, as each div handles its own */
+  box-sizing: border-box;
+}
+
+/* Each .evaluacion div occupies the full screen height and snaps into place */
+.evaluacion {
+  min-height: 100vh;
+  /* Each section fills the full screen */
+  width: 100vw;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center content horizontally */
+  justify-content: center;
+  /* Center content vertically */
+  padding: 15px;
+  /* Reduced padding */
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  /* Snap to the top of each section */
+  background-color: #f0fffe;
+  /* Consistent background */
+  border-radius: 0;
+  /* No radius for full-screen feel */
+  box-shadow: none;
+  /* Remove shadows for seamless scroll */
+  gap: 15px;
+  /* Reduced gap */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow in sections */
+}
+
+/* Specific styles for the first .evaluacion (student data) */
+.evaluacion:nth-child(1) p {
+  font-size: 1rem;
+  /* Reduced font size */
+  color: #222;
+  margin: 4px 0;
+  /* Reduced margin */
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.evaluacion:nth-child(1) p:first-child {
+  font-weight: 600;
+  color: #54b198;
+  font-size: 1.3rem;
+  /* Reduced font size */
+}
+
+/* Styles for the second .evaluacion (DOMINIO BASICO) */
+.evaluacion:nth-child(2) h2 {
+  font-size: 1.3rem;
+  /* Reduced font size */
+  font-weight: 700;
+  color: #4c4b4b;
+  margin: 0;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.evaluacion:nth-child(2) ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Reduced gap */
+  width: 100%;
+  max-width: 250px;
+  /* Reduced max-width */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+.evaluacion:nth-child(2) li {
+  padding: 12px;
+  /* Reduced padding */
+  border-radius: 8px;
+  /* Reduced radius */
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  background-color: #f9f9f9;
+  /* Light background for touch targets */
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  /* Reduced font size */
+}
+
+.evaluacion:nth-child(2) li:hover {
+  background-color: #54b198;
+  color: #f0fffe;
+  transform: scale(1.05);
+}
+
+/* Styles for the third .evaluacion (CIRCULACION) - similar to above */
+.evaluacion:nth-child(3) h2 {
+  font-size: 1.3rem;
+  /* Reduced font size */
+  font-weight: 700;
+  color: #4c4b4b;
+  margin: 0;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.evaluacion:nth-child(3) ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Reduced gap */
+  width: 100%;
+  max-width: 250px;
+  /* Reduced max-width */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+.evaluacion:nth-child(3) li {
+  padding: 12px;
+  /* Reduced padding */
+  border-radius: 8px;
+  /* Reduced radius */
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  background-color: #f9f9f9;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  /* Reduced font size */
+}
+
+.evaluacion:nth-child(3) li:hover {
+  background-color: #54b198;
+  color: #f0fffe;
+  transform: scale(1.05);
+}
+
+/* Styles for the fourth .evaluacion (ESTACIONAMIENTO) - similar */
+.evaluacion:nth-child(4) h2 {
+  font-size: 1.3rem;
+  /* Reduced font size */
+  font-weight: 700;
+  color: #4c4b4b;
+  margin: 0;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.evaluacion:nth-child(4) ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Reduced gap */
+  width: 100%;
+  max-width: 250px;
+  /* Reduced max-width */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+.evaluacion:nth-child(4) li {
+  padding: 12px;
+  /* Reduced padding */
+  border-radius: 8px;
+  /* Reduced radius */
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  background-color: #f9f9f9;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  /* Reduced font size */
+}
+
+.evaluacion:nth-child(4) li:hover {
+  background-color: #54b198;
+  color: #f0fffe;
+  transform: scale(1.05);
+}
+
+/* Close button - position it at the top of the first .evaluacion for easy access */
+.profe-turno-wrapper button {
+  position: absolute;
+  top: 15px;
+  /* Reduced top */
+  right: 15px;
+  /* Reduced right */
+  background-color: #54b198;
+  color: #f0fffe;
+  border: none;
+  border-radius: 40px;
+  /* Reduced radius */
+  width: 40px;
+  /* Reduced width */
+  height: 40px;
+  /* Reduced height */
+  font-size: 1rem;
+  /* Reduced font size */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 1001;
+  /* Above content */
+}
+
+.profe-turno-wrapper button:hover {
+  background-color: #3d7d6a;
+  transform: scale(1.1);
+}
+
+/* Color picker - fixed at the top, wraps to multiple rows if needed to prevent horizontal overflow */
+.profe-color {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: auto;
+  /* Allow height to adjust for wrapping */
+  min-height: 60px;
+  /* Reduced minimum height */
+  background-color: rgba(240, 255, 254, 0.95);
+  /* Semi-transparent background */
+  display: flex;
+  flex-direction: row;
+  /* Horizontal layout */
+  flex-wrap: wrap;
+  /* Wrap to next row if too many colors */
+  align-items: center;
+  justify-content: center;
+  /* Center the colors */
+  gap: 10px;
+  /* Reduced gap */
+  z-index: 1002;
+  /* Above everything */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  padding: 8px;
+  /* Reduced padding */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  overflow-y: hidden;
+  /* No vertical scroll needed */
+  box-sizing: border-box;
+}
+
+.profe-color>div {
+  width: 40px;
+  /* Reduced width */
+  height: 40px;
+  /* Reduced height */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  /* Prevent shrinking */
+}
+
+.profe-color>div:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* "Terminar Clase" button - position it at the bottom of the last section or fixed */
+.profe_wrapper>button {
+  position: fixed;
+  bottom: 15px;
+  /* Reduced bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #54b198;
+  color: #f0fffe;
+  border: none;
+  border-radius: 20px;
+  /* Reduced radius */
+  padding: 12px 24px;
+  /* Reduced padding */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 1001;
+  max-width: calc(100vw - 30px);
+  /* Prevent overflow */
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  /* Prevent long text overflow */
+  font-size: 0.9rem;
+  /* Reduced font size */
+}
+
+.profe_wrapper>button:hover {
+  background-color: #3d7d6a;
+}
