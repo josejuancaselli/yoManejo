@@ -95,7 +95,7 @@ const PruebaProfesores = () => {
 
                         <div className='evaluacion' style={{backgroundColor:"#e2eeedff"}}>
                             <p>{turno.hora}</p>
-                            <p>{turno.direccion}</p>
+                            <p style={{fontWeight:"bold", fontSize:"1.3rem"}}>{turno.direccion}</p>
                             <p>{turno.nombre}</p>
                             <p>{turno.telefono}</p>
                         </div>
