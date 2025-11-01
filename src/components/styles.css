@@ -171,12 +171,14 @@
 
 .tab-zona-2 {
   background: #b9e3d8;
-
 }
 
 .tab-zona-3 {
   background: #96cfc1;
+}
 
+.tab-zona-automatico{
+  background: #7cafa2;
 }
 
 .mañana-tab,
@@ -227,14 +229,19 @@
   background: #96cfc1;
 }
 
-.zona-3 .auto-title {
+.zona-3 .auto-title, .zona-automatico .auto-title {
   color: #4c4b4b;
 }
 
 
-.zona-3 .nav-btn {
+.zona-3 .nav-btn, .zona-automatico .nav-btn {
   color: #478d7a;
 }
+
+.zona-automatico {
+  background: #7cafa2;
+}
+
 
 
 /* Header with month and nav */
@@ -302,7 +309,7 @@
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
   font-weight: 600;
-  color: #54b198;
+  color: #326e5e;
   font-size: 0.9rem;
   margin-bottom: 12px;
   user-select: none;
