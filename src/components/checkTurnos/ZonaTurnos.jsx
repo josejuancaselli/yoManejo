@@ -133,11 +133,12 @@ const ZonaTurnos = () => {
       ? Number(e.target.value)
       : e.target.value;
 
+    const turnosAlumnos = alumnos.map((alumno) => alumno.turnos).flat()
     const nuevosTurnos = [...turnosEditables];
     const turnoEditado = { ...nuevosTurnos[index], [campo]: valor };
 
     // --- Validación de duplicados ---
-    const existeDuplicado = nuevosTurnos.some((t, i) =>
+    const existeDuplicado = turnosAlumnos.some((t, i) =>
       i !== index &&
       t.dia === turnoEditado.dia &&
       t.mes === turnoEditado.mes &&
@@ -208,12 +209,12 @@ const ZonaTurnos = () => {
               <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
               <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
               <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
-              <button onClick={() => {setSimulacion(true); setWarningReserva(true)}} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
+              <button onClick={() => { setSimulacion(true); setWarningReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
             </div>
           </div>
 
 
-          {turnoSim.length > 0 && !simulacion && !ventanaReservar &&(
+          {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
             <>
               <ul className="simulacion-card">
                 {turnoSim.map((e, index) => {
@@ -263,12 +264,12 @@ const ZonaTurnos = () => {
       </div>
 
       {/* Render de simulación */}
-      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar} warningReserva={warningReserva} setWarningReserva={setWarningReserva}/>)}
+      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar} warningReserva={warningReserva} setWarningReserva={setWarningReserva} />)}
 
       {/* Render de ventana de reservar */}
       {ventanaReservar && (
         <div className="reserva-modal-backdrop">
-          <Reservar turnoSim={turnoSim} setSimulacion={setSimulacion}  setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh}  setWarningReserva={setWarningReserva}/>
+          <Reservar turnoSim={turnoSim} setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh} setWarningReserva={setWarningReserva} />
         </div>
       )}
 
@@ -336,7 +337,7 @@ const ZonaTurnos = () => {
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]) }}>Imprimir</button>                    
+                    <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]) }}>Imprimir</button>
                     <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
 
                   </div>

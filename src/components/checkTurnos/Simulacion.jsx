@@ -46,7 +46,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar,w
                         })
                         .map((e, index) => (
                             <li key={index} className="simulacion-item" style={{ color: "#377363" }}>
-                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Zona {e.zona}
+                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Coche {e.zona}
                             </li>
                         ))}
 

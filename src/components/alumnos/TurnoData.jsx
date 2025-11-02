@@ -68,7 +68,8 @@ const TurnoData = ({
                             <div className="turno-editable">
                                 <div>
                                     <label>Día</label>
-                                    <select className="turno-editable-select" value={turno.dia} onChange={(e) => handleEditarTurno(e, index, "dia")}>
+                                    <select className="turno-editable-select" value={turno.dia} onChange={(e) => handleEditarTurno(e, index, "dia")}>                                        
+                                        <option value="" disabled hidden></option>
                                         {obtenerDiasDelMes(turno.mes, turno.anio).map((d, i) => (
                                             <option key={i} value={d}>
                                                 {String(d).padStart(2, "0")}
@@ -89,8 +90,7 @@ const TurnoData = ({
                                 </div>
 
                                 <div>
-                                    <label>Año</label>
-                                    {/* <input type="number" value={turno.anio} onChange={(e) => handleEditarTurno(e, index, "anio")} /> */}
+                                    <label>Año</label>                                    
                                     <select className="turno-editable-select" value={turno.anio} onChange={(e) => handleEditarTurno(e, index, "anio")} >
 
                                         <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>
