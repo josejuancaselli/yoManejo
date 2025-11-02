@@ -526,6 +526,7 @@
 /* Day names */
 .dia-semana {
   padding: 6px 0;
+  text-decoration: underline;
 }
 
 /* Empty day placeholder */

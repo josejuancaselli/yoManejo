@@ -12,7 +12,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
   const ventanaRef = useRef(null); // referencia al contenedor de horarios (para click fuera)
   const botonDiaRef = useRef(null); // referencia al botón del día activo
   const [activeHora, setActiveHora] = useState(null);
-  const [mañanaTarde, setMañanaTarde] = useState([]);
+  const [mañanaTarde, setMañanaTarde] = useState(["mañana", "tarde"]);
 
   const turnosAlumnos = alumnos.map(e => e.turnos).flat(); // todos los turnos de todos los alumnos en un solo array
   const toggleMañanaTarde = (tipo) => {
