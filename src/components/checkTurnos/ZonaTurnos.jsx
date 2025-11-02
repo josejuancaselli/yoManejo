@@ -26,6 +26,7 @@ const ZonaTurnos = () => {
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
   const [editarTurnos, setEditarTurnos] = useState(null);
   const [turnosEditables, setTurnosEditables] = useState([]);
+  const [warningReserva, setWarningReserva] = useState(false);
 
 
   const { alumnos, setAlumnos, alumnosFiltrados,
@@ -156,12 +157,32 @@ const ZonaTurnos = () => {
     handleEditar(e, index, campo);
   };
 
+  const imprimirJPG = () => {
+    const element = document.querySelector(".simulacion-modal");
+    if (!element) return;
 
+    const backdrop = document.querySelector(".simulacion-modal-backdrop");
+    const originalBackdropDisplay = backdrop?.style.display;
+    if (backdrop) backdrop.style.display = "hidden";
+
+    html2canvas(element, { backgroundColor: null })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/jpeg", 1.0);
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "turnos.jpeg";
+        link.click();
+      })
+      .finally(() => {
+        if (backdrop && originalBackdropDisplay !== undefined) {
+          backdrop.style.display = originalBackdropDisplay;
+        }
+      });
+  };
 
   return (
     <div className="zona-turnos-container">
-      {console.log("estos son todos los alumnos", alumnos.map((alumno) => alumno.turnos).flat().filter(a => a.dia === 17 && a.mes === 4 && a.anio === 2025 && a.hora === "08:45" && a.zona === "1"))}
-      {console.log(alumnos)}
+
       <div className="zonas-section">
         <div className="seleccion-zona">
           <div className="searchbar-wrapper">
@@ -187,12 +208,12 @@ const ZonaTurnos = () => {
               <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
               <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
               <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
-              <button onClick={() => setSimulacion(true)} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
+              <button onClick={() => {setSimulacion(true); setWarningReserva(true)}} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
             </div>
           </div>
 
 
-          {turnoSim.length > 0 && (
+          {turnoSim.length > 0 && !simulacion && !ventanaReservar &&(
             <>
               <ul className="simulacion-card">
                 {turnoSim.map((e, index) => {
@@ -242,12 +263,12 @@ const ZonaTurnos = () => {
       </div>
 
       {/* Render de simulación */}
-      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar}  />)}
+      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar} warningReserva={warningReserva} setWarningReserva={setWarningReserva}/>)}
 
       {/* Render de ventana de reservar */}
       {ventanaReservar && (
         <div className="reserva-modal-backdrop">
-          <Reservar turnoSim={turnoSim} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh} />
+          <Reservar turnoSim={turnoSim} setSimulacion={setSimulacion}  setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh}  setWarningReserva={setWarningReserva}/>
         </div>
       )}
 
@@ -284,7 +305,7 @@ const ZonaTurnos = () => {
                       </div>
                       <div>
                         <p>Observaciones: </p>
-                        <p style={{height: "70px"}}>{alumnoSeleccionado.observaciones}</p>
+                        <p style={{ height: "70px" }}>{alumnoSeleccionado.observaciones}</p>
                       </div>
                     </div>
                     <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
@@ -315,8 +336,9 @@ const ZonaTurnos = () => {
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]) }}>Imprimir</button>                    
                     <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
-                    <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+
                   </div>
                 </div>
               )}
@@ -372,8 +394,9 @@ const ZonaTurnos = () => {
                       />
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
                       <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                      <button className="btn-cerrar" onClick={() => { setDataAlumno(false) }}>Cerrar</button>
+
                     </div>
                   </>
                 )}

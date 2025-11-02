@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { db } from "../../firebase/firebaseConfig";
 import { useState } from "react";
 
-const Reservar = ({ setVentanaReservar, turnoSim, setTurnoSim, reserva, setReserva,setRefresh }) => {
+const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setTurnoSim, reserva, setReserva,setRefresh, warningReserva, setWarningReserva }) => {
 
 
     const { register, handleSubmit } = useForm();
@@ -22,7 +22,8 @@ const enviar = async (data) => {
         // 3️⃣ Actualizo estado local
         setReserva(nuevaReserva)
         setVentanaReservar(false)
-        setTurnoSim([])
+        setSimulacion(true)
+        setWarningReserva(false)
         setRefresh(prev => !prev)
         
 
