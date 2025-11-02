@@ -56,6 +56,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     </button>
                                     {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
+                                            <p>{ventanaDireccion.nombre}</p>
                                             <p>{ventanaDireccion.direccion}</p>
                                         </div>
                                     )}
@@ -112,7 +113,9 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     
                                     {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
+                                            <p>{ventanaDireccion.nombre}</p>
                                             <p>{ventanaDireccion.direccion}</p>
+                                            {console.log(ventanaDireccion.nombre)}
                                         </div>
                                     )}
                                 </div>

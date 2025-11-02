@@ -3,6 +3,8 @@ import { useFechas } from "../../helpers/useFechas";
 
 import AgregarTurno from "./AgregarTurno";
 import EditarAlumno from "./EditarAlumno";
+import { IoIosClose } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
 
 
 
@@ -25,10 +27,11 @@ const AlumnoData = ({
     inputAgregarTurno,
     setInputAgregarTurno,
     toggleAlumno,
+    setVentanaAlumno,
     borrarAlumno
 }) => {
 
-
+    const [dataAlumno, setDataAlumno] = useState(false)
     const { obtenerDiasDelMes, fecha, obtenerHorarios } = useFechas();
 
 
@@ -42,30 +45,45 @@ const AlumnoData = ({
 
 
             {ventanaAlumno && ventanaAlumno.id === alumno.id && (
-                <div>
+                <div className="alumno-modal-content">
                     {!modoEdicion ? (
                         <>
-                            <h3>{alumno.nombre}</h3>
-                            <p>Direccion: {alumno.direccion}</p>
-                            <p>DNI: {alumno.dni}</p>
-                            <p>Telefono: {alumno.telefono}</p>
-                            <p>Correo: {alumno.correo}</p>
-                            <p>Observaciones: {alumno.observaciones}</p>
-                            <h3>Turnos:</h3>
-                            <ul>
-                                {alumno.turnos.map((turno, index) => {
-                                    return (
-                                        <li key={index}>
-                                            {turno.dia}/{turno.mes + 1} - {turno.hora} hs - Zona {turno.zona}
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                            <button onClick={() => setModoEdicion(true)}>Editar</button>
-                            <button onClick={() => borrarAlumno(alumno.id)}>Borrar alumno</button>
+                        
+                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
+                                <div style={{ display: "flex" }}>
+                                    <h3>{alumnoSeleccionado.nombre}</h3>
+                                </div>
+                                <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => { setDataAlumno(false); setVentanaAlumno(null) }}><IoIosClose /></button>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div className="editar-alumno-modal">
+                                    <div>
+                                        <p>Direccion:</p>
+                                        <p>{alumnoSeleccionado.direccion}</p>
+                                    </div>
+                                    <div>
+                                        <p>DNI: </p>
+                                        <p>{alumnoSeleccionado.dni}</p>
+                                    </div>
+                                    <div>
+                                        <p>Telefono: </p>
+                                        <p>{alumnoSeleccionado.telefono}</p>
+                                    </div>
+                                    <div>
+                                        <p>Correo: </p>
+                                        <p>{alumnoSeleccionado.correo}</p>
+                                    </div>
+                                    <div>
+                                        <p>Observaciones: </p>
+                                        <p style={{ height: "70px" }}>{alumnoSeleccionado.observaciones}</p>
+                                    </div>
+                                </div>
+                                <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
+                            </div>
                         </>
                     ) : (
                         <div>
+                            
                             <EditarAlumno
                                 alumnoSeleccionado={alumnoSeleccionado}
                                 handleEditar={handleEditar}
@@ -81,22 +99,6 @@ const AlumnoData = ({
                                 setTurnoModificandose={setTurnoModificandose}
                                 todosLosTurnos={todosLosTurnos}
 
-                            />
-                        </div>
-                    )}
-
-                    {/*Modal para agregar turno */}
-                    {inputAgregarTurno && (
-                        <div>
-                            <AgregarTurno
-                                nuevoTurno={nuevoTurno}
-                                setNuevoTurno={setNuevoTurno}
-                                obtenerDiasDelMes={obtenerDiasDelMes}
-                                fecha={fecha}
-                                obtenerHorarios={obtenerHorarios}
-                                agregarTurno={agregarTurno}
-                                alumno={alumno}
-                                setInputAgregarTurno={setInputAgregarTurno}
                             />
                         </div>
                     )}

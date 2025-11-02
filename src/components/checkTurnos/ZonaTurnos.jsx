@@ -158,28 +158,7 @@ const ZonaTurnos = () => {
     handleEditar(e, index, campo);
   };
 
-  const imprimirJPG = () => {
-    const element = document.querySelector(".simulacion-modal");
-    if (!element) return;
 
-    const backdrop = document.querySelector(".simulacion-modal-backdrop");
-    const originalBackdropDisplay = backdrop?.style.display;
-    if (backdrop) backdrop.style.display = "hidden";
-
-    html2canvas(element, { backgroundColor: null })
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/jpeg", 1.0);
-        const link = document.createElement("a");
-        link.href = imgData;
-        link.download = "turnos.jpeg";
-        link.click();
-      })
-      .finally(() => {
-        if (backdrop && originalBackdropDisplay !== undefined) {
-          backdrop.style.display = originalBackdropDisplay;
-        }
-      });
-  };
 
   return (
     <div className="zona-turnos-container">
@@ -337,7 +316,7 @@ const ZonaTurnos = () => {
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]) }}>Imprimir</button>
+                    <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]); setWarningReserva(false) }}>Imprimir</button>
                     <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
 
                   </div>
@@ -349,26 +328,24 @@ const ZonaTurnos = () => {
               < >
                 {alumnoSeleccionado && (
                   <>
-                    < >
-                      {/* className="editar-alumno-modal"  */}
-                      <EditarAlumno
-                        nuevoTurno={nuevoTurno}
-                        setNuevoTurno={setNuevoTurno}
-                        alumnoSeleccionado={alumnoSeleccionado}
-                        handleEditar={handleEditar}
-                        obtenerDiasDelMes={obtenerDiasDelMes}
-                        obtenerHorarios={obtenerHorarios}
-                        borrarTurnoReservado={borrarTurnoReservado}
-                        editarAlumno={editarAlumno}
-                        setModoEdicion={setModoEdicion}
-                        modoEdicion={modoEdicion}
-                        setInputAgregarTurno={setInputAgregarTurno}
-                        inputAgregarTurno={inputAgregarTurno}
-                        agregarTurno={agregarTurno}
-                        editarTurnoAlumno={editarTurnoAlumno}
-                        setEditarTurnoAlumno={setEditarTurnoAlumno}
-                      />
-                    </>
+                    <EditarAlumno
+                      nuevoTurno={nuevoTurno}
+                      setNuevoTurno={setNuevoTurno}
+                      alumnoSeleccionado={alumnoSeleccionado}
+                      handleEditar={handleEditar}
+                      obtenerDiasDelMes={obtenerDiasDelMes}
+                      obtenerHorarios={obtenerHorarios}
+                      borrarTurnoReservado={borrarTurnoReservado}
+                      editarAlumno={editarAlumno}
+                      setModoEdicion={setModoEdicion}
+                      modoEdicion={modoEdicion}
+                      setInputAgregarTurno={setInputAgregarTurno}
+                      inputAgregarTurno={inputAgregarTurno}
+                      agregarTurno={agregarTurno}
+                      editarTurnoAlumno={editarTurnoAlumno}
+                      setEditarTurnoAlumno={setEditarTurnoAlumno}
+                    />
+
                     <div className="turnos-editables">
                       <h3>Turnos:</h3>
                       <TurnoData

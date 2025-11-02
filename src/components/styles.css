@@ -1156,12 +1156,13 @@
 .ventana-reservado-modal>div {
   display: flex;
   flex-direction: column;
+  align-content: center;
   gap: 10px;
 }
 
 .ventana-reservado-modal p {
   font-weight: 500;
-  font-size: 15px;
+  font-size: 10px;
   margin: 0;
   color: #cecece;
   line-height: 1.4;
