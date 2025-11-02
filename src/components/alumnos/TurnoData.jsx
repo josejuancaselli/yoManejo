@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaEdit, FaRegTrashAlt } from 'react-icons/fa'
 import AgregarTurno from './AgregarTurno'
 import { IoAdd } from "react-icons/io5";
@@ -33,9 +33,10 @@ const TurnoData = ({
     setEditarTurnos,
     setTurnosEditables,
     turnosEditables,
+    confirmar, setConfirmar,
 }) => {
 
-
+    const [modalConfirmar, setModalConfirmar] = useState(false)
 
     return (
         <>
@@ -50,16 +51,30 @@ const TurnoData = ({
                                     </p>
                                     <div>
 
-                                        <button className='turnos-btn-editar' onClick={() => setEditarTurnos(index)}><FaEdit /></button>
-                                        <button className='turnos-btn-borrar'onClick={() => borrarTurnoReservado(
-                                            turno.dia,
-                                            turno.hora,
-                                            turno.mes,
-                                            turno.zona,
-                                            turno.anio,
-                                            alumnoSeleccionado.id)}>
+                                        <button className='turnos-btn-editar' onClick={() => setEditarTurnos(index)}>
+                                            <FaEdit />
+                                        </button>
+                                        <button className='turnos-btn-borrar' onClick={() => setModalConfirmar(true)}>
                                             <FaRegTrashAlt />
                                         </button>
+                                        {modalConfirmar && (
+                                            <div>
+                                                <p>¿Esta seguro que desea borrar el turno?</p>
+                                                <button  onClick={() => borrarTurnoReservado(
+                                                    turno.dia,
+                                                    turno.hora,
+                                                    turno.mes,
+                                                    turno.zona,
+                                                    turno.anio,
+                                                    alumnoSeleccionado.id,
+                                                    "si"
+                                                )}>
+                                                    SI
+                                                </button>
+                                                <button onClick={() => { setModalConfirmar(false), setConfirmar("no") }}>NO</button>
+                                            </div>
+                                        )}
+
 
                                     </div>
                                 </div>
@@ -68,7 +83,7 @@ const TurnoData = ({
                             <div className="turno-editable">
                                 <div>
                                     <label>Día</label>
-                                    <select className="turno-editable-select" value={turno.dia} onChange={(e) => handleEditarTurno(e, index, "dia")}>                                        
+                                    <select className="turno-editable-select" value={turno.dia} onChange={(e) => handleEditarTurno(e, index, "dia")}>
                                         <option value="" disabled hidden></option>
                                         {obtenerDiasDelMes(turno.mes, turno.anio).map((d, i) => (
                                             <option key={i} value={d}>
@@ -90,7 +105,7 @@ const TurnoData = ({
                                 </div>
 
                                 <div>
-                                    <label>Año</label>                                    
+                                    <label>Año</label>
                                     <select className="turno-editable-select" value={turno.anio} onChange={(e) => handleEditarTurno(e, index, "anio")} >
 
                                         <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>

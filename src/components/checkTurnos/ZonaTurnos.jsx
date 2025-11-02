@@ -39,7 +39,7 @@ const ZonaTurnos = () => {
     editarAlumno, normalizar, handleBusquedaAlumno,
     borrarAlumno, turnoModificandose, setTurnoModificandose,
     todosLosTurnos,
-    refresh, setRefresh, validacion,
+    refresh, setRefresh, validacion, confirmar, setConfirmar,
   } = useAlumnos()
 
   const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
@@ -79,13 +79,19 @@ const ZonaTurnos = () => {
     setRenderBusqueda(false)
   }
 
-  const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
+  const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno, confirmacion) => {
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
+    setConfirmar(confirmacion)
     try {
-      await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
-      alert("turno borrado con exito")
-      setRefresh(prev => !prev)
-      setAlumnoSeleccionado((prev) => ({ ...prev, turnos: turnoBorrado, }));
+      if (confirmacion === "si") {
+        await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
+        alert("turno borrado con exito")
+        setRefresh(prev => !prev)
+        setAlumnoSeleccionado((prev) => ({ ...prev, turnos: turnoBorrado, }));
+      } else {
+        setConfirmar(null)
+      }
+
     } catch (error) {
       console.error("Error borrando turno:", error);
     }
@@ -313,6 +319,9 @@ const ZonaTurnos = () => {
                       setTurnosEditables={setTurnosEditables}
                       editarTurnos={editarTurnos}
                       setEditarTurnos={setEditarTurnos}
+                      confirmar={confirmar}
+                      setConfirmar={setConfirmar}
+
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -369,6 +378,8 @@ const ZonaTurnos = () => {
                         setTurnosEditables={setTurnosEditables}
                         editarTurnos={editarTurnos}
                         setEditarTurnos={setEditarTurnos}
+                        confirmar={confirmar}
+                        setConfirmar={setConfirmar}
                       />
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>

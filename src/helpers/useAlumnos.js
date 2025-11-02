@@ -11,6 +11,7 @@ export const useAlumnos = () => {
     const [modoEdicion, setModoEdicion] = useState(null) // modo edicion para el formulario
     const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({}) // aca guardo los datos del formulario para editar el alumno
     const [turnoModificandose, setTurnoModificandose] = useState({}) // aca guardo los datos del formulario para editar el turno
+    const [confirmar, setConfirmar] = useState(null)
     const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat()
     const validacion = todosLosTurnos.some((turno) =>
         turno.dia === turnoModificandose.dia &&
@@ -118,6 +119,6 @@ export const useAlumnos = () => {
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
         setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
         toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose,
-        setTurnoModificandose, todosLosTurnos,refresh, setRefresh, validacion
+        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion, confirmar, setConfirmar
     }
 }
