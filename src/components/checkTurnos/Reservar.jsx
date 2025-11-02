@@ -1,8 +1,10 @@
 import { collection, addDoc } from "firebase/firestore"
 import { useForm } from 'react-hook-form'
 import { db } from "../../firebase/firebaseConfig";
+import { useState } from "react";
 
-const Reservar = ({ setVentanaReservar, turnoSim, setTurnoSim, reserva, setReserva }) => {
+const Reservar = ({ setVentanaReservar, turnoSim, setTurnoSim, reserva, setReserva,setRefresh }) => {
+
 
     const { register, handleSubmit } = useForm();
     const turnos = turnoSim
@@ -21,6 +23,7 @@ const enviar = async (data) => {
         setReserva(nuevaReserva)
         setVentanaReservar(false)
         setTurnoSim([])
+        setRefresh(prev => !prev)
         
 
         console.log("Reserva guardada en Firebase ✅")

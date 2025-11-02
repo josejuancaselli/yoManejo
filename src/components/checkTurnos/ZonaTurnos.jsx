@@ -160,6 +160,8 @@ const ZonaTurnos = () => {
 
   return (
     <div className="zona-turnos-container">
+      {console.log("estos son todos los alumnos", alumnos.map((alumno) => alumno.turnos).flat().filter(a => a.dia === 17 && a.mes === 4 && a.anio === 2025 && a.hora === "08:45" && a.zona === "1"))}
+      {console.log(alumnos)}
       <div className="zonas-section">
         <div className="seleccion-zona">
           <div className="searchbar-wrapper">
@@ -240,12 +242,12 @@ const ZonaTurnos = () => {
       </div>
 
       {/* Render de simulación */}
-      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar} />)}
+      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar}  />)}
 
       {/* Render de ventana de reservar */}
       {ventanaReservar && (
         <div className="reserva-modal-backdrop">
-          <Reservar turnoSim={turnoSim} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} />
+          <Reservar turnoSim={turnoSim} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh} />
         </div>
       )}
 
