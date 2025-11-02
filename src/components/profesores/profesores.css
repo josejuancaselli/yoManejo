@@ -29,6 +29,28 @@ body {
   /* Reduced gap */
 }
 
+.profe-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.profe-header button {
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  background-color: #a9b1af;
+  color: #f0fffe;
+  box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);  
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  width: 72px;
+}
+
 .profe-fecha {
   font-size: 1.2rem;
   /* Reduced font size */
@@ -39,7 +61,7 @@ body {
   padding-bottom: 8px;
   /* Reduced padding */
   border-bottom: 3px solid #54b198;
-  width: 100%;
+  width: 40%;
   /* Ensure it doesn't exceed */
   box-sizing: border-box;
   overflow-wrap: break-word;
@@ -233,6 +255,16 @@ body {
   /* Prevent horizontal overflow in sections */
 }
 
+.evaluacion a{
+gap: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222;
+    margin: 8px 0;
+    text-align: center;
+    overflow-wrap: break-word;
+    text-decoration: none;
+}
 /* Specific styles for the first .evaluacion (student data) */
 .evaluacion:nth-child(1) p {
   font-size: 1rem;
@@ -295,7 +327,7 @@ body {
 
 .evaluacion:nth-child(2) li:hover {
   background-color: #54b198;
-  
+
   transform: scale(1.05);
 }
 
@@ -342,7 +374,7 @@ body {
 
 .evaluacion:nth-child(3) li:hover {
   background-color: #54b198;
-  
+
   transform: scale(1.05);
 }
 
@@ -389,8 +421,27 @@ body {
 
 .evaluacion:nth-child(4) li:hover {
   background-color: #54b198;
-  
+
   transform: scale(1.05);
+}
+
+.profe-warnings-wrapper {
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  margin: 30px 0;
+}
+
+.profe-warnings{
+  text-align: center;
+    align-content: center;
+    padding: 10px;
+    font-weight: bold;
+    width: 28px;
+    border: solid 1px rgba(0, 0, 0, 0.137);
+    height: 28px;
+    border-radius: 20%;
 }
 
 /* Close button - position it at the top of the first .evaluacion for easy access */

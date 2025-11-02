@@ -68,20 +68,23 @@ const EditarAlumno = ({
 
                     <div>
                         <p>Dirección:</p>
-                        <input name="direccion" value={alumnoSeleccionado.direccion} onChange={handleEditar} />
+                        <input
+                            placeholder="Calle"
+                            value={alumnoSeleccionado.direccion?.calle || ""}
+                            onChange={(e) => handleEditar(e, null, null, "calle")}
+                        />
+                        <input
+                            placeholder="Número"
+                            value={alumnoSeleccionado.direccion?.altura || ""}
+                            onChange={(e) => handleEditar(e, null, null, "altura")}
+                        />
+                        <input
+                            placeholder="Entre calles"
+                            value={alumnoSeleccionado.direccion?.entrecalles || ""}
+                            onChange={(e) => handleEditar(e, null, null, "entrecalles")}
+                        />
                     </div>
-                    <div>
-                        <p>DNI:</p>
-                        <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
-                    </div>
-                    <div>
-                        <p>Teléfono:</p>
-                        <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
-                    </div>
-                    <div>
-                        <p>Correo:</p>
-                        <textarea name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
-                    </div>
+
 
                     <div>
                         <p>Observaciones:</p>

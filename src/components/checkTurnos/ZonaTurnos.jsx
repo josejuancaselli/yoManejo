@@ -275,7 +275,7 @@ const ZonaTurnos = () => {
                     <div className="editar-alumno-modal">
                       <div>
                         <p>Direccion:</p>
-                        <p>{alumnoSeleccionado.direccion}</p>
+                        <p>{alumnoSeleccionado.direccion["calle"]} n° {alumnoSeleccionado.direccion["altura"]} e/ {alumnoSeleccionado.direccion["entrecalles"]}</p>
                       </div>
                       <div>
                         <p>DNI: </p>

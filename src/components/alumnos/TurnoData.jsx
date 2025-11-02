@@ -60,7 +60,7 @@ const TurnoData = ({
                                         {modalConfirmar && (
                                             <div>
                                                 <p>¿Esta seguro que desea borrar el turno?</p>
-                                                <button  onClick={() => borrarTurnoReservado(
+                                                <button  onClick={() => {borrarTurnoReservado(
                                                     turno.dia,
                                                     turno.hora,
                                                     turno.mes,
@@ -68,7 +68,7 @@ const TurnoData = ({
                                                     turno.anio,
                                                     alumnoSeleccionado.id,
                                                     "si"
-                                                )}>
+                                                ); setModalConfirmar(false)}}>
                                                     SI
                                                 </button>
                                                 <button onClick={() => { setModalConfirmar(false), setConfirmar("no") }}>NO</button>

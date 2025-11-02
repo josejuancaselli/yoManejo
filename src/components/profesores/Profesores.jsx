@@ -25,7 +25,9 @@ const Profesores = () => {
       .map(t => ({
         ...t,
         nombre: alumno.nombre,
-        direccion: alumno.direccion
+        calle: alumno.calle,
+        altura: alumno.altura,
+        entrecalles: alumno.entrecalles
       }))
     )
   }, [alumnos, hoy, manana, verManiana])

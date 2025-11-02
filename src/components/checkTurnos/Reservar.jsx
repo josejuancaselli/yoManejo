@@ -13,8 +13,16 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setTurnoSim, re
 
 const enviar = async (data) => {
     try {
-        // 1️⃣ Armo el objeto completo de reserva
-        const nuevaReserva = { ...data, turnos: turnos }
+        // 🔹 Combino los campos de dirección en uno solo
+        const direccion = {
+            calle: data.calle || "",
+            altura: data.altura || "",
+            entrecalles: data.entrecalles || ""
+        }
+
+        // 2️⃣ Armo el objeto completo de reserva, excluyendo los campos individuales
+        const { calle, altura, entrecalles, ...otrosCampos } = data
+        const nuevaReserva = { ...otrosCampos, direccion, turnos }
 
         // 2️⃣ Pusheo a Firebase
         await addDoc(collection(db, "alumnos"), nuevaReserva)
@@ -25,13 +33,13 @@ const enviar = async (data) => {
         setSimulacion(true)
         setWarningReserva(false)
         setRefresh(prev => !prev)
-        
 
         console.log("Reserva guardada en Firebase ✅")
     } catch (err) {
         console.error("Error guardando reserva:", err)
     }
 }
+
 
 
     return (
@@ -44,8 +52,14 @@ const enviar = async (data) => {
                     <label className='reserva-label'>DNI</label>
                     <input type="text"  {...register("dni")} className='reserva-input' />
 
-                    <label className='reserva-label'>Dirección</label>
-                    <input type="text" {...register("direccion")} className='reserva-input' />
+                    <label className='reserva-label'>Calle</label>
+                    <input type="text" {...register("calle")} className='reserva-input' />
+
+                    <label className='reserva-label'>Número</label>
+                    <input type="text" {...register("altura")} className='reserva-input' />
+
+                    <label className='reserva-label'>Entre calles</label>
+                    <input type="text" {...register("entrecalles")} className='reserva-input' />
 
                     <label className='reserva-label'>Teléfono</label>
                     <input type="text" {...register("telefono")} className='reserva-input' />
