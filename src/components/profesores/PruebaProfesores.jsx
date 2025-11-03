@@ -134,66 +134,74 @@ const PruebaProfesores = () => {
             {auto && (
                 <div className='profe-alm-wrapper'>
                     <div className="profe-data-alm">
-                        <h3 className="turno-header" onClick={() => setTurnoSeleccionado("mañana")}>Turno mañana</h3>
-                        {turnoSeleccionado === "mañana" && (
-                            <div className="turno-lista">
-                                {turnosManiana.length > 0 ? (
-                                    turnosManiana.map((e, index) => (
-                                        <div
-                                            key={index}
-                                            onClick={() => setTurno(e)}
-                                            className="profe-data-alm"
+                        <h3
+                            className={`turno-header ${turnoSeleccionado === "mañana" ? "abierto" : ""}`}
+                            onClick={() => setTurnoSeleccionado(turnoSeleccionado === "mañana" ? "" : "mañana")}
+                        >
+                            Turnos mañana
+                        </h3>
+                        <div className={`turno-lista acordeon ${turnoSeleccionado === "mañana" ? "abierto" : ""}`}>
+                            {turnosManiana.length > 0 ? (
+                                turnosManiana.map((e, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => setTurno(e)}
+                                        className="profe-data-alm"
+                                    >
+                                        <p>{e.hora}</p>
+                                        <p
+                                            style={{
+                                                fontSize: "1.1rem",
+                                                fontWeight: "bold",
+                                                
+                                            }}
                                         >
-                                            <p>{e.hora}</p>
-                                            <p>{e.nombre}</p>
-                                            <p
-                                                style={{
-                                                    fontSize: "1.1rem",
-                                                    fontWeight: "bold",
-                                                    marginLeft: "auto",
-                                                }}
-                                            >
-                                                {e.direccion.calle} {e.direccion.altura}
-                                            </p>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="sin-turnos">No hay turnos de mañana</p>
-                                )}
-                            </div>
-                        )}
-
+                                            {e.direccion.calle} {e.direccion.altura}
+                                        </p>
+                                        <p>{e.nombre} {e.telefono}</p>
+                                        
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="sin-turnos">No hay turnos de mañana</p>
+                            )}
+                        </div>
                     </div>
+
                     {/* 🔹 Sección turno tarde */}
                     <div className="profe-data-alm">
-                        <h3 className="turno-header" onClick={() => setTurnoSeleccionado("tarde")}>Turno tarde</h3>
-                        {turnoSeleccionado === "tarde" && (
-                            <div className="turno-lista">
-                                {turnosTarde.length > 0 ? (
-                                    turnosTarde.map((e, index) => (
-                                        <div
-                                            key={index}
-                                            onClick={() => setTurno(e)}
-                                            className="profe-data-alm"
+                        <h3
+                            className={`turno-header ${turnoSeleccionado === "tarde" ? "abierto" : ""}`}
+                            onClick={() => setTurnoSeleccionado(turnoSeleccionado === "tarde" ? "" : "tarde")}
+                        >
+                            Turnos tarde
+                        </h3>
+                        <div className={`turno-lista acordeon ${turnoSeleccionado === "tarde" ? "abierto" : ""}`}>
+                            {turnosTarde.length > 0 ? (
+                                turnosTarde.map((e, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => setTurno(e)}
+                                        className="profe-data-alm"
+                                    >
+                                        <p>{e.hora}</p>
+
+                                        <p
+                                            style={{
+                                                fontSize: "1.1rem",
+                                                fontWeight: "bold",
+                                                
+                                            }}
                                         >
-                                            <p>{e.hora}</p>
-                                            <p>{e.nombre}</p>
-                                            <p
-                                                style={{
-                                                    fontSize: "1.1rem",
-                                                    fontWeight: "bold",
-                                                    marginLeft: "auto",
-                                                }}
-                                            >
-                                                {e.direccion.calle} {e.direccion.altura}
-                                            </p>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="sin-turnos">No hay turnos de tarde</p>
-                                )}
-                            </div>
-                        )}
+                                            {e.direccion.calle} {e.direccion.altura}
+                                        </p>
+                                        <p>{e.nombre} {e.telefono}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="sin-turnos">No hay turnos de tarde</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
