@@ -167,6 +167,7 @@ body {
 .profe-data-alm {
   background: #f9f9f9;
   border-radius: 10px;
+  margin-bottom: 16px;
   /* Reduced radius */
   box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
   padding: 12px;
@@ -175,7 +176,8 @@ body {
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  border: solid 1px #0000002e;
+  /* gap: 35px; */
   /* Reduced gap */
   width: 100%;
   max-width: calc(100vw - 30px);
@@ -191,7 +193,7 @@ body {
 }
 
 .profe-data-alm p {
-  margin: 0;
+  margin: 10px 0;
   font-size: 0.9rem;
   /* Reduced font size */
   color: #222;
