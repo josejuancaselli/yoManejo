@@ -39,7 +39,7 @@ const ZonaTurnos = () => {
     editarAlumno, normalizar, handleBusquedaAlumno,
     borrarAlumno, turnoModificandose, setTurnoModificandose,
     todosLosTurnos,
-    refresh, setRefresh, validacion, 
+    refresh, setRefresh, validacion,
   } = useAlumnos()
 
   const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
@@ -81,14 +81,14 @@ const ZonaTurnos = () => {
 
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno, confirmacion) => {
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
-    
+
     try {
       if (confirmacion === "si") {
         await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
         alert("turno borrado con exito")
         setRefresh(prev => !prev)
         setAlumnoSeleccionado((prev) => ({ ...prev, turnos: turnoBorrado, }));
-      } 
+      }
 
     } catch (error) {
       console.error("Error borrando turno:", error);
@@ -317,7 +317,7 @@ const ZonaTurnos = () => {
                       setTurnosEditables={setTurnosEditables}
                       editarTurnos={editarTurnos}
                       setEditarTurnos={setEditarTurnos}
-                   
+
 
                     />
                   </div>
@@ -375,13 +375,13 @@ const ZonaTurnos = () => {
                         setTurnosEditables={setTurnosEditables}
                         editarTurnos={editarTurnos}
                         setEditarTurnos={setEditarTurnos}
-                        
+
                       />
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
-                      <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
 
+                      <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                      <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
                     </div>
                   </>
                 )}
