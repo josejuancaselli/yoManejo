@@ -57,25 +57,6 @@ const TurnoData = ({
                                         <button className='turnos-btn-borrar' onClick={() => setModalConfirmar(true)}>
                                             <FaRegTrashAlt />
                                         </button>
-                                        {modalConfirmar && (
-                                            <div>
-                                                <p>¿Esta seguro que desea borrar el turno?</p>
-                                                <button  onClick={() => {borrarTurnoReservado(
-                                                    turno.dia,
-                                                    turno.hora,
-                                                    turno.mes,
-                                                    turno.zona,
-                                                    turno.anio,
-                                                    alumnoSeleccionado.id,
-                                                    "si"
-                                                ); setModalConfirmar(false)}}>
-                                                    SI
-                                                </button>
-                                                <button onClick={() => { setModalConfirmar(false), setConfirmar("no") }}>NO</button>
-                                            </div>
-                                        )}
-
-
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +123,26 @@ const TurnoData = ({
                 ))}
             </ul>
             <button className='turno-btn-agregar' onClick={() => setInputAgregarTurno(true)}> <IoAdd /> </button>
+
+            {modalConfirmar && (
+                <div className='turno-borrar-wrapper'>
+                    <p>¿Esta seguro que desea borrar el turno?</p>
+                    <button onClick={() => {
+                        borrarTurnoReservado(
+                            turno.dia,
+                            turno.hora,
+                            turno.mes,
+                            turno.zona,
+                            turno.anio,
+                            alumnoSeleccionado.id,
+                            "si"
+                        ); setModalConfirmar(false)
+                    }}>
+                        SI
+                    </button>
+                    <button onClick={() => { setModalConfirmar(false), setConfirmar("no") }}>NO</button>
+                </div>
+            )}
 
             {inputAgregarTurno && (
                 <div className='turno-item'>

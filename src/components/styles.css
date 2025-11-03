@@ -393,7 +393,7 @@
   min-width: 92px;
   border: solid 1px rgba(0, 0, 0, 0.068);
   margin-right: 5px;
-  
+
   border-radius: 10px 10px 0 0;
   /* Top rounded */
   font-size: 1rem;
@@ -1242,10 +1242,6 @@
   gap: 8px;
 }
 
-.alumno-modal-content li:hover {
-  background-color: #e6f0ec;
-}
-
 /* Updated .editar-alumno-modal - Same as above */
 .editar-alumno-modal,
 .editar-alumno-modal-1 {
@@ -1400,6 +1396,7 @@
 .turnos-editables {
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 10px;
 }
 
@@ -1422,6 +1419,27 @@
   justify-content: space-between;
   gap: 8px;
   width: 100%;
+}
+
+.turno-borrar-wrapper {
+border-radius: 7%;
+    padding: 50px;
+    position: fixed;
+    border: solid 4px #00000036;
+    top: 50%;
+    left: 55%;
+    z-index: 1000;
+    background: #f1f1f1;
+}
+
+.turno-borrar-wrapper button{
+    margin: 0px 12px;
+    background-color: #c2d7cb;
+    padding: 0;
+    border-radius: 20%;
+    width: 40px;
+    border: solid 1px #00000033;
+    height: 28px;
 }
 
 .turno-editable-info p {
