@@ -15,6 +15,13 @@ const PruebaProfesores = () => {
     const [alumnos, setAlumnos] = useState([])
     const colores = ["#d74545", "#2bcb2b", "#ddab4f", "#e7e74b", "#f9f9f9"]
     const autos = ["1", "2", "3", "automatico"]
+    const horasManiana = ["07:45", "08:45", "09:45", "10:45", "11:45"];
+    const horasTarde = ["14:00", "15:00", "16:00", "17:00", "18:00"];
+    const [turnoSeleccionado, setTurnoSeleccionado] = useState("");
+
+
+
+
 
     const { fecha, hoy } = useFechas()
 
@@ -95,6 +102,9 @@ const PruebaProfesores = () => {
         }
     };
 
+    const turnosManiana = turnosOrdenados.filter((t) => t.zona === auto && horasManiana.includes(t.hora));
+    const turnosTarde = turnosOrdenados.filter((t) => t.zona === auto && horasTarde.includes(t.hora));
+
     return (
         <div className='profe_wrapper'>
             <div className="profe-header">
@@ -121,16 +131,73 @@ const PruebaProfesores = () => {
             </div>
 
             <h3 className='profe-auto'>Coche {auto}</h3>
+            {auto && (
+                <div className='profe-alm-wrapper'>
+                    <div className="profe-data-alm">
+                        <h3 className="turno-header" onClick={() => setTurnoSeleccionado("mañana")}>Turno mañana</h3>
+                        {turnoSeleccionado === "mañana" && (
+                            <div className="turno-lista">
+                                {turnosManiana.length > 0 ? (
+                                    turnosManiana.map((e, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => setTurno(e)}
+                                            className="profe-data-alm"
+                                        >
+                                            <p>{e.hora}</p>
+                                            <p>{e.nombre}</p>
+                                            <p
+                                                style={{
+                                                    fontSize: "1.1rem",
+                                                    fontWeight: "bold",
+                                                    marginLeft: "auto",
+                                                }}
+                                            >
+                                                {e.direccion.calle} {e.direccion.altura}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="sin-turnos">No hay turnos de mañana</p>
+                                )}
+                            </div>
+                        )}
 
-            <div className='profe-alm-wrapper'>
-                {turnosOrdenados.filter(t => t.zona === auto).map((e, index) => (
-                    <div key={index} onClick={() => setTurno(e)} className='profe-data-alm'>
-                        <p>{e.hora}</p>
-                        <p>{e.nombre}</p>
-                        <p style={{ fontSize: "1.1rem", fontWeight: "bold", marginLeft: "auto" }}>{e.direccion["calle"]} {e.direccion["altura"]}</p>
                     </div>
-                ))}
-            </div>
+                    {/* 🔹 Sección turno tarde */}
+                    <div className="profe-data-alm">
+                        <h3 className="turno-header" onClick={() => setTurnoSeleccionado("tarde")}>Turno tarde</h3>
+                        {turnoSeleccionado === "tarde" && (
+                            <div className="turno-lista">
+                                {turnosTarde.length > 0 ? (
+                                    turnosTarde.map((e, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => setTurno(e)}
+                                            className="profe-data-alm"
+                                        >
+                                            <p>{e.hora}</p>
+                                            <p>{e.nombre}</p>
+                                            <p
+                                                style={{
+                                                    fontSize: "1.1rem",
+                                                    fontWeight: "bold",
+                                                    marginLeft: "auto",
+                                                }}
+                                            >
+                                                {e.direccion.calle} {e.direccion.altura}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="sin-turnos">No hay turnos de tarde</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
 
             {turno && (
                 <>
@@ -138,14 +205,13 @@ const PruebaProfesores = () => {
                         <div className='evaluacion' style={{ backgroundColor: "#e2eeedff" }}>
                             <p>{turno.hora}</p>
                             <div style={{}}>
-{console.log(evaluacion)}
                                 <a
-                                    style={{  display: "flex", flexDirection: "row" }}
+                                    style={{ display: "flex", flexDirection: "row" }}
                                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.direccion["calle"]} ${turno.direccion["altura"]}, la plata`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {turno.direccion["calle"]} {turno.direccion["altura"]} {turno.direccion["entrecalles"]}<SiGooglemaps style={{color: "#dd1a22"}} />
+                                    {turno.direccion["calle"]} {turno.direccion["altura"]} {turno.direccion["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
                                 </a>
                             </div>
                             <p>{turno.nombre}</p>
