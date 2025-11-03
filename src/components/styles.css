@@ -1428,7 +1428,7 @@ border-radius: 7%;
     border: solid 4px #00000036;
     top: 50%;
     left: 55%;
-    z-index: 1000;
+    z-index: 9999;
     background: #f1f1f1;
 }
 
