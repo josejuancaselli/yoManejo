@@ -267,23 +267,23 @@ const ZonaTurnos = () => {
                     <div className="editar-alumno-modal">
                       <div>
                         <p>Direccion:</p>
-                        <p>{alumnoSeleccionado.direccion["calle"]} n° {alumnoSeleccionado.direccion["altura"]} e/ {alumnoSeleccionado.direccion["entrecalles"]}</p>
+                        <p style={{flex:1}}>{alumnoSeleccionado.direccion["calle"]} n° {alumnoSeleccionado.direccion["altura"]} e/ {alumnoSeleccionado.direccion["entrecalles"]}</p>
                       </div>
                       <div>
                         <p>DNI: </p>
-                        <p>{alumnoSeleccionado.dni}</p>
+                        <p style={{flex:1}}>{alumnoSeleccionado.dni}</p>
                       </div>
                       <div>
-                        <p>Telefono: </p>
-                        <p>{alumnoSeleccionado.telefono}</p>
+                        <p >Telefono: </p>
+                        <p style={{flex:1}}>{alumnoSeleccionado.telefono}</p>
                       </div>
                       <div>
                         <p>Correo: </p>
-                        <p>{alumnoSeleccionado.correo}</p>
+                        <p style={{flex:1}}>{alumnoSeleccionado.correo}</p>
                       </div>
                       <div>
                         <p>Observaciones: </p>
-                        <p style={{ height: "70px" }}>{alumnoSeleccionado.observaciones}</p>
+                        <p style={{ height: "70px" , flex:1}}>{alumnoSeleccionado.observaciones}</p>
                       </div>
                     </div>
                     <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>

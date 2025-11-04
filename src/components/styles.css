@@ -1275,7 +1275,7 @@
 
 .editar-alumno-modal div p,
 .editar-alumno-modal-1 div p {
-  width: 45%;
+  width: 35%;
   font-weight: 500;
   font-size: 1rem;
   color: #222;
@@ -1319,6 +1319,7 @@
   user-select: text;
   outline: none;
   padding: 3px 5px;
+  min-width: 70px;
 }
 
 .editar-alumno-modal input {
