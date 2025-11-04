@@ -7,52 +7,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaSave } from "react-icons/fa";
 
 
-const EditarAlumno = ({
-
-    ventanaAlumno,
-    todosLosTurnos,
-    alumnos,
-    turnoModificandose,
-    setTurnoModificandose,
-    editarAlumno,
-    setNuevoTurno,
-    nuevoTurno,
-    modoEdicion,
-    setModoEdicion,
-    alumnoSeleccionado,
-    handleEditar,
-    agregarTurno,
-    alumno,
-    borrarTurnoReservado,
-    inputAgregarTurno,
-    setInputAgregarTurno,
-    toggleAlumno,
-    borrarAlumno,
-    obtenerHorarios,
-    obtenerDiasDelMes,
-    editarTurnoAlumno,
-    setEditarTurnoAlumno
-}) => {
-
-
-    // Estado para controlar qué turno se está editando
-    const [editarTurnos, setEditarTurnos] = useState(null);
-
-
-
-    // Estado que mantiene una copia editable de los turnos
-    const [turnosEditables, setTurnosEditables] = useState([]);
-
-    // Cargamos los turnos al entrar en modo edición o al cambiar el alumno seleccionado
-    useEffect(() => {
-        if (alumnoSeleccionado.turnos) {
-            setTurnosEditables(alumnoSeleccionado.turnos.map((t) => ({ ...t })));
-        }
-    }, [alumnoSeleccionado]);
-
-
-
-
+const EditarAlumno = ({ editarAlumno, setModoEdicion, alumnoSeleccionado, handleEditar, }) => {
 
     return (
         <>
@@ -60,9 +15,9 @@ const EditarAlumno = ({
                 <div className="editar-alumno-modal">
                     <input name="nombre" value={alumnoSeleccionado.nombre} onChange={handleEditar} />
                 </div>
-
                 <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => setModoEdicion(null)}><IoIosClose /></button>
             </div>
+            
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="editar-alumno-modal-1">
 
@@ -85,20 +40,20 @@ const EditarAlumno = ({
                         />
                     </div>
 
-        <div>
-            <p>DNI:</p>
-            <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
-        </div>
+                    <div>
+                        <p>DNI:</p>
+                        <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
+                    </div>
 
-        <div>
-            <p>Telefono:</p>
-            <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
-        </div>
+                    <div>
+                        <p>Telefono:</p>
+                        <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
+                    </div>
 
-        <div>
-            <p>Correo:</p>
-            <input name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
-        </div>
+                    <div>
+                        <p>Correo:</p>
+                        <input name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
+                    </div>
 
                     <div>
                         <p>Observaciones:</p>

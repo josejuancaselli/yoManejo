@@ -5,6 +5,7 @@ import AlumnoData from './AlumnoData'
 import { useAlumnos } from '../../helpers/useAlumnos'
 import { IoIosClose } from 'react-icons/io'
 import { FaEdit } from 'react-icons/fa'
+import EditarAlumno from './EditarAlumno'
 
 const Alumnos = () => {
 
@@ -29,6 +30,8 @@ const Alumnos = () => {
         normalizar,
         turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
     } = useAlumnos()
+
+    
 
     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
@@ -76,49 +79,13 @@ const Alumnos = () => {
             })}
 
             {dataAlumno && (
-                alumnoSeleccionado && (
-                    <div>
-                        <AlumnoData
-                            setVentanaAlumno={setVentanaAlumno}
-                            toggleAlumno={toggleAlumno}
-                            alumnos={alumnos}
-                            ventanaAlumno={ventanaAlumno}
-                            modoEdicion={modoEdicion}
-                            setModoEdicion={setModoEdicion}
-                            alumnoSeleccionado={alumnoSeleccionado}
-                            handleEditar={handleEditar}
-                            editarAlumno={editarAlumno}
-                            borrarAlumno={borrarAlumno}
-                            borrarTurnoReservado={borrarTurnoReservado}
-                            setAlumnoSeleccionado={setAlumnoSeleccionado}
-                            nuevoTurno={nuevoTurno}
-                            setNuevoTurno={setNuevoTurno}
-                            agregarTurno={agregarTurno}
-                            inputAgregarTurno={inputAgregarTurno}
-                            setInputAgregarTurno={setInputAgregarTurno}
-                            turnoModificandose={turnoModificandose}
-                            setTurnoModificandose={setTurnoModificandose}
-                            todosLosTurnos={todosLosTurnos}
-                            capturarAlumno={capturarAlumno}
-                            alumnosFiltrados={alumnosFiltrados}
-                            editarTurnoAlumno={editarTurnoAlumno}
-                            setEditarTurnoAlumno={setEditarTurnoAlumno}
-                            dataAlumno={dataAlumno}
-                            setDataAlumno={setDataAlumno}
-                        />
-                        <button onClick={() => borrarAlumno(alumnoSeleccionado.id)}>Borrar</button>
-                    </div>
-                )
-            )}
-            {/* <div className='alumno-modal-content'>
-                {listaAlumnos.map((alumno, index) => {
-                    return (
-                        <div key={index}>
+                !modoEdicion ? (
+                    alumnoSeleccionado && (
+                        <div>
                             <AlumnoData
                                 setVentanaAlumno={setVentanaAlumno}
                                 toggleAlumno={toggleAlumno}
                                 alumnos={alumnos}
-                                alumno={alumno}
                                 ventanaAlumno={ventanaAlumno}
                                 modoEdicion={modoEdicion}
                                 setModoEdicion={setModoEdicion}
@@ -140,14 +107,22 @@ const Alumnos = () => {
                                 alumnosFiltrados={alumnosFiltrados}
                                 editarTurnoAlumno={editarTurnoAlumno}
                                 setEditarTurnoAlumno={setEditarTurnoAlumno}
-                               
-
+                                dataAlumno={dataAlumno}
+                                setDataAlumno={setDataAlumno}
                             />
+                            <button onClick={() => borrarAlumno(alumnoSeleccionado.id)}>Borrar</button>
                         </div>
-
                     )
-                })}
-            </div> */}
+                ) : (
+                    <EditarAlumno
+                        alumnoSeleccionado={alumnoSeleccionado}
+                        handleEditar={handleEditar}
+                        editarAlumno={editarAlumno}
+                        setModoEdicion={setModoEdicion}
+                        modoEdicion={modoEdicion}
+                    />
+                )
+            )}
         </div>
     )
 }
