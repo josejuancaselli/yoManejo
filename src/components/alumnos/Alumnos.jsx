@@ -36,6 +36,7 @@ const Alumnos = () => {
     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
     const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
+    const [confirmarBorrado, setConfirmarBorrado] = useState(false)
 
     const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
         const arrayTurnosAlumno = alumnoSeleccionado.turnos;
@@ -110,7 +111,14 @@ const Alumnos = () => {
                                 dataAlumno={dataAlumno}
                                 setDataAlumno={setDataAlumno}
                             />
-                            <button onClick={() => borrarAlumno(alumnoSeleccionado.id)}>Borrar</button>
+                            <button onClick={()=>setConfirmarBorrado(true)}>Borrar</button>
+                            {confirmarBorrado && (
+                                <div>
+                                    <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
+                                    <button onClick={() => { borrarAlumno(alumnoSeleccionado.id), setConfirmarBorrado(false) }}>Confirmar</button>
+                                </div>
+                            )}
+                            
                         </div>
                     )
                 ) : (
