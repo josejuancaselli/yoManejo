@@ -12,6 +12,8 @@ import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import TurnoData from "../alumnos/TurnoData";
 import AlumnoData from "../alumnos/AlumnoData";
+import SeleccionZona from "./SeleccionZona";
+import TurnosSimulados from "./TurnosSimulados";
 
 
 const ZonaTurnos = () => {
@@ -20,46 +22,29 @@ const ZonaTurnos = () => {
   const [reserva, setReserva] = useState({});
   const [turnoSim, setTurnoSim] = useState([]);
   const [simulacion, setSimulacion] = useState(false);
-
-
   const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
   const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
   const [editarTurnos, setEditarTurnos] = useState(null);
   const [turnosEditables, setTurnosEditables] = useState([]);
   const [warningReserva, setWarningReserva] = useState(false);
+  const [botonReserva, setBotonReserva] = useState(true);
 
 
   const { alumnos, setAlumnos, alumnosFiltrados,
     setAlumnosFiltrados, ventanaAlumno,
     setVentanaAlumno, busquedaAlumno,
-    setBusquedaAlumno, modoEdicion,
+    modoEdicion,
     setModoEdicion, alumnoSeleccionado,
     setAlumnoSeleccionado,
     toggleAlumno, handleEditar,
-    editarAlumno, normalizar, handleBusquedaAlumno,
+    editarAlumno,
     borrarAlumno, turnoModificandose, setTurnoModificandose,
     todosLosTurnos,
-    refresh, setRefresh, validacion, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
+    setRefresh, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
   } = useAlumnos()
 
   const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
-
-  // const handleBusqueda = (e) => {
-  //   const valor = e.target.value.toLowerCase();
-  //   setBusquedaAlumno(valor);
-  //   if (valor === "") {
-
-  //     setAlumnosFiltrados([]);
-  //     setRenderBusqueda(false); 
-  //     return;
-  //   }
-
-  //   const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor));
-  //   setAlumnosFiltrados(filtrados);
-  //   setRenderBusqueda(true); 
-  // };
-
 
   // ✅ toggle para agregar o quitar zonas seleccionadas
   const toggleZona = (z) => {
@@ -71,8 +56,6 @@ const ZonaTurnos = () => {
   const borrarTurnoSimulado = (dia, hora, mes, zona, anio) => {
     setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)));
   };
-
-
 
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno, confirmacion) => {
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
@@ -157,93 +140,56 @@ const ZonaTurnos = () => {
     handleEditar(e, index, campo);
   };
 
-
-
   return (
     <div className="zona-turnos-container">
 
       <div className="zonas-section">
         <div className="seleccion-zona">
-          <div className="searchbar-wrapper">
-            <input className="searchbar" type="text" value={busquedaAlumno} onChange={handleBusqueda} placeholder="Buscar alumno..." />
-            {renderBusqueda && (
-              <div className="alumnos-search-wrapper">
-                <ul className="alumnos-list">
-                  {alumnosFiltrados.map((alumno) => (
-                    <li key={alumno.id} className="alumno-item" onClick={() => { { capturarAlumno(alumno.id) } }}>
-                      {alumno.nombre}
-                    </li>
-                  ))}
-                </ul>
-                <button className="turno-btn-cerrar" onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}><IoIosClose /></button>
-              </div>
-            )}
-          </div>
-          <div className="zona-buttons-wrapper">
-            <h2>Zonas</h2>
-            <div className="zona-buttons">
-              <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
-              <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
-              <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
-              <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
-              <button onClick={() => { setSimulacion(true); setWarningReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
-            </div>
-          </div>
+          <SeleccionZona
+            handleBusqueda={handleBusqueda}
+            renderBusqueda={renderBusqueda}
+            alumnosFiltrados={alumnosFiltrados}
+            capturarAlumno={capturarAlumno}
+            setAlumnosFiltrados={setAlumnosFiltrados}
+            setRenderBusqueda={setRenderBusqueda}
+            toggleZona={toggleZona}
+            setSimulacion={setSimulacion}
+            setWarningReserva={setWarningReserva}
+            busquedaAlumno={busquedaAlumno}
+          />
 
           {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
-            <>
-              <ul className="simulacion-card">
-                {turnoSim.map((e, index) => {
-                  return (
-                    <li key={index} className="simulacion-container">
-                      <p className="simulacion-item">
-                        {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")} - {e.hora} hs - Zona {e.zona}
-                      </p>
-                      <button className="simulacion-delete-btn" onClick={() => { borrarTurnoSimulado(e.dia, e.hora, e.mes, e.zona, e.anio) }}><IoIosClose /></button>
-                    </li>
-                  )
-                })}
-              </ul>
-            </>
+            <TurnosSimulados
+              turnoSim={turnoSim}
+              borrarTurnoSimulado={borrarTurnoSimulado}
+            />
           )}
         </div>
 
         <div className="zonas">
-          <>
-            {zonasSeleccionadas.map((zona) => (
-              <div key={zona} className="zona-selected">
-                <Calendario
-                  zona={zona} // 👈 se pasa la zona específica
-                  turnoSim={turnoSim}
-                  setTurnoSim={setTurnoSim}
-                  simulacion={simulacion}
-                  setSimulacion={setSimulacion}
-                  alumnos={alumnos}
-                  reserva={reserva}
-                  setReserva={setReserva}
-                  setAlumnos={setAlumnos}
-                  ventanaReservar={ventanaReservar}
-                  setVentanaReservar={setVentanaReservar}
-                  horariosMañana={horariosMañana}
-                  horariosTarde={horariosTarde}
-                  obtenerHorarios={obtenerHorarios}
-                  horarios={horarios}
-                />
-              </div>
-            ))}
-          </>
+          {zonasSeleccionadas.map((zona) => (
+            <div key={zona} className="zona-selected">
+              <Calendario
+                zona={zona} // 👈 se pasa la zona específica
+                turnoSim={turnoSim}
+                setTurnoSim={setTurnoSim}
+                simulacion={simulacion}
+                setSimulacion={setSimulacion}
+                alumnos={alumnos}
+                reserva={reserva}
+                setReserva={setReserva}
+                setAlumnos={setAlumnos}
+                ventanaReservar={ventanaReservar}
+                setVentanaReservar={setVentanaReservar}
+                horariosMañana={horariosMañana}
+                horariosTarde={horariosTarde}
+                obtenerHorarios={obtenerHorarios}
+                horarios={horarios}
+              />
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* Render de simulación */}
-      {simulacion && (<Simulacion setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} turnoSim={turnoSim} setVentanaReservar={setVentanaReservar} warningReserva={warningReserva} setWarningReserva={setWarningReserva} />)}
-
-      {/* Render de ventana de reservar */}
-      {ventanaReservar && (
-        <div className="reserva-modal-backdrop">
-          <Reservar turnoSim={turnoSim} setSimulacion={setSimulacion} setTurnoSim={setTurnoSim} setVentanaReservar={setVentanaReservar} reserva={reserva} setReserva={setReserva} setRefresh={setRefresh} setWarningReserva={setWarningReserva} />
-        </div>
-      )}
 
       {dataAlumno && (
         <div className="alumno-modal">
@@ -365,6 +311,35 @@ const ZonaTurnos = () => {
           )}
         </div>
       )}
+
+      {/* Render de simulación */}
+      {simulacion && (
+        <Simulacion
+          setSimulacion={setSimulacion}
+          setTurnoSim={setTurnoSim}
+          turnoSim={turnoSim}
+          setVentanaReservar={setVentanaReservar}
+          warningReserva={warningReserva}
+          setWarningReserva={setWarningReserva}
+          botonReserva={botonReserva}
+        />
+      )}
+
+      {/* Render de ventana de reservar */}
+      {ventanaReservar && (
+        <div className="reserva-modal-backdrop">
+          <Reservar
+            setVentanaReservar={setVentanaReservar}
+            setSimulacion={setSimulacion}
+            turnoSim={turnoSim}
+            setReserva={setReserva}
+            setRefresh={setRefresh}
+            setWarningReserva={setWarningReserva}
+            setBotonReserva={setBotonReserva}
+          />
+        </div>
+      )}
+
     </div>
   );
 };

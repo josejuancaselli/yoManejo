@@ -5,8 +5,7 @@ import { IoAdd } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 
 const TurnoData = ({
-    turnosEditables,
-    setTurnosEditables,
+    turnosEditables,    
     editarTurnos,
     setEditarTurnos,
     handleEditarTurno,

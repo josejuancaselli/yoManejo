@@ -1,8 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { useFechas } from "../../helpers/useFechas";
-import AgregarTurno from "./AgregarTurno";
-import { FaEdit } from "react-icons/fa";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import { FaSave } from "react-icons/fa";
 

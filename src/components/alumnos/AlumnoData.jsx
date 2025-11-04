@@ -8,39 +8,11 @@ import { FaDove, FaEdit } from "react-icons/fa";
 
 
 
-const AlumnoData = ({
-    nuevoTurno,
-    ventanaAlumno,
-    todosLosTurnos,
-    alumnos,
-    turnoModificandose,
-    setTurnoModificandose,
-    editarAlumno,
-    setNuevoTurno,
-    modoEdicion,
-    setModoEdicion,
-    alumnoSeleccionado,
-    handleEditar,
-    agregarTurno,
-    alumno,
-    borrarTurnoReservado,
-    inputAgregarTurno,
-    setInputAgregarTurno,
-    toggleAlumno,
-    setVentanaAlumno,
-    borrarAlumno, capturarAlumno, alumnosFiltrados, setAlumnoSeleccionado, editarTurnoAlumno, setEditarTurnoAlumno,dataAlumno, setDataAlumno
-}) => {
-
-    
-    
-
-
-
-
+const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
 
     return (
         <>
-            
+
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
                 <div style={{ display: "flex" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>

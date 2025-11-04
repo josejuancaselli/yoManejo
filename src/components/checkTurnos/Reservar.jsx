@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { db } from "../../firebase/firebaseConfig";
 import { useState } from "react";
 
-const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setTurnoSim, reserva, setReserva, setRefresh, warningReserva, setWarningReserva }) => {
+const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, setRefresh, setWarningReserva, setBotonReserva }) => {
 
 
     const { register, handleSubmit } = useForm();
@@ -32,6 +32,7 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setTurnoSim, re
             setVentanaReservar(false)
             setSimulacion(true)
             setWarningReserva(false)
+            setBotonReserva(false)
             setRefresh(prev => !prev)
 
             console.log("Reserva guardada en Firebase ✅")

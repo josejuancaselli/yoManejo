@@ -2,9 +2,8 @@ import html2canvas from "html2canvas";
 import { useState } from "react";
 
 
-const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar,warningReserva, setWarningReserva }) => {
+const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, warningReserva, setWarningReserva, botonReserva }) => {
 
-    
 
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-list");
@@ -21,7 +20,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar,w
                 link.href = imgData;
                 link.download = "turnos.jpeg";
                 link.click();
-                
+
             })
 
             .finally(() => {
@@ -59,12 +58,14 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar,w
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                    <button className="btn-imprimir" onClick={() => turnoSim.length === 0 ? (() => { alert("No hay turnos para simular"); setSimulacion(false)})() : imprimirJPG()}>
+                    <button className="btn-imprimir" onClick={() => turnoSim.length === 0 ? (() => { alert("No hay turnos para simular"); setSimulacion(false) })() : imprimirJPG()}>
                         Imprimir
                     </button>
-                    <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false); setWarningReserva(false) }}>
-                        Reservar
-                    </button>
+                    {botonReserva && (
+                        <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false); setWarningReserva(false) }}>
+                            Reservar
+                        </button>
+                    )}
                 </div>
             </div>
 
