@@ -95,7 +95,6 @@ export const useAlumnos = () => {
                 setTurnoModificandose({});
                 setModoEdicion(false);
             }
-
         } catch (error) {
             console.error("Error actualizando alumno:", error);
         }
