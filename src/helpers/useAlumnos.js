@@ -11,7 +11,7 @@ export const useAlumnos = () => {
     const [modoEdicion, setModoEdicion] = useState(null) // modo edicion para el formulario
     const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({}) // aca guardo los datos del formulario para editar el alumno
     const [turnoModificandose, setTurnoModificandose] = useState({}) // aca guardo los datos del formulario para editar el turno
-    
+
     const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat()
     const validacion = todosLosTurnos.some((turno) =>
         turno.dia === turnoModificandose.dia &&
@@ -53,33 +53,33 @@ export const useAlumnos = () => {
 
     };
 
-const handleEditar = (e, idxTurno = null, campoTurno = null, subCampoDireccion = null) => {
-    const { name, value } = e.target;
+    const handleEditar = (e, idxTurno = null, campoTurno = null, subCampoDireccion = null) => {
+        const { name, value } = e.target;
 
-    // Campos numéricos
-    const camposNumericos = ["dia", "mes", "anio"];
-    const valor = camposNumericos.includes(name) || camposNumericos.includes(campoTurno) ? Number(value) : value;
+        // Campos numéricos
+        const camposNumericos = ["dia", "mes", "anio"];
+        const valor = camposNumericos.includes(name) || camposNumericos.includes(campoTurno) ? Number(value) : value;
 
-    if (subCampoDireccion) {
-        // Estamos editando un subcampo de la dirección
-        setAlumnoSeleccionado(prev => ({
-            ...prev,
-            direccion: {
-                ...prev.direccion,
-                [subCampoDireccion]: valor
-            }
-        }));
-    } else if (idxTurno !== null && campoTurno) {
-        // Estamos editando un campo dentro de un turno
-        const turnosActualizados = [...alumnoSeleccionado.turnos];
-        turnosActualizados[idxTurno][campoTurno] = valor;
-        setAlumnoSeleccionado({ ...alumnoSeleccionado, turnos: turnosActualizados });
-        setTurnoModificandose({ ...turnoModificandose, [campoTurno]: valor });
-    } else {
-        // Campo simple del alumno
-        setAlumnoSeleccionado({ ...alumnoSeleccionado, [name]: valor });
-    }
-};
+        if (subCampoDireccion) {
+            // Estamos editando un subcampo de la dirección
+            setAlumnoSeleccionado(prev => ({
+                ...prev,
+                direccion: {
+                    ...prev.direccion,
+                    [subCampoDireccion]: valor
+                }
+            }));
+        } else if (idxTurno !== null && campoTurno) {
+            // Estamos editando un campo dentro de un turno
+            const turnosActualizados = [...alumnoSeleccionado.turnos];
+            turnosActualizados[idxTurno][campoTurno] = valor;
+            setAlumnoSeleccionado({ ...alumnoSeleccionado, turnos: turnosActualizados });
+            setTurnoModificandose({ ...turnoModificandose, [campoTurno]: valor });
+        } else {
+            // Campo simple del alumno
+            setAlumnoSeleccionado({ ...alumnoSeleccionado, [name]: valor });
+        }
+    };
 
 
     const editarAlumno = async (id) => {
@@ -117,10 +117,12 @@ const handleEditar = (e, idxTurno = null, campoTurno = null, subCampoDireccion =
     const borrarAlumno = async (id) => {
         try {
             await deleteDoc(doc(db, "alumnos", id));
+            setRefresh(prev => !prev); // 👈 esto “dispara” el useEffect
             console.log(`Alumno con id ${id} borrado correctamente`);
         } catch (error) {
             console.error("Error borrando alumno:", error);
         }
+        console.log(id)
     };
 
 
@@ -129,6 +131,6 @@ const handleEditar = (e, idxTurno = null, campoTurno = null, subCampoDireccion =
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
         setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
         toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose,
-        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion, 
+        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion,
     }
 }

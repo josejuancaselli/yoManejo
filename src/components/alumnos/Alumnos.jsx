@@ -77,10 +77,10 @@ const Alumnos = () => {
     return (
         <div>
             <input type="text" value={busquedaAlumno} onChange={handleBusqueda} />
-            <div>
+            <div className='alumno-modal-content'>
                 {listaAlumnos.map((alumno, index) => {
                     return (
-                        <div key={index}>
+                        <div  key={index}>
                             <AlumnoData
                                 setVentanaAlumno={setVentanaAlumno}
                                 toggleAlumno={toggleAlumno}
