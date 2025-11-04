@@ -4,6 +4,7 @@ import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firesto
 import AlumnoData from './AlumnoData'
 import { useAlumnos } from '../../helpers/useAlumnos'
 import { IoIosClose } from 'react-icons/io'
+import { FaEdit } from 'react-icons/fa'
 
 const Alumnos = () => {
 
@@ -66,8 +67,47 @@ const Alumnos = () => {
     return (
         <div>
             <input type="text" value={busquedaAlumno} onChange={handleBusqueda} />
-
-            <div className='alumno-modal-content'>
+            {listaAlumnos.map((alumno, index) => {
+                return (
+                    <div key={index}>
+                        <h2 onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }}>{alumno.nombre}</h2>
+                    </div>
+                )
+            })}
+            
+            {dataAlumno && (
+                alumnoSeleccionado && (
+                    <AlumnoData
+                        setVentanaAlumno={setVentanaAlumno}
+                        toggleAlumno={toggleAlumno}
+                        alumnos={alumnos}                        
+                        ventanaAlumno={ventanaAlumno}
+                        modoEdicion={modoEdicion}
+                        setModoEdicion={setModoEdicion}
+                        alumnoSeleccionado={alumnoSeleccionado}
+                        handleEditar={handleEditar}
+                        editarAlumno={editarAlumno}
+                        borrarAlumno={borrarAlumno}
+                        borrarTurnoReservado={borrarTurnoReservado}
+                        setAlumnoSeleccionado={setAlumnoSeleccionado}
+                        nuevoTurno={nuevoTurno}
+                        setNuevoTurno={setNuevoTurno}
+                        agregarTurno={agregarTurno}
+                        inputAgregarTurno={inputAgregarTurno}
+                        setInputAgregarTurno={setInputAgregarTurno}
+                        turnoModificandose={turnoModificandose}
+                        setTurnoModificandose={setTurnoModificandose}
+                        todosLosTurnos={todosLosTurnos}
+                        capturarAlumno={capturarAlumno}
+                        alumnosFiltrados={alumnosFiltrados}
+                        editarTurnoAlumno={editarTurnoAlumno}
+                        setEditarTurnoAlumno={setEditarTurnoAlumno}
+                        dataAlumno={dataAlumno}
+                        setDataAlumno={setDataAlumno}
+                    />
+                )
+            )}
+            {/* <div className='alumno-modal-content'>
                 {listaAlumnos.map((alumno, index) => {
                     return (
                         <div key={index}>
@@ -104,7 +144,7 @@ const Alumnos = () => {
 
                     )
                 })}
-            </div>
+            </div> */}
         </div>
     )
 }
