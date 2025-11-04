@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"; // hooks de React
-import { useFechas } from "../../helpers/useFechas";
-import DiasDelMes from "./DiasDelMes"; // componente que renderiza los días del mes
+import { useFechas } from "../../../helpers/useFechas";
+import DiasDelMes from "./DiasDelMes";
+
 
 
 // Componente principal del calendario

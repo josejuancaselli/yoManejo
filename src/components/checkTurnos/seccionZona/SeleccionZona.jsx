@@ -14,8 +14,6 @@ const SeleccionZona = ({
     setWarningReserva
 }) => {
 
-
-
     return (
         <>
             <div className="searchbar-wrapper">

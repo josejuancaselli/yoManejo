@@ -3,10 +3,6 @@ import React, { useRef, useState } from 'react'
 
 const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosMañana, horariosTarde, toggleHora, reservado, alumnos, fecha, horarios, dia, ventanaDia, ventanaDireccion, setVentanaDireccion }) => {
 
-
-
-
-
     return (
         <>
 
@@ -26,12 +22,8 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     t.zona.toString() === turno.zona.toString()
                                 )
                             );
-
-
                             return (
-
                                 <div key={hora} style={{ position: "relative", display: "inline-block", margin: "0 2px" }}>
-
                                     <button
                                         key={hora}
                                         className="horario-btn"
@@ -73,7 +65,6 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                     <div style={{ display: "flex", flexDirection: "row" }}>
 
                         {horariosTarde().map((hora) => {
-
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>
                                 alumno.turnos.some(t =>
@@ -86,9 +77,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                             );
 
                             return (
-
                                 <div key={hora} style={{ position: "relative", display: "inline-block", margin: "0 2px" }}>
-
                                     <button
                                         key={hora}
                                         className="horario-btn"

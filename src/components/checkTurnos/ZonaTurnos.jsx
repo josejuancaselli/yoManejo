@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
-import Calendario from "./Calendario";
-import Prueba from "./Prueba";
 import Simulacion from "./Simulacion";
 import Reservar from "./Reservar";
 import { db } from "../../firebase/firebaseConfig";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { useAlumnos } from "../../helpers/useAlumnos";
 import { useFechas } from "../../helpers/useFechas";
 import EditarAlumno from "../alumnos/EditarAlumno";
-import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
 import TurnoData from "../alumnos/TurnoData";
 import AlumnoData from "../alumnos/AlumnoData";
-import SeleccionZona from "./SeleccionZona";
-import TurnosSimulados from "./TurnosSimulados";
+import ZonasSection from "./ZonasSection";
 
 
 const ZonaTurnos = () => {
@@ -143,53 +138,33 @@ const ZonaTurnos = () => {
   return (
     <div className="zona-turnos-container">
 
-      <div className="zonas-section">
-        <div className="seleccion-zona">
-          <SeleccionZona
-            handleBusqueda={handleBusqueda}
-            renderBusqueda={renderBusqueda}
-            alumnosFiltrados={alumnosFiltrados}
-            capturarAlumno={capturarAlumno}
-            setAlumnosFiltrados={setAlumnosFiltrados}
-            setRenderBusqueda={setRenderBusqueda}
-            toggleZona={toggleZona}
-            setSimulacion={setSimulacion}
-            setWarningReserva={setWarningReserva}
-            busquedaAlumno={busquedaAlumno}
-          />
-
-          {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
-            <TurnosSimulados
-              turnoSim={turnoSim}
-              borrarTurnoSimulado={borrarTurnoSimulado}
-            />
-          )}
-        </div>
-
-        <div className="zonas">
-          {zonasSeleccionadas.map((zona) => (
-            <div key={zona} className="zona-selected">
-              <Calendario
-                zona={zona} // 👈 se pasa la zona específica
-                turnoSim={turnoSim}
-                setTurnoSim={setTurnoSim}
-                simulacion={simulacion}
-                setSimulacion={setSimulacion}
-                alumnos={alumnos}
-                reserva={reserva}
-                setReserva={setReserva}
-                setAlumnos={setAlumnos}
-                ventanaReservar={ventanaReservar}
-                setVentanaReservar={setVentanaReservar}
-                horariosMañana={horariosMañana}
-                horariosTarde={horariosTarde}
-                obtenerHorarios={obtenerHorarios}
-                horarios={horarios}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      <ZonasSection
+        handleBusqueda={handleBusqueda}
+        renderBusqueda={renderBusqueda}
+        alumnosFiltrados={alumnosFiltrados}
+        capturarAlumno={capturarAlumno}
+        setAlumnosFiltrados={setAlumnosFiltrados}
+        setRenderBusqueda={setRenderBusqueda}
+        toggleZona={toggleZona}
+        setSimulacion={setSimulacion}
+        simulacion={simulacion}
+        ventanaReservar={ventanaReservar}
+        setVentanaReservar={setVentanaReservar}
+        setWarningReserva={setWarningReserva}
+        busquedaAlumno={busquedaAlumno}
+        turnoSim={turnoSim}
+        setTurnoSim={setTurnoSim}
+        borrarTurnoSimulado={borrarTurnoSimulado}
+        zonasSeleccionadas={zonasSeleccionadas}
+        alumnos={alumnos}
+        setAlumnos={setAlumnos}
+        reserva={reserva}
+        setReserva={setReserva}
+        horariosMañana={horariosMañana}
+        horariosTarde={horariosTarde}
+        obtenerHorarios={obtenerHorarios}
+        horarios={horarios}
+      />
 
       {dataAlumno && (
         <div className="alumno-modal">
