@@ -28,7 +28,8 @@ const ZonasSection = ({
     horariosMañana,
     horariosTarde,
     obtenerHorarios,
-    horarios
+    horarios,
+    setBotonReserva
 }) => {
     return (
         <div className="zonas-section">
@@ -44,6 +45,7 @@ const ZonasSection = ({
                     setSimulacion={setSimulacion}
                     setWarningReserva={setWarningReserva}
                     busquedaAlumno={busquedaAlumno}
+                    setBotonReserva={setBotonReserva}
                 />
 
                 {turnoSim.length > 0 && !simulacion && !ventanaReservar && (

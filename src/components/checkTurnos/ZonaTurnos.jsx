@@ -162,6 +162,7 @@ const ZonaTurnos = () => {
         horariosTarde={horariosTarde}
         obtenerHorarios={obtenerHorarios}
         horarios={horarios}
+        setBotonReserva={setBotonReserva}
       />
 
       {dataAlumno && (

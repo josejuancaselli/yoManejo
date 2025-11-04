@@ -1,0 +1,71 @@
+.alumnos-wrapper {
+    background-color: #5cad97a8;
+    margin: 12px auto;
+    padding: 20px 0;
+    width: 95%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.searchbar {
+    margin-left: 12px;
+    background-color: #f9f7f7;
+    width: 20rem;
+    padding: 0.75rem 1.25rem;
+    padding-left: 3rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(45, 59, 100, 0.15);
+    font-style: italic;
+    /* background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232D3B64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat 1rem center/1rem; */
+}
+
+.alumnos-content {
+    position: relative;
+    margin: 24px 0;
+}
+
+.alumnos-content:hover {}
+
+.alumnos-content h2 {
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+.alumnos {
+    background-color: #f9f9f9;
+    margin: 12px 8px;
+    border-radius: 3%;
+    box-shadow: 0 0 8px rgba(104, 104, 104, 0.3);
+    border: solid 1px #00000030;
+    padding: 0 16px;
+    width: 20%;
+}
+
+.alumnos:hover {
+    background-color: #dbdbdb;
+    transition: ease-in 0.3s;
+    cursor: pointer;
+}
+
+.alumnos:active{
+    transform: scale(0.99) translateY(2px);
+    /* transform: translateY(3px);  */
+    box-shadow: 0 0 8px rgba(104, 104, 104, 0.514);
+    transition: transform 0.05s ease, background-color 0.05s ease;
+    background-color: #cfcfcf;
+}
+
+
+
+.alumno-data {
+    position: fixed;
+    /* top: 50%; */
+    /* right: 50%; */
+    left: 35%;
+    bottom: 40%;
+    border: solid 1px #00000024;
+    border-radius: 20px;
+    background-color: #e1dfdf;
+    padding: 20px;
+    width: 30%;
+}

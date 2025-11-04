@@ -11,7 +11,8 @@ const SeleccionZona = ({
     setRenderBusqueda,
     toggleZona,
     setSimulacion,
-    setWarningReserva
+    setWarningReserva,
+    setBotonReserva
 }) => {
 
     return (
@@ -38,7 +39,7 @@ const SeleccionZona = ({
                     <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
                     <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
                     <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
-                    <button onClick={() => { setSimulacion(true); setWarningReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>
+                    <button onClick={() => { setSimulacion(true); setWarningReserva(true); setBotonReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>
                         +
                     </button>
                 </div>

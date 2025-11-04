@@ -661,6 +661,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 400px;
   width: 90vw;
+  height: 100%;
   /* Responsive width */
   background: #f0fffe;
   /* Light teal background matching theme */
