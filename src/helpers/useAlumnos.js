@@ -142,6 +142,7 @@ export const useAlumnos = () => {
         try {
             await deleteDoc(doc(db, "alumnos", id));
             setRefresh(prev => !prev); // 👈 esto “dispara” el useEffect
+            setDataAlumno(false)
             console.log(`Alumno con id ${id} borrado correctamente`);
         } catch (error) {
             console.error("Error borrando alumno:", error);

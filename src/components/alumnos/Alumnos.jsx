@@ -74,37 +74,40 @@ const Alumnos = () => {
                     </div>
                 )
             })}
-            
+
             {dataAlumno && (
                 alumnoSeleccionado && (
-                    <AlumnoData
-                        setVentanaAlumno={setVentanaAlumno}
-                        toggleAlumno={toggleAlumno}
-                        alumnos={alumnos}                        
-                        ventanaAlumno={ventanaAlumno}
-                        modoEdicion={modoEdicion}
-                        setModoEdicion={setModoEdicion}
-                        alumnoSeleccionado={alumnoSeleccionado}
-                        handleEditar={handleEditar}
-                        editarAlumno={editarAlumno}
-                        borrarAlumno={borrarAlumno}
-                        borrarTurnoReservado={borrarTurnoReservado}
-                        setAlumnoSeleccionado={setAlumnoSeleccionado}
-                        nuevoTurno={nuevoTurno}
-                        setNuevoTurno={setNuevoTurno}
-                        agregarTurno={agregarTurno}
-                        inputAgregarTurno={inputAgregarTurno}
-                        setInputAgregarTurno={setInputAgregarTurno}
-                        turnoModificandose={turnoModificandose}
-                        setTurnoModificandose={setTurnoModificandose}
-                        todosLosTurnos={todosLosTurnos}
-                        capturarAlumno={capturarAlumno}
-                        alumnosFiltrados={alumnosFiltrados}
-                        editarTurnoAlumno={editarTurnoAlumno}
-                        setEditarTurnoAlumno={setEditarTurnoAlumno}
-                        dataAlumno={dataAlumno}
-                        setDataAlumno={setDataAlumno}
-                    />
+                    <div>
+                        <AlumnoData
+                            setVentanaAlumno={setVentanaAlumno}
+                            toggleAlumno={toggleAlumno}
+                            alumnos={alumnos}
+                            ventanaAlumno={ventanaAlumno}
+                            modoEdicion={modoEdicion}
+                            setModoEdicion={setModoEdicion}
+                            alumnoSeleccionado={alumnoSeleccionado}
+                            handleEditar={handleEditar}
+                            editarAlumno={editarAlumno}
+                            borrarAlumno={borrarAlumno}
+                            borrarTurnoReservado={borrarTurnoReservado}
+                            setAlumnoSeleccionado={setAlumnoSeleccionado}
+                            nuevoTurno={nuevoTurno}
+                            setNuevoTurno={setNuevoTurno}
+                            agregarTurno={agregarTurno}
+                            inputAgregarTurno={inputAgregarTurno}
+                            setInputAgregarTurno={setInputAgregarTurno}
+                            turnoModificandose={turnoModificandose}
+                            setTurnoModificandose={setTurnoModificandose}
+                            todosLosTurnos={todosLosTurnos}
+                            capturarAlumno={capturarAlumno}
+                            alumnosFiltrados={alumnosFiltrados}
+                            editarTurnoAlumno={editarTurnoAlumno}
+                            setEditarTurnoAlumno={setEditarTurnoAlumno}
+                            dataAlumno={dataAlumno}
+                            setDataAlumno={setDataAlumno}
+                        />
+                        <button onClick={() => borrarAlumno(alumnoSeleccionado.id)}>Borrar</button>
+                    </div>
                 )
             )}
             {/* <div className='alumno-modal-content'>

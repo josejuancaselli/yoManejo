@@ -39,8 +39,8 @@ const AlumnoData = ({
 
 
     return (
-        <div>
-            {console.log(dataAlumno)}
+        <>
+            
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
                 <div style={{ display: "flex" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>
@@ -72,7 +72,7 @@ const AlumnoData = ({
                 </div>
                 <button className="turnos-btn-editar" onClick={() => setModoEdicion(true)}><FaEdit /></button>
             </div>
-        </div>
+        </>
     )
 }
 

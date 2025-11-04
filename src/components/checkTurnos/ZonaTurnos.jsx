@@ -174,7 +174,6 @@ const ZonaTurnos = () => {
                       {alumno.nombre}
                     </li>
                   ))}
-
                 </ul>
                 <button className="turno-btn-cerrar" onClick={() => { setAlumnosFiltrados([]), setRenderBusqueda(false) }}><IoIosClose /></button>
               </div>
@@ -190,7 +189,6 @@ const ZonaTurnos = () => {
               <button onClick={() => { setSimulacion(true); setWarningReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>+</button>
             </div>
           </div>
-
 
           {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
             <>
@@ -208,10 +206,7 @@ const ZonaTurnos = () => {
               </ul>
             </>
           )}
-
         </div>
-
-
 
         <div className="zonas">
           <>
@@ -237,7 +232,6 @@ const ZonaTurnos = () => {
               </div>
             ))}
           </>
-
         </div>
       </div>
 
@@ -253,7 +247,6 @@ const ZonaTurnos = () => {
 
       {dataAlumno && (
         <div className="alumno-modal">
-
           {!modoEdicion ? (
             alumnoSeleccionado && (
               <div className="alumno-modal-content">
@@ -317,31 +310,10 @@ const ZonaTurnos = () => {
                 </div>
               </div>
             )
-
           ) : (
-            <div className="alumno-modal-content">
-              alumnoSeleccionado && (
-              <EditarAlumno
-                nuevoTurno={nuevoTurno}
-                setNuevoTurno={setNuevoTurno}
-                alumnoSeleccionado={alumnoSeleccionado}
-                handleEditar={handleEditar}
-                obtenerDiasDelMes={obtenerDiasDelMes}
-                obtenerHorarios={obtenerHorarios}
-                borrarTurnoReservado={borrarTurnoReservado}
-                editarAlumno={editarAlumno}
-                setModoEdicion={setModoEdicion}
-                modoEdicion={modoEdicion}
-                setInputAgregarTurno={setInputAgregarTurno}
-                inputAgregarTurno={inputAgregarTurno}
-                agregarTurno={agregarTurno}
-                editarTurnoAlumno={editarTurnoAlumno}
-                setEditarTurnoAlumno={setEditarTurnoAlumno}
-              />
-
-              <div className="turnos-editables">
-                <h3>Turnos:</h3>
-                <TurnoData
+            alumnoSeleccionado && (
+              <div className="alumno-modal-content">
+                <EditarAlumno
                   nuevoTurno={nuevoTurno}
                   setNuevoTurno={setNuevoTurno}
                   alumnoSeleccionado={alumnoSeleccionado}
@@ -357,23 +329,39 @@ const ZonaTurnos = () => {
                   agregarTurno={agregarTurno}
                   editarTurnoAlumno={editarTurnoAlumno}
                   setEditarTurnoAlumno={setEditarTurnoAlumno}
-                  handleEditarTurno={handleEditarTurno}
-                  turnosEditables={turnosEditables}
-                  setTurnosEditables={setTurnosEditables}
-                  editarTurnos={editarTurnos}
-                  setEditarTurnos={setEditarTurnos}
-
                 />
+
+                <div className="turnos-editables">
+                  <h3>Turnos:</h3>
+                  <TurnoData
+                    nuevoTurno={nuevoTurno}
+                    setNuevoTurno={setNuevoTurno}
+                    alumnoSeleccionado={alumnoSeleccionado}
+                    handleEditar={handleEditar}
+                    obtenerDiasDelMes={obtenerDiasDelMes}
+                    obtenerHorarios={obtenerHorarios}
+                    borrarTurnoReservado={borrarTurnoReservado}
+                    editarAlumno={editarAlumno}
+                    setModoEdicion={setModoEdicion}
+                    modoEdicion={modoEdicion}
+                    setInputAgregarTurno={setInputAgregarTurno}
+                    inputAgregarTurno={inputAgregarTurno}
+                    agregarTurno={agregarTurno}
+                    editarTurnoAlumno={editarTurnoAlumno}
+                    setEditarTurnoAlumno={setEditarTurnoAlumno}
+                    handleEditarTurno={handleEditarTurno}
+                    turnosEditables={turnosEditables}
+                    setTurnosEditables={setTurnosEditables}
+                    editarTurnos={editarTurnos}
+                    setEditarTurnos={setEditarTurnos}
+                  />
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
+                  <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
+                </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-                <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
-              </div>
-
-              )
-
-            </div>
+            )
           )}
         </div>
       )}
