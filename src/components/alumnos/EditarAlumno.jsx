@@ -85,6 +85,20 @@ const EditarAlumno = ({
                         />
                     </div>
 
+        <div>
+            <p>DNI:</p>
+            <input name="dni" value={alumnoSeleccionado.dni} onChange={handleEditar} />
+        </div>
+
+        <div>
+            <p>Telefono:</p>
+            <input name="telefono" value={alumnoSeleccionado.telefono} onChange={handleEditar} />
+        </div>
+
+        <div>
+            <p>Correo:</p>
+            <input name="correo" value={alumnoSeleccionado.correo} onChange={handleEditar} />
+        </div>
 
                     <div>
                         <p>Observaciones:</p>

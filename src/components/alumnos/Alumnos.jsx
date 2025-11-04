@@ -3,10 +3,10 @@ import { db } from '../../firebase/firebaseConfig'
 import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore'
 import AlumnoData from './AlumnoData'
 import { useAlumnos } from '../../helpers/useAlumnos'
+import { IoIosClose } from 'react-icons/io'
 
 const Alumnos = () => {
-    const [dataAlumno, setDataAlumno] = useState(false)
-    const [renderBusqueda, setRenderBusqueda] = useState(false)
+
     const {
         alumnos,
         setAlumnos,
@@ -26,11 +26,12 @@ const Alumnos = () => {
         handleBusquedaAlumno,
         borrarAlumno,
         normalizar,
-        turnoModificandose, setTurnoModificandose, todosLosTurnos,
+        turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
     } = useAlumnos()
 
     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
+    const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
 
     const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
         const arrayTurnosAlumno = alumnoSeleccionado.turnos;
@@ -58,29 +59,18 @@ const Alumnos = () => {
         }
     };
 
-    const handleBusqueda = (e) => {
-        const value = e.target.value.toLowerCase();
-        setBusquedaAlumno(value);
-        if (value === "") {
-            // Si el input está vacío, dejamos el array vacío
-            setAlumnosFiltrados([]);
 
-            return;
-        }
-        // Filtramos los alumnos
-        const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(value));
-        setAlumnosFiltrados(filtrados);
-    };
 
     const listaAlumnos = alumnosFiltrados.length === 0 ? alumnos : alumnosFiltrados // constante donde se elije mostrar alumnos filtrados por busqueda o a todos los alumnos
 
     return (
         <div>
             <input type="text" value={busquedaAlumno} onChange={handleBusqueda} />
+
             <div className='alumno-modal-content'>
                 {listaAlumnos.map((alumno, index) => {
                     return (
-                        <div  key={index}>
+                        <div key={index}>
                             <AlumnoData
                                 setVentanaAlumno={setVentanaAlumno}
                                 toggleAlumno={toggleAlumno}
@@ -103,6 +93,11 @@ const Alumnos = () => {
                                 turnoModificandose={turnoModificandose}
                                 setTurnoModificandose={setTurnoModificandose}
                                 todosLosTurnos={todosLosTurnos}
+                                capturarAlumno={capturarAlumno}
+                                alumnosFiltrados={alumnosFiltrados}
+                                editarTurnoAlumno={editarTurnoAlumno}
+                                setEditarTurnoAlumno={setEditarTurnoAlumno}
+                               
 
                             />
                         </div>

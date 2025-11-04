@@ -19,8 +19,8 @@ const ZonaTurnos = () => {
   const [reserva, setReserva] = useState({});
   const [turnoSim, setTurnoSim] = useState([]);
   const [simulacion, setSimulacion] = useState(false);
-  const [dataAlumno, setDataAlumno] = useState(false)
-  const [renderBusqueda, setRenderBusqueda] = useState(false)
+  
+  
   const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
   const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
@@ -39,25 +39,25 @@ const ZonaTurnos = () => {
     editarAlumno, normalizar, handleBusquedaAlumno,
     borrarAlumno, turnoModificandose, setTurnoModificandose,
     todosLosTurnos,
-    refresh, setRefresh, validacion,
+    refresh, setRefresh, validacion,handleBusqueda,renderBusqueda, setRenderBusqueda,dataAlumno, setDataAlumno,capturarAlumno
   } = useAlumnos()
 
   const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
 
-  const handleBusqueda = (e) => {
-    const valor = e.target.value.toLowerCase();
-    setBusquedaAlumno(valor);
-    if (valor === "") {
-      // Si el input está vacío, dejamos el array vacío
-      setAlumnosFiltrados([]);
-      setRenderBusqueda(false); // opcional, si depende de que haya resultados
-      return;
-    }
-    // Filtramos los alumnos
-    const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor));
-    setAlumnosFiltrados(filtrados);
-    setRenderBusqueda(true); //  se activa solo si hay algo escrito
-  };
+  // const handleBusqueda = (e) => {
+  //   const valor = e.target.value.toLowerCase();
+  //   setBusquedaAlumno(valor);
+  //   if (valor === "") {
+      
+  //     setAlumnosFiltrados([]);
+  //     setRenderBusqueda(false); 
+  //     return;
+  //   }
+    
+  //   const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor));
+  //   setAlumnosFiltrados(filtrados);
+  //   setRenderBusqueda(true); 
+  // };
 
 
   // ✅ toggle para agregar o quitar zonas seleccionadas
@@ -71,13 +71,7 @@ const ZonaTurnos = () => {
     setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)));
   };
 
-  const capturarAlumno = (id) => { // funcion que setea el alumnoSeleccionado a partir del Id
-    const almn = alumnosFiltrados.filter((e) => e.id === id)
-    const alumnoCopiaProfunda = { ...almn[0], turnos: almn[0].turnos ? almn[0].turnos.map(t => ({ ...t })) : [] }
-    setAlumnoSeleccionado(alumnoCopiaProfunda)
-    setDataAlumno(true)
-    setRenderBusqueda(false)
-  }
+
 
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno, confirmacion) => {
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);

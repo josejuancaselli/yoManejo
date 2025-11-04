@@ -11,6 +11,8 @@ export const useAlumnos = () => {
     const [modoEdicion, setModoEdicion] = useState(null) // modo edicion para el formulario
     const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({}) // aca guardo los datos del formulario para editar el alumno
     const [turnoModificandose, setTurnoModificandose] = useState({}) // aca guardo los datos del formulario para editar el turno
+    const [renderBusqueda, setRenderBusqueda] = useState(false)
+    const [dataAlumno, setDataAlumno] = useState(false)
 
     const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat()
     const validacion = todosLosTurnos.some((turno) =>
@@ -107,11 +109,34 @@ export const useAlumnos = () => {
             .toLowerCase()                // minúscula
             .trim()                       // quita espacios al inicio y fin
 
-    const handleBusquedaAlumno = (e) => { // funcion que setea con alumnos la const alumnosFiltrados. Puede ser 1, 2 o mil alumnos
-        setBusquedaAlumno(e.target.value)
-        const valor = e.target.value.toLowerCase()
-        const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor))
-        setAlumnosFiltrados(filtrados)
+    // const handleBusquedaAlumno = (e) => { 
+    //     setBusquedaAlumno(e.target.value)
+    //     const valor = e.target.value.toLowerCase()
+    //     const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor))
+    //     setAlumnosFiltrados(filtrados)
+    // }
+
+    const handleBusqueda = (e) => {
+        const valor = e.target.value.toLowerCase();
+        setBusquedaAlumno(valor);
+        if (valor === "") {
+            // Si el input está vacío, dejamos el array vacío
+            setAlumnosFiltrados([]);
+            setRenderBusqueda(false); // opcional, si depende de que haya resultados
+            return;
+        }
+        // Filtramos los alumnos
+        const filtrados = alumnos.filter((alumno) => normalizar(alumno.nombre).includes(valor));
+        setAlumnosFiltrados(filtrados);
+        setRenderBusqueda(true); //  se activa solo si hay algo escrito
+    };
+
+    const capturarAlumno = (id) => { // funcion que setea el alumnoSeleccionado a partir del Id
+        const almn = alumnosFiltrados.filter((e) => e.id === id)
+        const alumnoCopiaProfunda = { ...almn[0], turnos: almn[0].turnos ? almn[0].turnos.map(t => ({ ...t })) : [] }
+        setAlumnoSeleccionado(alumnoCopiaProfunda)
+        setDataAlumno(true)
+        setRenderBusqueda(false)
     }
 
     const borrarAlumno = async (id) => {
@@ -130,7 +155,7 @@ export const useAlumnos = () => {
     return {
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
         setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
-        toggleAlumno, handleEditar, editarAlumno, normalizar, handleBusquedaAlumno, borrarAlumno, turnoModificandose,
-        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion,
+        toggleAlumno, handleEditar, editarAlumno, normalizar, borrarAlumno, turnoModificandose,
+        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno,capturarAlumno
     }
 }
