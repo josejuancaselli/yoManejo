@@ -1,6 +1,6 @@
-.body {
-  background-color: #f9f7f7;
-
+body {
+  background-color: #fbfbfb;
+  margin: 0;
 }
 
 /* NAV BAR */
@@ -8,9 +8,10 @@
 /* Global styles for the Inicio component - ensure full-screen and no overflow */
 .inicio-container {
   display: flex;
+  
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh; */
+  
   max-width: 100vw;
   background-color: #f0fffe;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -95,7 +96,7 @@
   font-size: 0.9rem;
   padding: 8px 12px;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #ffffff52;
   /* Subtle background for links */
   transition: background-color 0.25s ease, transform 0.2s ease;
   flex: 1;
@@ -113,7 +114,7 @@
 }
 
 .nav-bar .auto-title:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgb(122, 122, 122);
   transform: scale(1.05);
 }
 
@@ -147,74 +148,12 @@
   box-shadow: 0 6px 14px rgba(34, 34, 34, 0.6);
 }
 
-/* Media query for small screens (e.g., 400px and below) */
-@media (max-width: 400px) {
-  .nav-bar {
-    gap: 6px;
-    /* Tighter gap */
-    padding: 8px 3px;
-    /* Reduced padding */
-  }
-
-  .nav-bar .auto-title {
-    font-size: 0.8rem;
-    /* Smaller font */
-    padding: 6px 10px;
-    /* Smaller padding */
-    min-width: 60px;
-    /* Smaller minimum width */
-    max-width: 120px;
-    /* Smaller maximum width */
-  }
-
-  .nav-bar button {
-    font-size: 0.7rem;
-    /* Smaller font */
-    padding: 6px 10px;
-    /* Smaller padding */
-    min-width: 80px;
-    /* Smaller minimum width */
-  }
-}
-
-/* Additional media query for very small screens (360px and below) */
-@media (max-width: 360px) {
-  .nav-bar {
-    gap: 4px;
-    /* Even tighter gap */
-    padding: 6px 2px;
-    /* Minimal padding */
-  }
-
-  .nav-bar .auto-title {
-    font-size: 0.7rem;
-    /* Very small font */
-    padding: 4px 8px;
-    /* Minimal padding */
-    min-width: 50px;
-    /* Very small minimum width */
-    max-width: 100px;
-    /* Very small maximum width */
-  }
-
-  .nav-bar button {
-    font-size: 0.6rem;
-    /* Very small font */
-    padding: 4px 8px;
-    /* Minimal padding */
-    min-width: 60px;
-    /* Very small minimum width */
-  }
-}
-
-
-
 /* Container */
 .zona-turnos-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 100%;
-  /* margin: 30px auto; */
-  background: #fbfbfb;
+  margin: 32px;
+  background: #f0fffe;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);
   /* padding: 25px 30px; */
@@ -294,7 +233,7 @@
   height: 100px;
   max-width: 100%;
   background-color: #f0fffe;
-  box-shadow: 3px 0 8px rgba(84, 177, 152, 0.15);
+  /* box-shadow: 3px 0 8px rgba(84, 177, 152, 0.15); */
   padding: 30px 20px;
   display: flex;
   flex-direction: row;
@@ -417,7 +356,7 @@
   min-width: 499px;
   border-radius: 0 0 10px 10px;
   /* Bottom rounded only */
-  margin: 0 2px 2px 2px;
+  margin: 0 16px 2px 2px;
   /* Top margin 0 to connect */
   position: relative;
   top: -2px;
@@ -1691,5 +1630,34 @@ input[type=number]::-webkit-outer-spin-button {
 
   .simulacion-delete-btn {
     font-size: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-bar {
+    gap: 4px;
+    /* Even tighter gap */
+    padding: 6px 2px;
+    /* Minimal padding */
+  }
+
+  .nav-bar .auto-title {
+    font-size: 0.7rem;
+    /* Very small font */
+    padding: 4px 8px;
+    /* Minimal padding */
+    min-width: 50px;
+    /* Very small minimum width */
+    max-width: 100px;
+    /* Very small maximum width */
+  }
+
+  .nav-bar button {
+    font-size: 0.6rem;
+    /* Very small font */
+    padding: 4px 8px;
+    /* Minimal padding */
+    min-width: 60px;
+    /* Very small minimum width */
   }
 }

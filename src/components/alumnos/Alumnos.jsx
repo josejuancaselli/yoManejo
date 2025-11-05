@@ -8,6 +8,10 @@ import { FaEdit } from 'react-icons/fa'
 import EditarAlumno from './EditarAlumno'
 import "./alumnos.css"
 
+// ----- IMPORT CORRECTO para la versión que tenés (v2.x) -----
+import { List } from "react-window"
+import { Link } from 'react-router-dom'
+
 const Alumnos = () => {
 
     const {
@@ -32,12 +36,11 @@ const Alumnos = () => {
         turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
     } = useAlumnos()
 
-
-
     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
     const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
     const [confirmarBorrado, setConfirmarBorrado] = useState(false)
+    
 
     const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
         const arrayTurnosAlumno = alumnoSeleccionado.turnos;
@@ -65,23 +68,62 @@ const Alumnos = () => {
         }
     };
 
-
-
     const listaAlumnos = alumnosFiltrados.length === 0 ? alumnos : alumnosFiltrados // constante donde se elije mostrar alumnos filtrados por busqueda o a todos los alumnos
+
+    // -----------------------------------------------------
+    // Row component: la librería v2 espera un component (rowComponent) 
+    // que reciba props como { index, style, ... }.
+    // Es obligatorio aplicar "style" al wrapper para que la virtualización funcione.
+    // -----------------------------------------------------
+    const Row = ({ index, style, ...rest }) => {
+        console.log("Renderizando fila:", index) // 👈 para ver cuántas se montan realmente
+        const alumno = listaAlumnos[index]
+        if (!alumno) return null
+
+        return (
+
+            <div style={{ ...style, }}            >
+                <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }}  className='alumnos'>
+                    <h2 style={{ margin: 0 }}>{alumno.nombre}</h2>
+                </div>
+            </div>
+        )
+    }
+
+    // -----------------------------------------------------
+    // Parámetros clave:
+    // - defaultHeight: alto visible del contenedor (en px)
+    // - rowCount: cantidad total de filas
+    // - rowHeight: alto por fila (px) — si tenés alturas dinámicas hay otra API
+    // - rowComponent: el componente que renderiza cada fila (Row)
+    // - rowProps: si querés pasar props adicionales a Row
+    // -----------------------------------------------------
 
     return (
         <div className='alumnos-wrapper'>
-            <input className="searchbar" placeholder='Buscar alumno...' type="text" value={busquedaAlumno} onChange={handleBusqueda} />
-           
-            
-            <div className='alumnos-content'>
-                {alumnosFiltrados.map((alumno, index) => {
-                    return (
-                        <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }} key={index} className='alumnos'>
-                            <h2 >{alumno.nombre}</h2>
-                        </div>
-                    )
-                })}
+            <div className='inicio-container'>
+                <div className='nav-bar'>
+                    <Link className='auto-title' to="/inicio">Ir a Turnos</Link>
+                    <Link className='auto-title' to="/alumnos">Alumnos</Link>
+                    <Link className='auto-title' to="/profesores">Profesores</Link>
+                </div>
+            </div>
+            <div style={{display:"flex", margin:"32px"}}>
+                <input style={{margin:"auto"}} className="searchbar" placeholder='Buscar alumno...' type="text" value={busquedaAlumno} onChange={handleBusqueda} />
+            </div>
+
+            <div className='alumnos-content' style={{ height: '800px' }}>
+                <List
+                    defaultHeight={800}               // alto visible del contenedor
+                    rowCount={listaAlumnos.length}    // cantidad total de filas
+                    rowHeight={60}                    // alto de cada fila (ajustalo según tu CSS)
+                    rowComponent={Row}                // componente que renderiza cada fila
+                    rowProps={{}}                     // si necesitás pasar algo extra a Row
+                    overscanCount={3}                 // filas extra renderizadas para suavizar scroll
+                    style={{ width: '100%', height: '100%' }}
+                >
+                    {/* La API v2 acepta children (se renderizan después) pero no hace falta aquí */}
+                </List>               
 
                 {dataAlumno && (
                     !modoEdicion ? (
@@ -119,7 +161,7 @@ const Alumnos = () => {
                                 {confirmarBorrado && (
                                     <div>
                                         <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
-                                        <button onClick={() => { borrarAlumno(alumnoSeleccionado.id), setConfirmarBorrado(false) }}>Confirmar</button>
+                                        <button onClick={() => { borrarAlumno(alumnoSeleccionado.id); setConfirmarBorrado(false) }}>Confirmar</button>
                                     </div>
                                 )}
 
@@ -136,9 +178,6 @@ const Alumnos = () => {
                     )
                 )}
             </div>
-
-
-
         </div>
     )
 }
@@ -155,9 +194,6 @@ export default Alumnos
 // import { FaEdit } from 'react-icons/fa'
 // import EditarAlumno from './EditarAlumno'
 // import "./alumnos.css"
-
-// // ----- IMPORT CORRECTO para la versión que tenés (v2.x) -----
-// import { List } from "react-window"
 
 // const Alumnos = () => {
 
@@ -182,6 +218,8 @@ export default Alumnos
 //         normalizar,
 //         turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
 //     } = useAlumnos()
+
+
 
 //     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
 //     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
@@ -214,53 +252,23 @@ export default Alumnos
 //         }
 //     };
 
+
+
 //     const listaAlumnos = alumnosFiltrados.length === 0 ? alumnos : alumnosFiltrados // constante donde se elije mostrar alumnos filtrados por busqueda o a todos los alumnos
-
-//     // -----------------------------------------------------
-//     // Row component: la librería v2 espera un component (rowComponent) 
-//     // que reciba props como { index, style, ... }.
-//     // Es obligatorio aplicar "style" al wrapper para que la virtualización funcione.
-//     // -----------------------------------------------------
-//     const Row = ({ index, style, ...rest }) => {
-//         console.log("Renderizando fila:", index) // 👈 para ver cuántas se montan realmente
-//         const alumno = listaAlumnos[index]
-//         if (!alumno) return null
-
-//         return (
-
-//             <div style={{ ...style, }}            >
-//                 <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }}  className='alumnos'>
-//                     <h2 style={{ margin: 0 }}>{alumno.nombre}</h2>
-//                 </div>
-//             </div>
-//         )
-//     }
-
-//     // -----------------------------------------------------
-//     // Parámetros clave:
-//     // - defaultHeight: alto visible del contenedor (en px)
-//     // - rowCount: cantidad total de filas
-//     // - rowHeight: alto por fila (px) — si tenés alturas dinámicas hay otra API
-//     // - rowComponent: el componente que renderiza cada fila (Row)
-//     // - rowProps: si querés pasar props adicionales a Row
-//     // -----------------------------------------------------
 
 //     return (
 //         <div className='alumnos-wrapper'>
 //             <input className="searchbar" placeholder='Buscar alumno...' type="text" value={busquedaAlumno} onChange={handleBusqueda} />
-
-//             <div className='alumnos-content' style={{ height: '600px' }}>
-//                 <List
-//                     defaultHeight={600}               // alto visible del contenedor
-//                     rowCount={listaAlumnos.length}    // cantidad total de filas
-//                     rowHeight={60}                    // alto de cada fila (ajustalo según tu CSS)
-//                     rowComponent={Row}                // componente que renderiza cada fila
-//                     rowProps={{}}                     // si necesitás pasar algo extra a Row
-//                     overscanCount={3}                 // filas extra renderizadas para suavizar scroll
-//                     style={{ width: '100%', height: '100%' }}
-//                 >
-//                     {/* La API v2 acepta children (se renderizan después) pero no hace falta aquí */}
-//                 </List>
+           
+            
+//             <div className='alumnos-content'>
+//                 {alumnosFiltrados.map((alumno, index) => {
+//                     return (
+//                         <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }} key={index} className='alumnos'>
+//                             <h2 >{alumno.nombre}</h2>
+//                         </div>
+//                     )
+//                 })}
 
 //                 {dataAlumno && (
 //                     !modoEdicion ? (
@@ -298,7 +306,7 @@ export default Alumnos
 //                                 {confirmarBorrado && (
 //                                     <div>
 //                                         <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
-//                                         <button onClick={() => { borrarAlumno(alumnoSeleccionado.id); setConfirmarBorrado(false) }}>Confirmar</button>
+//                                         <button onClick={() => { borrarAlumno(alumnoSeleccionado.id), setConfirmarBorrado(false) }}>Confirmar</button>
 //                                     </div>
 //                                 )}
 
@@ -315,8 +323,13 @@ export default Alumnos
 //                     )
 //                 )}
 //             </div>
+
+
+
 //         </div>
 //     )
 // }
 
 // export default Alumnos
+
+

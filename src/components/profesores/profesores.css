@@ -1,11 +1,5 @@
 /* Styles for the profe_wrapper component, optimized for full-screen mobile display without horizontal overflow */
 
-
-body {
-
-  margin: 0;
-}
-
 .profe_wrapper {
   display: flex;
   flex-direction: column;

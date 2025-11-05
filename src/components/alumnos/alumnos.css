@@ -1,7 +1,7 @@
 .alumnos-wrapper {
     background-color: #5cad97a8;
-    margin: 12px auto;
-    padding: 20px 0;
+    margin: 32px;
+    
     width: 95%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -22,14 +22,14 @@
 .alumnos-content {
     position: relative;
     margin: 24px 0;
-    height:750px;
+    height: 750px;
 }
 
 .alumnos-content h2 {
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     word-break: break-word;
-   
+
 }
 
 .alumnos {
@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 
-.alumnos:active{
+.alumnos:active {
     transform: scale(0.99) translateY(2px);
     /* transform: translateY(3px);  */
     box-shadow: 0 0 8px rgba(104, 104, 104, 0.514);
@@ -76,7 +76,7 @@
     width: 30%;
 }
 
-.alumno-data h3{
+.alumno-data h3 {
     font-weight: 700;
     font-size: 1.2rem;
     margin-bottom: 20px;
@@ -86,7 +86,7 @@
     word-break: break-all;
 }
 
-.btn-borrar-alumno-modal{
+.btn-borrar-alumno-modal {
     cursor: pointer;
     background-color: #f33f3fe8;
     border-radius: 6px;
