@@ -5,7 +5,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyD2CpMllbDvP_lEGk5B37TeHZA53iVIRac",
   authDomain: "yomanejo-1510a.firebaseapp.com",
   projectId: "yomanejo-1510a",
-  storageBucket: "yomanejo-1510a.firebasestorage.app",
+  storageBucket: "yomanejo-1510a.appspot.app",
   messagingSenderId: "787782467321",
   appId: "1:787782467321:web:164d7bf9e60d25ae4b2c28",
 };
