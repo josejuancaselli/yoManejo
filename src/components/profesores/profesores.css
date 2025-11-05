@@ -1,6 +1,6 @@
 /* Styles for the profe_wrapper component, optimized for full-screen mobile display without horizontal overflow */
 
-.profe_wrapper {
+.profe-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -30,7 +30,8 @@
   margin-bottom: 24px;
 }
 
-.profe-header button {
+.hoy,
+.mañana {
   border: none;
   border-radius: 20px;
   font-weight: 600;
@@ -44,6 +45,27 @@
   text-align: center;
   font-size: 0.9rem;
   width: 72px;
+}
+
+.hoy {
+  color: #181818;
+  background-color: #84c7bd7d;
+}
+
+.mañana {
+  color: #ffffff;
+  background-color: #2e4841;
+
+}
+
+.profe-fecha.hoy {
+  color: #181818;
+  background-color: #84c7bd7d;
+}
+
+.profe-fecha.mañana {
+  color: #ffffff;
+  background-color: #2e4841;
 }
 
 .profe-header button:active {
@@ -69,16 +91,6 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
   /* Prevent long text overflow */
-}
-
-.flash {
-  animation: flash 0.5s ease-in-out;
-}
-
-
-@keyframes flash {
-  0% { background-color: #ffffff; }
-  50% { background-color: #e0e0e0; }
 }
 
 
@@ -148,40 +160,41 @@
 }
 
 .profe-auto {
-  font-size: 1.1rem;
-  /* Reduced font size */
+  font-size: 1.1rem;  
   font-weight: 700;
   color: #4c4b4b;
   text-align: center;
   margin: 0;
-  padding: 8px 0;
-  /* Reduced padding */
+  padding: 8px 0;  
   border-bottom: 2px solid #54b198;
   width: 100%;
   box-sizing: border-box;
-  overflow-wrap: break-word;
-  /* Prevent long text overflow */
+  overflow-wrap: break-word;  
 }
 
 .profe-alm-wrapper {
   display: flex;
   flex-direction: column;
-
-  /* Reduced gap */
   flex: 1;
-  /* Take remaining space */
   overflow-y: auto;
-  /* Scroll if many items */
   overflow-x: hidden;
-  /* Prevent horizontal */
   width: 100%;
   max-width: 100vw;
+  border-radius: 10px;
+}
+
+.profe-alm-wrapper.h {
+  background-color: #bbe4de;
+}
+
+.profe-alm-wrapper.m {
+  background-color: #2e4841;
 }
 
 .profe-data-alm {
-  background: #f9f9f9;
+  background: #f0fffe;
   border-radius: 10px;
-  margin-bottom: 16px;
+  margin: 24px auto;
   /* Reduced radius */
   box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
   padding: 12px;
@@ -193,7 +206,7 @@
   border: solid 1px #0000002e;
   /* gap: 35px; */
   /* Reduced gap */
-  width: 100%;
+  width: 95%;
   max-width: calc(100vw - 30px);
   /* Prevent overflow */
   box-sizing: border-box;

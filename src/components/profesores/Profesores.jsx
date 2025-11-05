@@ -106,18 +106,18 @@ const Profesores = () => {
     const turnosTarde = turnosOrdenados.filter((t) => t.zona === auto && horasTarde.includes(t.hora));
 
     return (
-        <div className='profe_wrapper'>
+        <div className="profe-wrapper">
             <div className="profe-header">
-                <h2 className= {`profe-fecha ${modo === "mañana" ? "flash" : ""}`}>
+                <h2 className= {`profe-fecha ${modo}`}>
                     {modo === "hoy"
                         ? `${String(hoy.getDate()).padStart(2, "0")} - ${String(fecha.mes + 1).padStart(2, "0")} - ${fecha.anio}`
                         : `${String(mañana.getDate()).padStart(2, "0")} - ${String(mañana.getMonth() + 1).padStart(2, "0")} - ${mañana.getFullYear()}`
                     }
                 </h2>
-                <button className={modo === "hoy" ? "activo" : ""} onClick={() => setModo("hoy")}                >
+                <button className="hoy" onClick={() => setModo("hoy")}                >
                     Hoy
                 </button>
-                <button className={modo === "mañana" ? "activo" : ""} onClick={() => setModo("mañana")}                >
+                <button className="mañana" onClick={() => setModo("mañana")}                >
                     Mañana
                 </button>
             </div>
@@ -132,7 +132,7 @@ const Profesores = () => {
 
             <h3 className='profe-auto'>Coche {auto}</h3>
             {auto && (
-                <div className='profe-alm-wrapper'>
+                <div className={`profe-alm-wrapper ${modo === "hoy" ? "h" : "m"}`}>
                     <div className="profe-data-alm">
                         <h3
                             className={`turno-header ${turnoSeleccionado === "mañana" ? "abierto" : ""}`}
