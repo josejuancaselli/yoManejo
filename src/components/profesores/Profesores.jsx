@@ -22,7 +22,6 @@ const Profesores = () => {
 
 
 
-
     const { fecha, hoy } = useFechas()
 
     // 🔹 Calcular fecha de mañana
