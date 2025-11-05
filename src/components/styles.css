@@ -1213,6 +1213,13 @@
   pointer-events: auto;
 }
 
+.nombre-alumno-wrapper{
+  display: flex; 
+  flex-direction:row;
+  justify-content:space-between; 
+  border-bottom: 3px solid #54b198;
+  padding-bottom: 10px;
+}
 
 /* Headings in modal */
 .alumno-modal-content h3 {

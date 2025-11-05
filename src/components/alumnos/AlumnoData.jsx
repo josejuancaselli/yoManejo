@@ -13,7 +13,7 @@ const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
     return (
         <>
 
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "3px solid #54b198", paddingBottom: "10px" }}>
+            <div className="nombre-alumno-wrapper" >
                 <div style={{ display: "flex" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>
                 </div>
