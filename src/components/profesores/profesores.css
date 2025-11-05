@@ -39,11 +39,19 @@
   user-select: none;
   background-color: #a9b1af;
   color: #f0fffe;
-  box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);  
+  box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
   padding: 8px 12px;
   text-align: center;
   font-size: 0.9rem;
   width: 72px;
+}
+
+.profe-header button:active {
+  transform: scale(0.95);
+  /* se achica un poquito */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
+  background-color: #7b8381;
+  /* efecto de “hundido” */
 }
 
 .profe-fecha {
@@ -146,7 +154,7 @@
 .profe-alm-wrapper {
   display: flex;
   flex-direction: column;
-  
+
   /* Reduced gap */
   flex: 1;
   /* Take remaining space */
@@ -254,16 +262,17 @@
   /* Prevent horizontal overflow in sections */
 }
 
-.evaluacion a{
-gap: 8px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #222;
-    margin: 8px 0;
-    text-align: center;
-    overflow-wrap: break-word;
-    text-decoration: none;
+.evaluacion a {
+  gap: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  margin: 8px 0;
+  text-align: center;
+  overflow-wrap: break-word;
+  text-decoration: none;
 }
+
 /* Specific styles for the first .evaluacion (student data) */
 .evaluacion:nth-child(1) p {
   font-size: 1rem;
@@ -432,15 +441,15 @@ gap: 8px;
   margin: 30px 0;
 }
 
-.profe-warnings{
+.profe-warnings {
   text-align: center;
-    align-content: center;
-    padding: 10px;
-    font-weight: bold;
-    width: 28px;
-    border: solid 1px rgba(0, 0, 0, 0.137);
-    height: 28px;
-    border-radius: 20%;
+  align-content: center;
+  padding: 10px;
+  font-weight: bold;
+  width: 28px;
+  border: solid 1px rgba(0, 0, 0, 0.137);
+  height: 28px;
+  border-radius: 20%;
 }
 
 /* Close button - position it at the top of the first .evaluacion for easy access */
@@ -594,7 +603,8 @@ gap: 8px;
 
 /* Cuando está abierto */
 .acordeon.abierto {
-  max-height: 1000px; /* suficiente para el contenido */
+  max-height: 1000px;
+  /* suficiente para el contenido */
   opacity: 1;
   transform: scaleY(1);
   padding-top: 5px;
