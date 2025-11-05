@@ -74,7 +74,6 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, set
 
                     <label className='reserva-label'>Observaciones</label>
                     <input type="text" {...register("observaciones")} className='reserva-input' />
-
                     <button type="submit">Guardar turno</button>
                     <button onClick={() => { setVentanaReservar(false) }}>Cerrar</button>
                 </form>
