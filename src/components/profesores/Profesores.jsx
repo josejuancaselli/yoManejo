@@ -265,7 +265,7 @@ const Profesores = () => {
                             </ul>
                         </div>
 
-                        <button onClick={() => setTurno(null)}>X</button>
+                        <button onClick={() => {setTurno(null); terminarClase(turno.id)}}>X</button>
 
                         {topico && (
                             <div className='profe-color'>
