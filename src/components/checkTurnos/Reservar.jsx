@@ -52,7 +52,7 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, set
 
                     <label className='reserva-label'>DNI</label>
                     <input type="text"  {...register("dni")} className='reserva-input' />
-                    <div>
+                    <div style={{display:"flex"}}>
                         <div>
                             <label className='reserva-label'>Calle</label>
                             <input type="text" {...register("calle")} className='reserva-input' />

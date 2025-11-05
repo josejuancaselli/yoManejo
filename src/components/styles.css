@@ -8,10 +8,10 @@ body {
 /* Global styles for the Inicio component - ensure full-screen and no overflow */
 .inicio-container {
   display: flex;
-  
+
   flex-direction: column;
   /* height: 100vh; */
-  
+
   max-width: 100vw;
   background-color: #f0fffe;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -176,7 +176,7 @@ body {
   flex-direction: column;
   margin-left: 5px;
   /* slightly more than sidebar width */
-  /* padding: 20px 30px 30px 30px; */
+  padding: 20px 30px 30px 30px;
   box-sizing: border-box;
 }
 
@@ -600,7 +600,8 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 400px;
   width: 90vw;
-  height: 100%;
+  height: 85%;
+  justify-content: center;
   /* Responsive width */
   background: #f0fffe;
   /* Light teal background matching theme */
@@ -1152,10 +1153,10 @@ body {
   pointer-events: auto;
 }
 
-.nombre-alumno-wrapper{
-  display: flex; 
-  flex-direction:row;
-  justify-content:space-between; 
+.nombre-alumno-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   border-bottom: 3px solid #54b198;
   padding-bottom: 10px;
 }
@@ -1370,24 +1371,24 @@ body {
 }
 
 .turno-borrar-wrapper {
-border-radius: 7%;
-    padding: 50px;
-    position: fixed;
-    border: solid 4px #00000036;
-    top: 50%;
-    left: 55%;
-    z-index: 9999;
-    background: #f1f1f1;
+  border-radius: 7%;
+  padding: 50px;
+  position: fixed;
+  border: solid 4px #00000036;
+  top: 50%;
+  left: 55%;
+  z-index: 9999;
+  background: #f1f1f1;
 }
 
-.turno-borrar-wrapper button{
-    margin: 0px 12px;
-    background-color: #c2d7cb;
-    padding: 0;
-    border-radius: 20%;
-    width: 40px;
-    border: solid 1px #00000033;
-    height: 28px;
+.turno-borrar-wrapper button {
+  margin: 0px 12px;
+  background-color: #c2d7cb;
+  padding: 0;
+  border-radius: 20%;
+  width: 40px;
+  border: solid 1px #00000033;
+  height: 28px;
 }
 
 .turno-editable-info p {
@@ -1539,7 +1540,7 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
 }
 
-@media (max-width: 1536px) {
+@media (min-width: 1536px) and (max-width: 1919px) {
 
   .nav-bar {
     gap: 6px;
@@ -1633,7 +1634,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-@media (max-width: 360px) {
+@media (min-width: 360px) and (max-width: 640px) {
   .nav-bar {
     gap: 4px;
     /* Even tighter gap */
@@ -1660,4 +1661,70 @@ input[type=number]::-webkit-outer-spin-button {
     min-width: 60px;
     /* Very small minimum width */
   }
+
+  .zona-turnos-container {
+    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+        margin: 0;
+  }
+
+  .zonas-section {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0;
+        margin: 0;
+  }
+
+  .seleccion-zona {
+    height: unset;
+    flex-direction: column;
+  }
+
+  .zona-buttons-wrapper {
+    position: unset;
+    transform: none;
+  }
+
+  .alumnos-search-wrapper{
+    width: 85%;
+    position: absolute;
+  }
+
+  .zonas{
+    flex-direction: column;
+  }
+
+  .calendario-container{
+    max-width: 100%;
+    min-width: 90%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .zonas-section h2{
+    font-size: 0.8rem;
+  }
+
+  .nav-btn{
+    font-size: 0.8rem;
+  }
+
+  .dias-mes{
+    column-gap: unset;
+  }
+
+  .dias-mes div{
+    margin: auto;
+    width: 85%;
+  }
+.dia-num-btn{
+  padding: 0;
+  width: 100%;
+}
+
 }
