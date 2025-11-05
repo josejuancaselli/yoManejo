@@ -152,7 +152,7 @@ body {
 .zona-turnos-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 100%;
-  margin: 32px;
+  margin: 24px;
   background: #f0fffe;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(84, 177, 152, 0.15);

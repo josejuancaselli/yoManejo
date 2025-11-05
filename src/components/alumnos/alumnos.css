@@ -1,8 +1,8 @@
 .alumnos-wrapper {
     background-color: #5cad97a8;
-    margin: 32px;
+    margin: 24px;
 
-    width: 95%;
+    max-width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -95,7 +95,7 @@
     border: solid 1px #3c11119e;
 }
 
-@media (min-width: 360px) and (max-width: 1536px    ) {
+@media (min-width: 360px) and (max-width: 1536px) {
     .alumnos-wrapper {
         margin: 0;
         width: 100%;
