@@ -103,7 +103,7 @@ const Alumnos = () => {
         <div className='alumnos-wrapper'>
             <div className='inicio-container'>
                 <div className='nav-bar'>
-                    <Link className='auto-title' to="/inicio">Ir a Turnos</Link>
+                    <Link className='auto-title' to="/turnos">Ir a Turnos</Link>
                     <Link className='auto-title' to="/alumnos">Alumnos</Link>
                     <Link className='auto-title' to="/profesores">Profesores</Link>
                 </div>
