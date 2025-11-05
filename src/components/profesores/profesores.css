@@ -71,6 +71,18 @@
   /* Prevent long text overflow */
 }
 
+.flash {
+  animation: flash 0.5s ease-in-out;
+}
+
+
+@keyframes flash {
+  0% { background-color: #ffffff; }
+  50% { background-color: #e0e0e0; }
+}
+
+
+
 .profe-btn-wrapper {
   display: flex;
   flex-direction: row;

@@ -108,7 +108,7 @@ const Profesores = () => {
     return (
         <div className='profe_wrapper'>
             <div className="profe-header">
-                <h2 className='profe-fecha'>
+                <h2 className= {`profe-fecha ${modo === "mañana" ? "flash" : ""}`}>
                     {modo === "hoy"
                         ? `${String(hoy.getDate()).padStart(2, "0")} - ${String(fecha.mes + 1).padStart(2, "0")} - ${fecha.anio}`
                         : `${String(mañana.getDate()).padStart(2, "0")} - ${String(mañana.getMonth() + 1).padStart(2, "0")} - ${mañana.getFullYear()}`
