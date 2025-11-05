@@ -13,7 +13,7 @@ const Profesores = () => {
     const [evaluacion, setEvaluacion] = useState({})
     const [modo, setModo] = useState("hoy") // 👈 Nuevo estado para cambiar entre HOY y MAÑANA
     const [alumnos, setAlumnos] = useState([])
-    const colores = ["#d74545", "#2bcb2b", "#ddab4f", "#e7e74b", "#f9f9f9"]
+    const colores = ["#d74545","#ddab4f",  "#e7e74b", "#2bcb2b", "#f9f9f9"]
     const autos = ["1", "2", "3", "automatico"]
     const horasManiana = ["07:45", "08:45", "09:45", "10:45", "11:45"];
     const horasTarde = ["14:00", "15:00", "16:00", "17:00", "18:00"];
