@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD2CpMllbDvP_lEGk5B37TeHZA53iVIRac",
-  authDomain: "yomanejo-1510a.firebaseapp.com",
+  authDomain: "yomanejo-1510a.appspot.com",
   projectId: "yomanejo-1510a",
   storageBucket: "yomanejo-1510a.appspot.app",
   messagingSenderId: "787782467321",
