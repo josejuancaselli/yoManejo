@@ -108,7 +108,7 @@ const Profesores = () => {
     return (
         <div className="profe-wrapper">
             <div className="profe-header">
-                <h2 className= {`profe-fecha ${modo}`}>
+                <h2 className={`profe-fecha ${modo}`}>
                     {modo === "hoy"
                         ? `${String(hoy.getDate()).padStart(2, "0")} - ${String(fecha.mes + 1).padStart(2, "0")} - ${fecha.anio}`
                         : `${String(mañana.getDate()).padStart(2, "0")} - ${String(mañana.getMonth() + 1).padStart(2, "0")} - ${mañana.getFullYear()}`
@@ -153,13 +153,13 @@ const Profesores = () => {
                                             style={{
                                                 fontSize: "1.1rem",
                                                 fontWeight: "bold",
-                                                
+
                                             }}
                                         >
                                             {e.direccion.calle} {e.direccion.altura}
                                         </p>
                                         <p>{e.nombre} {e.telefono}</p>
-                                        
+
                                     </div>
                                 ))
                             ) : (
@@ -190,7 +190,7 @@ const Profesores = () => {
                                             style={{
                                                 fontSize: "1.1rem",
                                                 fontWeight: "bold",
-                                                
+
                                             }}
                                         >
                                             {e.direccion.calle} {e.direccion.altura}
@@ -265,7 +265,7 @@ const Profesores = () => {
                             </ul>
                         </div>
 
-                        <button onClick={() => {setTurno(null); terminarClase(turno.id)}}>X</button>
+                        <button onClick={() => { setTurno(null); terminarClase(turno.id) }}>X</button>
 
                         {topico && (
                             <div className='profe-color'>
@@ -280,7 +280,7 @@ const Profesores = () => {
                         )}
                     </div>
 
-                    <button onClick={() => terminarClase(turno.id)}>Terminar Clase</button>
+                    <button className='terminar-clase' onClick={() => terminarClase(turno.id)}>Terminar Clase</button>
                 </>
             )}
 

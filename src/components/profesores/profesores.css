@@ -634,3 +634,29 @@
   transform: scaleY(1);
   padding-top: 5px;
 }
+
+/* Add or update the styles for the .terminar-clase button to ensure it stays fixed at the bottom of the screen, even during scrolling within the profe-turno-wrapper */
+
+.terminar-clase {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #54b198;
+  color: #f0fffe;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 1001; /* Ensure it's above the profe-turno-wrapper */
+  max-width: calc(100vw - 30px);
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+}
+
+.terminar-clase:hover {
+  background-color: #3d7d6a;
+}
