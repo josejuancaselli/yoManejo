@@ -194,10 +194,10 @@
 .profe-data-alm {
   background: #f0fffe;
   border-radius: 10px;
-  margin: 24px auto;
+  margin: 3px auto;
   /* Reduced radius */
   box-shadow: 0 4px 10px rgba(84, 177, 152, 0.3);
-  padding: 12px;
+  padding: 8px 12px;
   /* Reduced padding */
   cursor: pointer;
   transition: all 0.25s ease;
@@ -220,7 +220,8 @@
 }
 
 .profe-data-alm p {
-  margin: 10px 0;
+  margin: 0;
+  padding: 3px 0;
   font-size: 0.9rem;
   /* Reduced font size */
   color: #222;

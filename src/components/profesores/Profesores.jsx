@@ -109,7 +109,7 @@ const Profesores = () => {
             <div className="profe-header">
                 
                 <h2 className={`profe-fecha ${modo}`}>
-                    coche {auto}
+                    Coche {auto}
                 </h2>
                 <button className="hoy" onClick={() => setModo("hoy")}                >
                     Hoy
@@ -127,7 +127,7 @@ const Profesores = () => {
                 ))}
             </div>
 
-            <h2  className={`profe-fecha ${modo}`}>
+            <h2  className={`profe-fecha ${modo}`} style={{margin:"0 auto"}}>
                 {modo === "hoy"
                     ? "HOY"
                     : "MAÑANA"

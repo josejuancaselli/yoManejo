@@ -791,6 +791,11 @@ body {
   /* IE and Edge */
 }
 
+.horarios-list div {
+  display: flex;
+  flex-direction: row;
+}
+
 .horarios-wrapper {
   position: relative;
   display: inline-block;
@@ -1540,33 +1545,211 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
 }
 
-@media (min-width: 1536px) and (max-width: 1919px) {
+/* Para pantallas desde 360px hasta 500px */
+@media (min-width: 360px) and (max-width: 500px) {
+  .zona-turnos-container {
+    width: 100vw;
+    /* ocupa todo el ancho de la pantalla */
+    max-width: 500px;
+    /* no más ancho que 500px */
+    min-width: 360px;
+    /* no más estrecho que 360px */
+    margin: 0;
+    /* centra horizontalmente */
+    overflow-x: hidden;
+    /* evita scroll horizontal */
+    padding: 0;
+    /* opcional: margen interno lateral */
+    box-sizing: border-box;
+  }
+
+  .inicio-container {
+    width: 100vw;
+    /* ancho completo de la pantalla */
+    max-width: 500px;
+    /* no más ancho que 500px */
+    min-width: 360px;
+    /* no más estrecho que 360px */
+    margin: 0;
+    /* centra horizontalmente */
+    padding: 0;
+    /* opcional: margen interno */
+    box-sizing: border-box;
+    overflow-x: hidden;
+    /* evita scroll horizontal */
+  }
+
+  .inicio-container .nav-bar {
+    width: 100%;
+    /* la nav-bar ocupa todo el ancho del contenedor */
+    display: flex;
+    justify-content: space-between;
+    /* distribución horizontal */
+    align-items: center;
+    gap: 0.5rem;
+    /* espacio entre los links */
+    box-sizing: border-box;
+  }
+
+  .inicio-container .nav-bar .auto-title {
+    flex-shrink: 0;
+    /* evita que los links se achiquen demasiado */
+  }
+
+  .zonas-section {
+    padding: 0;
+    margin: 0;
+  }
+
+  .zonas-section h2{
+    font-size: 0.8rem;
+  }
+
+.nav-btn{
+  font-size: 0.8rem;
+}
+
+  .seleccion-zona {
+    flex-direction: column;
+    height: unset;
+  }
+
+  .searchbar-wrapper {
+    width: unset;
+  }
+
+  .searchbar {
+    width: unset;
+  }
+
+  .zona-buttons-wrapper {
+    position: unset;
+    transform: unset;
+  }
+
+
+  .zonas {
+    flex-direction: column;
+    max-width: 500px;
+  }
+
+  .calendario-container {
+
+    /* ancho exacto de la pantalla */
+    min-width: unset;
+    width: 100%;
+    overflow-x: hidden;
+    /* evita scroll horizontal */
+    box-sizing: border-box;
+    padding: 0;
+    /* opcional: para que no toque los bordes */
+  }
+
+  /* Header del calendario */
+  .calendario-header,
+  .nav-calendario {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Días de la semana */
+  .dias-semana {
+
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dia-semana {
+
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Días del mes */
+  .dias-mes {
+    column-gap: unset;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dia-mes {
+    flex: 1 0 calc(14.28% - 2px);
+    /* 7 días por fila con pequeño gap */
+    margin: 1px;
+    box-sizing: border-box;
+  }
+
+  /* Botones de cada hora */
+  .horarios-list {
+    flex-direction: column;
+  }
+
+  .horarios-list div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+
+  .horario-btn {
+    flex: 1 0 auto;
+    min-width: 40px;
+    /* opcional, ajusta según pantalla */
+    max-width: calc((100% - 14px) / 6);
+    /* máximo 6 botones por fila como ejemplo */
+    box-sizing: border-box;
+  }
+
+  .dia-num-btn {
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    padding: 0;
+  }
+
+.simulacion-card{
+  display: none;
+}
+
+.reserva-form{
+  height: 100%;
+}
+
+.reserva-input{
+  padding: 0;
+}
+
+}
+
+
+/* @media (min-width: 1536px) and (max-width: 1919px) {
 
   .nav-bar {
     gap: 6px;
-    /* Tighter gap */
+    
     padding: 8px 3px;
-    /* Reduced padding */
+    
   }
 
   .nav-bar .auto-title {
     font-size: 0.8rem;
-    /* Smaller font */
+    
     padding: 6px 10px;
-    /* Smaller padding */
+    
     min-width: 60px;
-    /* Smaller minimum width */
+    
     max-width: 120px;
-    /* Smaller maximum width */
+    
   }
 
   .nav-bar button {
     font-size: 0.7rem;
-    /* Smaller font */
+    
     padding: 6px 10px;
-    /* Smaller padding */
+    
     min-width: 80px;
-    /* Smaller minimum width */
+    
   }
 
   .zona-turnos-container {
@@ -1637,29 +1820,27 @@ input[type=number]::-webkit-outer-spin-button {
 @media (min-width: 360px) and (max-width: 640px) {
   .nav-bar {
     gap: 4px;
-    /* Even tighter gap */
+    
     padding: 6px 2px;
-    /* Minimal padding */
+    
   }
 
   .nav-bar .auto-title {
     font-size: 0.7rem;
-    /* Very small font */
+    
     padding: 4px 8px;
-    /* Minimal padding */
+    
     min-width: 50px;
-    /* Very small minimum width */
+    
     max-width: 100px;
-    /* Very small maximum width */
+    
   }
 
   .nav-bar button {
     font-size: 0.6rem;
-    /* Very small font */
     padding: 4px 8px;
-    /* Minimal padding */
+
     min-width: 60px;
-    /* Very small minimum width */
   }
 
   .zona-turnos-container {
@@ -1727,4 +1908,4 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
 }
 
-}
+} */
