@@ -13,7 +13,7 @@ const Profesores = () => {
     const [evaluacion, setEvaluacion] = useState({})
     const [modo, setModo] = useState("hoy") // 👈 Nuevo estado para cambiar entre HOY y MAÑANA
     const [alumnos, setAlumnos] = useState([])
-    const colores = ["#d74545","#ddab4f",  "#e7e74b", "#2bcb2b", "#f9f9f9"]
+    const colores = ["#d74545", "#ddab4f", "#e7e74b", "#2bcb2b", "#f9f9f9"]
     const autos = ["1", "2", "3", "automatico"]
     const horasManiana = ["07:45", "08:45", "09:45", "10:45", "11:45"];
     const horasTarde = ["14:00", "15:00", "16:00", "17:00", "18:00"];
@@ -107,11 +107,9 @@ const Profesores = () => {
     return (
         <div className="profe-wrapper">
             <div className="profe-header">
+                
                 <h2 className={`profe-fecha ${modo}`}>
-                    {modo === "hoy"
-                        ? `${String(hoy.getDate()).padStart(2, "0")} - ${String(fecha.mes + 1).padStart(2, "0")} - ${fecha.anio}`
-                        : `${String(mañana.getDate()).padStart(2, "0")} - ${String(mañana.getMonth() + 1).padStart(2, "0")} - ${mañana.getFullYear()}`
-                    }
+                    coche {auto}
                 </h2>
                 <button className="hoy" onClick={() => setModo("hoy")}                >
                     Hoy
@@ -129,7 +127,13 @@ const Profesores = () => {
                 ))}
             </div>
 
-            <h3 className='profe-auto'>Coche {auto}</h3>
+            <h2  className={`profe-fecha ${modo}`}>
+                {modo === "hoy"
+                    ? "HOY"
+                    : "MAÑANA"
+                }
+            </h2>
+
             {auto && (
                 <div className={`profe-alm-wrapper ${modo === "hoy" ? "h" : "m"}`}>
                     <div className="profe-data-alm">
