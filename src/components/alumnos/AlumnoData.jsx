@@ -23,7 +23,7 @@ const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
                 <div className="editar-alumno-modal">
                     <div>
                         <p>Direccion:</p>
-                        <p style={{ flex: 1 }}>{alumnoSeleccionado.direccion?.["calle"]} n° {alumnoSeleccionado.direccion?.["altura"]} e/ {alumnoSeleccionado.direccion?.["entrecalles"]}</p>
+                        <p style={{ flex: 1 }}>{alumnoSeleccionado.direccion?.["calle"]} {alumnoSeleccionado.direccion?.["altura"] ? `n° ${alumnoSeleccionado.direccion?.["altura"]}` : '"s/n"'} {alumnoSeleccionado.direccion?.["entrecalles"]}</p>
                     </div>
                     <div>
                         <p>DNI: </p>

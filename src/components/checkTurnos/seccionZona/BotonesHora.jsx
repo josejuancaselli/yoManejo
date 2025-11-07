@@ -9,7 +9,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
 
                 {mañanaTarde.includes("mañana") && (
-                    <div>
+                    <div className='botones-horarios-wrapper'>
 
                         {horariosMañana().map((hora) => {
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
@@ -62,7 +62,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                 {mañanaTarde.includes("tarde") && (
 
-                    <div>
+                    <div className='botones-horarios-wrapper'>
                         {horariosTarde().map((hora) => {
                             const turno = { dia, hora, mes: fecha.mes, anio: fecha.anio, zona };
                             const alumnoCorrespondiente = alumnos.find(alumno =>

@@ -787,7 +787,7 @@ body {
   /* IE and Edge */
 }
 
-.horarios-list div {
+.botones-horarios-wrapper {
   display: flex;
   flex-direction: row;
 }
