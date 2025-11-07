@@ -789,7 +789,7 @@ body {
 
 .horarios-list div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .horarios-wrapper {
