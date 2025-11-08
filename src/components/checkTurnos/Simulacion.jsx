@@ -59,7 +59,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
                     <button className="btn-imprimir" onClick={() => turnoSim.length === 0 ? (() => { alert("No hay turnos para simular"); setSimulacion(false) })() : imprimirJPG()}>
-                        Imprimir
+                        Simular
                     </button>
                     {botonReserva && (
                         <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false); setWarningReserva(false) }}>
