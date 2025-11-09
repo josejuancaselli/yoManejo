@@ -172,7 +172,7 @@ const TurnoData = ({
                 <IoAdd />
             </button> */}
 
-            {inputAgregarTurno && (
+            {/* {inputAgregarTurno && (
                 <div className="turno-item">
                     <AgregarTurno
                         inputAgregarTurno={inputAgregarTurno}
@@ -185,7 +185,7 @@ const TurnoData = ({
                         obtenerHorarios={obtenerHorarios}
                     />
                 </div>
-            )}
+            )} */}
         </>
     );
 };
