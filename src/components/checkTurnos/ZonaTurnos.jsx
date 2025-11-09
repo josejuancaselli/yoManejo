@@ -66,7 +66,33 @@ const ZonaTurnos = () => {
       console.error("Error borrando turno:", error);
     }
   }
+  // const agregarTurno = async (idAlumno) => {
+  //   const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
+  //   const validacion = todosLosTurnos.some((turno) =>
+  //     turno.dia === Number(nuevoTurno.dia) &&
+  //     turno.hora === nuevoTurno.hora &&
+  //     turno.mes === Number(nuevoTurno.mes) &&
+  //     turno.zona === nuevoTurno.zona &&
+  //     turno.anio === Number(nuevoTurno.anio)
+  //   );
 
+  //   if (validacion) {
+  //     alert("Turno ya existente");
+  //     setInputAgregarTurno(false);
+  //     return;
+  //   }
+
+  //   try {
+  //     const id = alumnoSeleccionado.turnos.length + 1;
+  //     const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] };
+
+  //     await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
+  //     setAlumnoSeleccionado(turnoActualizado);
+  //     setNuevoTurno({ dia: "", mes: "", hora: "", anio: "", zona: "" });
+  //   } catch (error) {
+  //     console.error("Error agregando turno:", error);
+  //   }
+  // };
   const agregarTurno = async (idAlumno) => {
 
     try {
