@@ -17,7 +17,7 @@ const ZonaTurnos = () => {
   const [turnoSim, setTurnoSim] = useState([]);
   const [simulacion, setSimulacion] = useState(false);
   const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
-  const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
+  const [nuevoTurno, setNuevoTurno] = useState([])
   const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
   const [editarTurnos, setEditarTurnos] = useState(null);
   const [turnosEditables, setTurnosEditables] = useState([]);
@@ -68,28 +68,14 @@ const ZonaTurnos = () => {
   }
 
   const agregarTurno = async (idAlumno) => {
-    const todosLosTurnos = alumnos.map((alumno) => alumno.turnos).flat();
-    const validacion = todosLosTurnos.some((turno) =>
-      turno.dia === Number(nuevoTurno.dia) &&
-      turno.hora === nuevoTurno.hora &&
-      turno.mes === Number(nuevoTurno.mes) &&
-      turno.zona === nuevoTurno.zona &&
-      turno.anio === Number(nuevoTurno.anio)
-    );
-
-    if (validacion) {
-      alert("Turno ya existente");
-      setInputAgregarTurno(false);
-      return;
-    }
 
     try {
-      const id = alumnoSeleccionado.turnos.length + 1;
-      const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] };
 
-      await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
-      setAlumnoSeleccionado(turnoActualizado);
-      setNuevoTurno({ dia: "", mes: "", hora: "", anio: "", zona: "" });
+      const nuevosTurnos = [...alumnoSeleccionado.turnos, ...turnoSim];
+
+      await updateDoc(doc(db, "alumnos", idAlumno), { turnos: nuevosTurnos });
+      setAlumnoSeleccionado((prev) => ({ ...prev, turnos: nuevosTurnos }));
+      setTurnoSim([]);
     } catch (error) {
       console.error("Error agregando turno:", error);
     }

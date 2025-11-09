@@ -165,12 +165,12 @@ const TurnoData = ({
                 ))}
             </ul>
 
-            <button
+            {/* <button
                 className="turno-btn-agregar"
                 onClick={() => setInputAgregarTurno(true)}
             >
                 <IoAdd />
-            </button>
+            </button> */}
 
             {inputAgregarTurno && (
                 <div className="turno-item">
