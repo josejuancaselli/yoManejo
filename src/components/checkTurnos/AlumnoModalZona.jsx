@@ -105,8 +105,7 @@ const AlumnoModalZona = ({
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
-                            <button className="btn-guardar" onClick={()=>agregarTurno(alumnoSeleccionado.id)}><IoAdd /></button>
-                            {console.log(alumnoSeleccionado)}
+                            <button className="btn-guardar" onClick={()=>agregarTurno(alumnoSeleccionado.id)}><IoAdd /></button>                            
                             <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]); setWarningReserva(false) }}>Imprimir</button>
                         </div>
                     </div>

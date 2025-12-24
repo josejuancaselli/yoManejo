@@ -1,7 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
+import { db } from '../../firebase/firebaseConfig'
+import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore'
 import AlumnoData from './AlumnoData'
-import EditarAlumno from './EditarAlumno'
 import { useAlumnos } from '../../helpers/useAlumnos'
+import EditarAlumno from './EditarAlumno'
 import "./alumnos.css"
 import { Link } from 'react-router-dom'
 
@@ -32,8 +34,12 @@ const Alumnos = () => {
 
     const [paginaActual, setPaginaActual] = useState(0)
     const [letraActiva, setLetraActiva] = useState(null)
+    const [inputAgregarTurno, setInputAgregarTurno] = useState("")
+    const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
+    const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
+    const [confirmarBorrado, setConfirmarBorrado] = useState(false)
 
-    // 1️⃣ lista base (búsqueda)
+    // 1️⃣ Elegimos lista base
     const listaBase = alumnosFiltrados.length > 0 ? alumnosFiltrados : alumnos
 
     // 2️⃣ filtro por letra
@@ -48,24 +54,58 @@ const Alumnos = () => {
         )
     }, [listaBase, letraActiva])
 
-    // 3️⃣ orden alfabético
+    // 2️⃣ ORDEN ALFABÉTICO (solo se recalcula si cambia la lista)
     const listaOrdenada = useMemo(() => {
         return [...listaFiltradaPorLetra].sort((a, b) =>
             a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
         )
     }, [listaFiltradaPorLetra])
 
-    // 4️⃣ paginación
+    // 3️⃣ Paginación
     const inicio = paginaActual * ITEMS_POR_PAGINA
     const fin = inicio + ITEMS_POR_PAGINA
     const alumnosPagina = listaOrdenada.slice(inicio, fin)
     const totalPaginas = Math.ceil(listaOrdenada.length / ITEMS_POR_PAGINA)
 
-    // reset de página al cambiar letra o búsqueda
+    const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
+        const turnoBorrado = alumnoSeleccionado.turnos.filter(
+            (turno) =>
+                turno.dia !== dia ||
+                turno.hora !== hora ||
+                turno.mes !== mes ||
+                turno.zona !== zona ||
+                turno.anio !== anio
+        )
+
+        try {
+            await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
+            alert("turno borrado con éxito")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const agregarTurno = async (idAlumno) => {
+        const id = alumnoSeleccionado.turnos.length + 1
+        try {
+            const turnoActualizado = {
+                ...alumnoSeleccionado,
+                turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }]
+            }
+
+            await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado)
+            setAlumnoSeleccionado(turnoActualizado)
+            setNuevoTurno({ dia: "", mes: "", hora: "", zona: "" })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     const seleccionarLetra = (letra) => {
         setLetraActiva(letra)
         setPaginaActual(0)
     }
+
 
     return (
         <div className='alumnos-wrapper'>
@@ -77,18 +117,14 @@ const Alumnos = () => {
                 </div>
             </div>
 
-            {/* BUSCADOR */}
             <div style={{ display: "flex", margin: "32px" }}>
                 <input
+                    style={{ margin: "auto" }}
                     className="searchbar"
                     placeholder='Buscar alumno...'
                     type="text"
                     value={busquedaAlumno}
-                    onChange={(e) => {
-                        handleBusqueda(e)
-                        setPaginaActual(0)
-                        setLetraActiva(null)
-                    }}
+                    onChange={handleBusqueda}
                 />
             </div>
 
@@ -120,9 +156,9 @@ const Alumnos = () => {
                 ))}
             </div>
 
-            {/* LISTA */}
             <div className='alumnos-content'>
-                {alumnosPagina.map(alumno => (
+
+                {alumnosPagina.map((alumno) => (
                     <div
                         key={alumno.id}
                         className='alumnos'
@@ -135,13 +171,8 @@ const Alumnos = () => {
                     </div>
                 ))}
 
-                {/* PAGINACIÓN */}
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "16px",
-                    margin: "24px"
-                }}>
+                {/* CONTROLES DE PAGINACIÓN */}
+                <div style={{ display: "flex", justifyContent: "center", gap: "16px", margin: "24px" }}>
                     <button
                         disabled={paginaActual === 0}
                         onClick={() => setPaginaActual(p => p - 1)}
@@ -150,7 +181,7 @@ const Alumnos = () => {
                     </button>
 
                     <span>
-                        Página {paginaActual + 1} de {totalPaginas || 1}
+                        Página {paginaActual + 1} de {totalPaginas}
                     </span>
 
                     <button
@@ -163,18 +194,45 @@ const Alumnos = () => {
 
                 {dataAlumno && (
                     !modoEdicion ? (
-                        <AlumnoData
-                            alumnoSeleccionado={alumnoSeleccionado}
-                            handleEditar={handleEditar}
-                            editarAlumno={editarAlumno}
-                            borrarAlumno={borrarAlumno}
-                            turnoModificandose={turnoModificandose}
-                            setTurnoModificandose={setTurnoModificandose}
-                            todosLosTurnos={todosLosTurnos}
-                            capturarAlumno={capturarAlumno}
-                            dataAlumno={dataAlumno}
-                            setDataAlumno={setDataAlumno}
-                        />
+                        alumnoSeleccionado && (
+                            <div className='alumno-data'>
+                                <AlumnoData
+                                    alumnoSeleccionado={alumnoSeleccionado}
+                                    handleEditar={handleEditar}
+                                    editarAlumno={editarAlumno}
+                                    borrarAlumno={borrarAlumno}
+                                    borrarTurnoReservado={borrarTurnoReservado}
+                                    setAlumnoSeleccionado={setAlumnoSeleccionado}
+                                    nuevoTurno={nuevoTurno}
+                                    setNuevoTurno={setNuevoTurno}
+                                    agregarTurno={agregarTurno}
+                                    inputAgregarTurno={inputAgregarTurno}
+                                    setInputAgregarTurno={setInputAgregarTurno}
+                                    turnoModificandose={turnoModificandose}
+                                    setTurnoModificandose={setTurnoModificandose}
+                                    todosLosTurnos={todosLosTurnos}
+                                    capturarAlumno={capturarAlumno}
+                                    editarTurnoAlumno={editarTurnoAlumno}
+                                    setEditarTurnoAlumno={setEditarTurnoAlumno}
+                                    dataAlumno={dataAlumno}
+                                    setDataAlumno={setDataAlumno}
+                                />
+
+                                <button onClick={() => setConfirmarBorrado(true)}>Borrar</button>
+
+                                {confirmarBorrado && (
+                                    <div>
+                                        <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
+                                        <button onClick={() => {
+                                            borrarAlumno(alumnoSeleccionado.id)
+                                            setConfirmarBorrado(false)
+                                        }}>
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )
                     ) : (
                         <EditarAlumno
                             alumnoSeleccionado={alumnoSeleccionado}
@@ -191,3 +249,4 @@ const Alumnos = () => {
 }
 
 export default Alumnos
+
