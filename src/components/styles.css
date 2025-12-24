@@ -1727,6 +1727,18 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0;
   }
 
+  .editar-alumno-modal div p, .editar-alumno-modal-1 div p{
+  font-size: 0.8rem;
+}
+
+.turno-editable-info p{
+  font-size: 0.8rem;
+}
+
+  .btn-guardar{
+    font-size: 0.8rem;
+  }
+
 }
 @media screen and (max-width: 1280px){
   .reserva-modal {
