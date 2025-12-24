@@ -1,173 +1,180 @@
-import { useEffect, useState } from 'react'
-import { db } from '../../firebase/firebaseConfig'
-import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore'
+import { useState, useMemo } from 'react'
 import AlumnoData from './AlumnoData'
-import { useAlumnos } from '../../helpers/useAlumnos'
-import { IoIosClose } from 'react-icons/io'
-import { FaEdit } from 'react-icons/fa'
 import EditarAlumno from './EditarAlumno'
+import { useAlumnos } from '../../helpers/useAlumnos'
 import "./alumnos.css"
-
-// ----- IMPORT CORRECTO para la versión que tenés (v2.x) -----
-import { List } from "react-window"
 import { Link } from 'react-router-dom'
+
+const ITEMS_POR_PAGINA = 100
+const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 const Alumnos = () => {
 
     const {
         alumnos,
-        setAlumnos,
         alumnosFiltrados,
-        setAlumnosFiltrados,
-        ventanaAlumno,
-        setVentanaAlumno,
         busquedaAlumno,
-        setBusquedaAlumno,
         modoEdicion,
         setModoEdicion,
         alumnoSeleccionado,
         setAlumnoSeleccionado,
-        toggleAlumno,
         handleEditar,
         editarAlumno,
-        handleBusquedaAlumno,
+        handleBusqueda,
         borrarAlumno,
-        normalizar,
-        turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
+        turnoModificandose,
+        setTurnoModificandose,
+        todosLosTurnos,
+        dataAlumno,
+        setDataAlumno,
+        capturarAlumno
     } = useAlumnos()
 
-    const [inputAgregarTurno, setInputAgregarTurno] = useState("")
-    const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
-    const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
-    const [confirmarBorrado, setConfirmarBorrado] = useState(false)
-    
+    const [paginaActual, setPaginaActual] = useState(0)
+    const [letraActiva, setLetraActiva] = useState(null)
 
-    const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
-        const arrayTurnosAlumno = alumnoSeleccionado.turnos;
-        const turnoBorrado = arrayTurnosAlumno.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
-        try {
-            await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
-            alert("turno borrado con exito")
-        } catch (error) {
-            console.error("Error borrando turno:", error);
-        }
-    }
+    // 1️⃣ lista base (búsqueda)
+    const listaBase = alumnosFiltrados.length > 0 ? alumnosFiltrados : alumnos
 
-    const agregarTurno = async (idAlumno) => {
-        const id = alumnoSeleccionado.turnos.length + 1
-        try {
-            const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] }
-            // 1️⃣ Actualiza en Firebase con el nuevo objeto
-            await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
-            // 2️⃣ Actualiza el estado local
-            setAlumnoSeleccionado(turnoActualizado);
-            // 3️⃣ Limpia el formulario
-            setNuevoTurno({ dia: "", mes: "", hora: "", zona: "" });
-        } catch (error) {
-            console.error("Error agregando turno:", error);
-        }
-    };
+    // 2️⃣ filtro por letra
+    const listaFiltradaPorLetra = useMemo(() => {
+        if (!letraActiva) return listaBase
 
-    const listaAlumnos = alumnosFiltrados.length === 0 ? alumnos : alumnosFiltrados // constante donde se elije mostrar alumnos filtrados por busqueda o a todos los alumnos
-
-    // -----------------------------------------------------
-    // Row component: la librería v2 espera un component (rowComponent) 
-    // que reciba props como { index, style, ... }.
-    // Es obligatorio aplicar "style" al wrapper para que la virtualización funcione.
-    // -----------------------------------------------------
-    const Row = ({ index, style, ...rest }) => {
-        console.log("Renderizando fila:", index) // 👈 para ver cuántas se montan realmente
-        const alumno = listaAlumnos[index]
-        if (!alumno) return null
-
-        return (
-
-            <div style={{ ...style, }}            >
-                <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }}  className='alumnos'>
-                    <h2 style={{ margin: 0 }}>{alumno.nombre}</h2>
-                </div>
-            </div>
+        return listaBase.filter(alumno =>
+            alumno.nombre
+                .trim()
+                .toUpperCase()
+                .startsWith(letraActiva)
         )
-    }
+    }, [listaBase, letraActiva])
 
-    // -----------------------------------------------------
-    // Parámetros clave:
-    // - defaultHeight: alto visible del contenedor (en px)
-    // - rowCount: cantidad total de filas
-    // - rowHeight: alto por fila (px) — si tenés alturas dinámicas hay otra API
-    // - rowComponent: el componente que renderiza cada fila (Row)
-    // - rowProps: si querés pasar props adicionales a Row
-    // -----------------------------------------------------
+    // 3️⃣ orden alfabético
+    const listaOrdenada = useMemo(() => {
+        return [...listaFiltradaPorLetra].sort((a, b) =>
+            a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+        )
+    }, [listaFiltradaPorLetra])
+
+    // 4️⃣ paginación
+    const inicio = paginaActual * ITEMS_POR_PAGINA
+    const fin = inicio + ITEMS_POR_PAGINA
+    const alumnosPagina = listaOrdenada.slice(inicio, fin)
+    const totalPaginas = Math.ceil(listaOrdenada.length / ITEMS_POR_PAGINA)
+
+    // reset de página al cambiar letra o búsqueda
+    const seleccionarLetra = (letra) => {
+        setLetraActiva(letra)
+        setPaginaActual(0)
+    }
 
     return (
         <div className='alumnos-wrapper'>
+
             <div className='inicio-container'>
                 <div className='nav-bar'>
                     <Link className='auto-title' to="/turnos">Ir a Turnos</Link>
-                    {/* <Link className='auto-title' to="/alumnos">Alumnos</Link> */}
                     <Link className='auto-title' to="/profesores">Profesores</Link>
                 </div>
             </div>
-            <div style={{display:"flex", margin:"32px"}}>
-                <input style={{margin:"auto"}} className="searchbar" placeholder='Buscar alumno...' type="text" value={busquedaAlumno} onChange={handleBusqueda} />
+
+            {/* BUSCADOR */}
+            <div style={{ display: "flex", margin: "32px" }}>
+                <input
+                    className="searchbar"
+                    placeholder='Buscar alumno...'
+                    type="text"
+                    value={busquedaAlumno}
+                    onChange={(e) => {
+                        handleBusqueda(e)
+                        setPaginaActual(0)
+                        setLetraActiva(null)
+                    }}
+                />
             </div>
 
-            <div className='alumnos-content' style={{ height: '800px' }}>
-                <List
-                    defaultHeight={800}               // alto visible del contenedor
-                    rowCount={listaAlumnos.length}    // cantidad total de filas
-                    rowHeight={60}                    // alto de cada fila (ajustalo según tu CSS)
-                    rowComponent={Row}                // componente que renderiza cada fila
-                    rowProps={{}}                     // si necesitás pasar algo extra a Row
-                    overscanCount={3}                 // filas extra renderizadas para suavizar scroll
-                    style={{ width: '100%', height: '100%' }}
+            {/* FILTRO A–Z */}
+            <div style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "6px",
+                justifyContent: "center",
+                marginBottom: "24px"
+            }}>
+                <button
+                    onClick={() => seleccionarLetra(null)}
+                    style={{ fontWeight: !letraActiva ? 'bold' : 'normal' }}
                 >
-                    {/* La API v2 acepta children (se renderizan después) pero no hace falta aquí */}
-                </List>               
+                    Todas
+                </button>
+
+                {LETRAS.map(letra => (
+                    <button
+                        key={letra}
+                        onClick={() => seleccionarLetra(letra)}
+                        style={{
+                            fontWeight: letraActiva === letra ? 'bold' : 'normal'
+                        }}
+                    >
+                        {letra}
+                    </button>
+                ))}
+            </div>
+
+            {/* LISTA */}
+            <div className='alumnos-content'>
+                {alumnosPagina.map(alumno => (
+                    <div
+                        key={alumno.id}
+                        className='alumnos'
+                        onClick={() => {
+                            setAlumnoSeleccionado(alumno)
+                            setDataAlumno(true)
+                        }}
+                    >
+                        <h2>{alumno.nombre}</h2>
+                    </div>
+                ))}
+
+                {/* PAGINACIÓN */}
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "16px",
+                    margin: "24px"
+                }}>
+                    <button
+                        disabled={paginaActual === 0}
+                        onClick={() => setPaginaActual(p => p - 1)}
+                    >
+                        Anterior
+                    </button>
+
+                    <span>
+                        Página {paginaActual + 1} de {totalPaginas || 1}
+                    </span>
+
+                    <button
+                        disabled={paginaActual >= totalPaginas - 1}
+                        onClick={() => setPaginaActual(p => p + 1)}
+                    >
+                        Siguiente
+                    </button>
+                </div>
 
                 {dataAlumno && (
                     !modoEdicion ? (
-                        alumnoSeleccionado && (
-                            <div className='alumno-data' >
-                                <AlumnoData
-                                    setVentanaAlumno={setVentanaAlumno}
-                                    toggleAlumno={toggleAlumno}
-                                    alumnos={alumnos}
-                                    ventanaAlumno={ventanaAlumno}
-                                    modoEdicion={modoEdicion}
-                                    setModoEdicion={setModoEdicion}
-                                    alumnoSeleccionado={alumnoSeleccionado}
-                                    handleEditar={handleEditar}
-                                    editarAlumno={editarAlumno}
-                                    borrarAlumno={borrarAlumno}
-                                    borrarTurnoReservado={borrarTurnoReservado}
-                                    setAlumnoSeleccionado={setAlumnoSeleccionado}
-                                    nuevoTurno={nuevoTurno}
-                                    setNuevoTurno={setNuevoTurno}
-                                    agregarTurno={agregarTurno}
-                                    inputAgregarTurno={inputAgregarTurno}
-                                    setInputAgregarTurno={setInputAgregarTurno}
-                                    turnoModificandose={turnoModificandose}
-                                    setTurnoModificandose={setTurnoModificandose}
-                                    todosLosTurnos={todosLosTurnos}
-                                    capturarAlumno={capturarAlumno}
-                                    alumnosFiltrados={alumnosFiltrados}
-                                    editarTurnoAlumno={editarTurnoAlumno}
-                                    setEditarTurnoAlumno={setEditarTurnoAlumno}
-                                    dataAlumno={dataAlumno}
-                                    setDataAlumno={setDataAlumno}
-                                />
-                                <button className='alumno-btn-editar' onClick={() => setConfirmarBorrado(true)}>Borrar</button>
-                                {confirmarBorrado && (
-                                    <div className='confirmar-borrado-wrapper'>
-                                        <p>¿Seguro quiere borrar a {alumnoSeleccionado.nombre}</p>
-                                        <button className='btn-cerrar' onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
-                                        <button className='btn-guardar' onClick={() => { borrarAlumno(alumnoSeleccionado.id); setConfirmarBorrado(false) }}>Confirmar</button>
-                                    </div>
-                                )}
-
-                            </div>
-                        )
+                        <AlumnoData
+                            alumnoSeleccionado={alumnoSeleccionado}
+                            handleEditar={handleEditar}
+                            editarAlumno={editarAlumno}
+                            borrarAlumno={borrarAlumno}
+                            turnoModificandose={turnoModificandose}
+                            setTurnoModificandose={setTurnoModificandose}
+                            todosLosTurnos={todosLosTurnos}
+                            capturarAlumno={capturarAlumno}
+                            dataAlumno={dataAlumno}
+                            setDataAlumno={setDataAlumno}
+                        />
                     ) : (
                         <EditarAlumno
                             alumnoSeleccionado={alumnoSeleccionado}
@@ -184,153 +191,3 @@ const Alumnos = () => {
 }
 
 export default Alumnos
-
-
-// import { useEffect, useState } from 'react'
-// import { db } from '../../firebase/firebaseConfig'
-// import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore'
-// import AlumnoData from './AlumnoData'
-// import { useAlumnos } from '../../helpers/useAlumnos'
-// import { IoIosClose } from 'react-icons/io'
-// import { FaEdit } from 'react-icons/fa'
-// import EditarAlumno from './EditarAlumno'
-// import "./alumnos.css"
-
-// const Alumnos = () => {
-
-//     const {
-//         alumnos,
-//         setAlumnos,
-//         alumnosFiltrados,
-//         setAlumnosFiltrados,
-//         ventanaAlumno,
-//         setVentanaAlumno,
-//         busquedaAlumno,
-//         setBusquedaAlumno,
-//         modoEdicion,
-//         setModoEdicion,
-//         alumnoSeleccionado,
-//         setAlumnoSeleccionado,
-//         toggleAlumno,
-//         handleEditar,
-//         editarAlumno,
-//         handleBusquedaAlumno,
-//         borrarAlumno,
-//         normalizar,
-//         turnoModificandose, setTurnoModificandose, todosLosTurnos, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
-//     } = useAlumnos()
-
-
-
-//     const [inputAgregarTurno, setInputAgregarTurno] = useState("")
-//     const [nuevoTurno, setNuevoTurno] = useState({ dia: "", mes: "", hora: "", zona: "", anio: "" })
-//     const [editarTurnoAlumno, setEditarTurnoAlumno] = useState(false)
-//     const [confirmarBorrado, setConfirmarBorrado] = useState(false)
-
-//     const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno) => {
-//         const arrayTurnosAlumno = alumnoSeleccionado.turnos;
-//         const turnoBorrado = arrayTurnosAlumno.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
-//         try {
-//             await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
-//             alert("turno borrado con exito")
-//         } catch (error) {
-//             console.error("Error borrando turno:", error);
-//         }
-//     }
-
-//     const agregarTurno = async (idAlumno) => {
-//         const id = alumnoSeleccionado.turnos.length + 1
-//         try {
-//             const turnoActualizado = { ...alumnoSeleccionado, turnos: [...alumnoSeleccionado.turnos, { id, ...nuevoTurno }] }
-//             // 1️⃣ Actualiza en Firebase con el nuevo objeto
-//             await updateDoc(doc(db, "alumnos", idAlumno), turnoActualizado);
-//             // 2️⃣ Actualiza el estado local
-//             setAlumnoSeleccionado(turnoActualizado);
-//             // 3️⃣ Limpia el formulario
-//             setNuevoTurno({ dia: "", mes: "", hora: "", zona: "" });
-//         } catch (error) {
-//             console.error("Error agregando turno:", error);
-//         }
-//     };
-
-
-
-//     const listaAlumnos = alumnosFiltrados.length === 0 ? alumnos : alumnosFiltrados // constante donde se elije mostrar alumnos filtrados por busqueda o a todos los alumnos
-
-//     return (
-//         <div className='alumnos-wrapper'>
-//             <input className="searchbar" placeholder='Buscar alumno...' type="text" value={busquedaAlumno} onChange={handleBusqueda} />
-           
-            
-//             <div className='alumnos-content'>
-//                 {alumnosFiltrados.map((alumno, index) => {
-//                     return (
-//                         <div onClick={() => { setAlumnoSeleccionado(alumno); setDataAlumno(true) }} key={index} className='alumnos'>
-//                             <h2 >{alumno.nombre}</h2>
-//                         </div>
-//                     )
-//                 })}
-
-//                 {dataAlumno && (
-//                     !modoEdicion ? (
-//                         alumnoSeleccionado && (
-//                             <div className='alumno-data' >
-//                                 <AlumnoData
-//                                     setVentanaAlumno={setVentanaAlumno}
-//                                     toggleAlumno={toggleAlumno}
-//                                     alumnos={alumnos}
-//                                     ventanaAlumno={ventanaAlumno}
-//                                     modoEdicion={modoEdicion}
-//                                     setModoEdicion={setModoEdicion}
-//                                     alumnoSeleccionado={alumnoSeleccionado}
-//                                     handleEditar={handleEditar}
-//                                     editarAlumno={editarAlumno}
-//                                     borrarAlumno={borrarAlumno}
-//                                     borrarTurnoReservado={borrarTurnoReservado}
-//                                     setAlumnoSeleccionado={setAlumnoSeleccionado}
-//                                     nuevoTurno={nuevoTurno}
-//                                     setNuevoTurno={setNuevoTurno}
-//                                     agregarTurno={agregarTurno}
-//                                     inputAgregarTurno={inputAgregarTurno}
-//                                     setInputAgregarTurno={setInputAgregarTurno}
-//                                     turnoModificandose={turnoModificandose}
-//                                     setTurnoModificandose={setTurnoModificandose}
-//                                     todosLosTurnos={todosLosTurnos}
-//                                     capturarAlumno={capturarAlumno}
-//                                     alumnosFiltrados={alumnosFiltrados}
-//                                     editarTurnoAlumno={editarTurnoAlumno}
-//                                     setEditarTurnoAlumno={setEditarTurnoAlumno}
-//                                     dataAlumno={dataAlumno}
-//                                     setDataAlumno={setDataAlumno}
-//                                 />
-//                                 <button onClick={() => setConfirmarBorrado(true)}>Borrar</button>
-//                                 {confirmarBorrado && (
-//                                     <div>
-//                                         <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
-//                                         <button onClick={() => { borrarAlumno(alumnoSeleccionado.id), setConfirmarBorrado(false) }}>Confirmar</button>
-//                                     </div>
-//                                 )}
-
-//                             </div>
-//                         )
-//                     ) : (
-//                         <EditarAlumno
-//                             alumnoSeleccionado={alumnoSeleccionado}
-//                             handleEditar={handleEditar}
-//                             editarAlumno={editarAlumno}
-//                             setModoEdicion={setModoEdicion}
-//                             modoEdicion={modoEdicion}
-//                         />
-//                     )
-//                 )}
-//             </div>
-
-
-
-//         </div>
-//     )
-// }
-
-// export default Alumnos
-
-
