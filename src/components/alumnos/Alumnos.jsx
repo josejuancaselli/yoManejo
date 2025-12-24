@@ -157,11 +157,12 @@ const Alumnos = () => {
                                     dataAlumno={dataAlumno}
                                     setDataAlumno={setDataAlumno}
                                 />
-                                <button onClick={() => setConfirmarBorrado(true)}>Borrar</button>
+                                <button className='alumno-btn-editar' onClick={() => setConfirmarBorrado(true)}>Borrar</button>
                                 {confirmarBorrado && (
-                                    <div>
-                                        <button onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
-                                        <button onClick={() => { borrarAlumno(alumnoSeleccionado.id); setConfirmarBorrado(false) }}>Confirmar</button>
+                                    <div className='confirmar-borrado-wrapper'>
+                                        <p>¿Seguro quiere borrar a {alumnoSeleccionado.nombre}</p>
+                                        <button className='btn-cerrar' onClick={() => setConfirmarBorrado(false)}>Cancelar</button>
+                                        <button className='btn-guardar' onClick={() => { borrarAlumno(alumnoSeleccionado.id); setConfirmarBorrado(false) }}>Confirmar</button>
                                     </div>
                                 )}
 

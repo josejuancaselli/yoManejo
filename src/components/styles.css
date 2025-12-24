@@ -1191,7 +1191,6 @@ body {
   gap: 8px;
 }
 
-/* Updated .editar-alumno-modal - Same as above */
 .editar-alumno-modal,
 .editar-alumno-modal-1 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -1235,7 +1234,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Main heading */
+
 .editar-alumno-modal h2 {
   font-weight: 700;
   font-size: 1.4rem;
@@ -1294,7 +1293,7 @@ body {
   box-shadow: 0 0 8px rgba(84, 177, 152, 0.3);
 }
 
-/* Buttons in modal */
+
 .alumno-btn-editar,
 .btn-guardar,
 .btn-cerrar {
@@ -1340,6 +1339,16 @@ body {
   border-color: #3d7d6a;
   outline: none;
   box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
+}
+
+.confirmar-borrado-wrapper{
+  border-radius: 7%;
+  padding: 50px;
+  position: absolute;
+  border: solid 4px #00000036;
+  bottom: 10%;  
+  z-index: 9999;
+  background: #f1f1f1;
 }
 
 /* Turnos editables container */
@@ -1772,190 +1781,3 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 10px 16px;
   }
 }
-
-/* @media (min-width: 1536px) and (max-width: 1919px) {
-
-  .nav-bar {
-    gap: 6px;
-    
-    padding: 8px 3px;
-    
-  }
-
-  .nav-bar .auto-title {
-    font-size: 0.8rem;
-    
-    padding: 6px 10px;
-    
-    min-width: 60px;
-    
-    max-width: 120px;
-    
-  }
-
-  .nav-bar button {
-    font-size: 0.7rem;
-    
-    padding: 6px 10px;
-    
-    min-width: 80px;
-    
-  }
-
-  .zona-turnos-container {
-    max-width: 1536px;
-  }
-
-  .zonas-section {
-    flex-direction: column;
-  }
-
-  .seleccion-zona {
-    height: 100px;
-    width: 100%;
-    padding: 0;
-    justify-content: flex-start;
-    flex-direction: row;
-  }
-
-  .seleccion-zona h2 {
-    margin-left: 20px;
-  }
-
-
-  .seleccion-zona .zona-btn {
-    width: 50px;
-  }
-
-  .calendario-container {
-    max-width: 383px;
-    min-width: 355px;
-  }
-
-  .dia-num-btn {
-    flex-direction: column;
-    font-size: 0.8rem;
-    width: 12px;
-    height: 12px;
-  }
-
-  .zonas-section h2 {
-    font-size: 1rem;
-
-  }
-
-  .nav-btn {
-    font-size: 0.8rem;
-  }
-
-  .dias-semana {
-    font-size: 0.7rem;
-  }
-
-  .horarios-list button {
-    font-size: 0.5rem;
-    min-width: 40px;
-  }
-
-  .simulacion-item {
-    font-size: 8px;
-    ;
-  }
-
-  .simulacion-delete-btn {
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 360px) and (max-width: 640px) {
-  .nav-bar {
-    gap: 4px;
-    
-    padding: 6px 2px;
-    
-  }
-
-  .nav-bar .auto-title {
-    font-size: 0.7rem;
-    
-    padding: 4px 8px;
-    
-    min-width: 50px;
-    
-    max-width: 100px;
-    
-  }
-
-  .nav-bar button {
-    font-size: 0.6rem;
-    padding: 4px 8px;
-
-    min-width: 60px;
-  }
-
-  .zona-turnos-container {
-    
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    
-        margin: 0;
-  }
-
-  .zonas-section {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0;
-        margin: 0;
-  }
-
-  .seleccion-zona {
-    height: unset;
-    flex-direction: column;
-  }
-
-  .zona-buttons-wrapper {
-    position: unset;
-    transform: none;
-  }
-
-  .alumnos-search-wrapper{
-    width: 85%;
-    position: absolute;
-  }
-
-  .zonas{
-    flex-direction: column;
-  }
-
-  .calendario-container{
-    max-width: 100%;
-    min-width: 90%;
-    margin: 0;
-    padding: 0;
-  }
-
-  .zonas-section h2{
-    font-size: 0.8rem;
-  }
-
-  .nav-btn{
-    font-size: 0.8rem;
-  }
-
-  .dias-mes{
-    column-gap: unset;
-  }
-
-  .dias-mes div{
-    margin: auto;
-    width: 85%;
-  }
-.dia-num-btn{
-  padding: 0;
-  width: 100%;
-}
-
-} */
