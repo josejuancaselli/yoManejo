@@ -1780,7 +1780,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   .reserva-form {
-    gap: 12px;
+    gap: 0;
   }
 
   .reserva-input {
