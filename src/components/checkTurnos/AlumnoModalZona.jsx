@@ -17,18 +17,16 @@ const AlumnoModalZona = ({
     borrarAlumno,
     borrarTurnoReservado,
     setAlumnoSeleccionado,
-    nuevoTurno,
+    // nuevoTurno,
     setNuevoTurno,
     agregarTurno,
-    inputAgregarTurno,
-    setInputAgregarTurno,
+    // inputAgregarTurno,
+    // setInputAgregarTurno,
     turnoModificandose,
     setTurnoModificandose,
     todosLosTurnos,
     capturarAlumno,
     alumnosFiltrados,    
-    editarTurnoAlumno,
-    setEditarTurnoAlumno,
     editarTurnos,
     setEditarTurnos,
     dataAlumno,
@@ -49,17 +47,17 @@ const AlumnoModalZona = ({
             {!modoEdicion ? (
                 alumnoSeleccionado && (
                     <div className="alumno-modal-content">
-                        <AlumnoData                            
+                        <AlumnoData
                             setModoEdicion={setModoEdicion}
-                            alumnoSeleccionado={alumnoSeleccionado}                           
+                            alumnoSeleccionado={alumnoSeleccionado}
                             setDataAlumno={setDataAlumno}
                         />
 
                         <div className="turnos-editables">
                             <h3>Turnos:</h3>
                             <TurnoData
-                                nuevoTurno={nuevoTurno}
-                                setNuevoTurno={setNuevoTurno}
+                                // nuevoTurno={nuevoTurno}
+                                // setNuevoTurno={setNuevoTurno}
                                 alumnoSeleccionado={alumnoSeleccionado}
                                 handleEditar={handleEditar}
                                 obtenerDiasDelMes={obtenerDiasDelMes}
@@ -68,11 +66,11 @@ const AlumnoModalZona = ({
                                 editarAlumno={editarAlumno}
                                 setModoEdicion={setModoEdicion}
                                 modoEdicion={modoEdicion}
-                                setInputAgregarTurno={setInputAgregarTurno}
-                                inputAgregarTurno={inputAgregarTurno}
+                                // setInputAgregarTurno={setInputAgregarTurno}
+                                // inputAgregarTurno={inputAgregarTurno}
                                 agregarTurno={agregarTurno}
-                                editarTurnoAlumno={editarTurnoAlumno}
-                                setEditarTurnoAlumno={setEditarTurnoAlumno}
+                                
+                                
                                 handleEditarTurno={handleEditarTurno}
                                 turnosEditables={turnosEditables}
                                 setTurnosEditables={setTurnosEditables}
@@ -82,7 +80,7 @@ const AlumnoModalZona = ({
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
-                            <button className="btn-guardar" onClick={()=>agregarTurno(alumnoSeleccionado.id)}><IoAdd /></button>                            
+                            <button className="btn-guardar" onClick={() => agregarTurno(alumnoSeleccionado.id)}><IoAdd /></button>
                             <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]); setWarningReserva(false) }}>Imprimir</button>
                         </div>
                     </div>
@@ -91,8 +89,6 @@ const AlumnoModalZona = ({
                 alumnoSeleccionado && (
                     <div className="alumno-modal-content">
                         <EditarAlumno
-                            nuevoTurno={nuevoTurno}
-                            setNuevoTurno={setNuevoTurno}
                             alumnoSeleccionado={alumnoSeleccionado}
                             handleEditar={handleEditar}
                             obtenerDiasDelMes={obtenerDiasDelMes}
@@ -101,18 +97,14 @@ const AlumnoModalZona = ({
                             editarAlumno={editarAlumno}
                             setModoEdicion={setModoEdicion}
                             modoEdicion={modoEdicion}
-                            setInputAgregarTurno={setInputAgregarTurno}
-                            inputAgregarTurno={inputAgregarTurno}
-                            agregarTurno={agregarTurno}
-                            editarTurnoAlumno={editarTurnoAlumno}
-                            setEditarTurnoAlumno={setEditarTurnoAlumno}
+                            agregarTurno={agregarTurno}                            
                         />
 
                         <div className="turnos-editables">
                             <h3>Turnos:</h3>
                             <TurnoData
-                                nuevoTurno={nuevoTurno}
-                                setNuevoTurno={setNuevoTurno}
+                                // nuevoTurno={nuevoTurno}
+                                // setNuevoTurno={setNuevoTurno}
                                 alumnoSeleccionado={alumnoSeleccionado}
                                 handleEditar={handleEditar}
                                 obtenerDiasDelMes={obtenerDiasDelMes}
@@ -121,11 +113,9 @@ const AlumnoModalZona = ({
                                 editarAlumno={editarAlumno}
                                 setModoEdicion={setModoEdicion}
                                 modoEdicion={modoEdicion}
-                                setInputAgregarTurno={setInputAgregarTurno}
-                                inputAgregarTurno={inputAgregarTurno}
-                                agregarTurno={agregarTurno}
-                                editarTurnoAlumno={editarTurnoAlumno}
-                                setEditarTurnoAlumno={setEditarTurnoAlumno}
+                                // setInputAgregarTurno={setInputAgregarTurno}
+                                // inputAgregarTurno={inputAgregarTurno}
+                                agregarTurno={agregarTurno}                                
                                 handleEditarTurno={handleEditarTurno}
                                 turnosEditables={turnosEditables}
                                 setTurnosEditables={setTurnosEditables}
@@ -135,7 +125,7 @@ const AlumnoModalZona = ({
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
-                            <button className="btn-guardar" onClick={()=>agregarTurno(alumnoSeleccionado.id)}>Agregar</button>
+                            <button className="btn-guardar" onClick={() => agregarTurno(alumnoSeleccionado.id)}>Agregar</button>
                             <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
                         </div>
                     </div>
