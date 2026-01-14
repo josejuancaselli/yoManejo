@@ -7,22 +7,30 @@ import { useAlumnos } from "../../helpers/useAlumnos";
 import { useFechas } from "../../helpers/useFechas";
 import ZonasSection from "./ZonasSection";
 import AlumnoModalZona from "./AlumnoModalZona";
+import { toggleZona } from "../../helpers/zonaHelper";
+
+
 import { Link } from "react-router-dom";
 
 
 const ZonaTurnos = () => {
-  const [zonasSeleccionadas, setZonasSeleccionadas] = useState([]);
-  const [ventanaReservar, setVentanaReservar] = useState(false)
-  const [reserva, setReserva] = useState({});
-  const [turnoSim, setTurnoSim] = useState([]);
-  const [simulacion, setSimulacion] = useState(false);
+  const [reserva, setReserva] = useState({}); //este estado todavia no se si sirve para algo
   // const [inputAgregarTurno, setInputAgregarTurno] = useState(false)
   // const [nuevoTurno, setNuevoTurno] = useState([])  
+
+  // UI
+  const [ventanaReservar, setVentanaReservar] = useState(false)
+  const [simulacion, setSimulacion] = useState(false);
+  const [modoSimulacion, setModoSimulacion] = useState("preview");
+
+
+  //Flujo
+  const [turnoSim, setTurnoSim] = useState([]);
+  const [zonasSeleccionadas, setZonasSeleccionadas] = useState([]);
+
+  //Edicion
   const [editarTurnos, setEditarTurnos] = useState(null);
   const [turnosEditables, setTurnosEditables] = useState([]);
-  const [warningReserva, setWarningReserva] = useState(false);
-  const [botonReserva, setBotonReserva] = useState(true);
-
 
   const { alumnos, setAlumnos, alumnosFiltrados,
     setAlumnosFiltrados, ventanaAlumno,
@@ -39,20 +47,42 @@ const ZonaTurnos = () => {
 
   const { obtenerDiasDelMes, obtenerHorarios, horariosMañana, horariosTarde, horarios } = useFechas()
 
-  // ✅ toggle para agregar o quitar zonas seleccionadas
-  const toggleZona = (z) => {
-    setZonasSeleccionadas((prev) =>
-      prev.includes(z) ? prev.filter((zona) => zona !== z) : [...prev, z]
+
+  //================================================================//
+  // ZONAS
+  //================================================================//
+  const handleToggleZona = (zona) => {// Set zona seleccionada to true or false based on if it's already in the list  
+    setZonasSeleccionadas((prev) => toggleZona(prev, zona));
+  };
+
+
+  //================================================================//
+  // turnos TEMPORALES (simulacion)
+  //================================================================//  
+  const borrarTurnoSimulado = (dia, hora, mes, zona, anio) => { // Esta funcion borra un turno simulado de la lista de turnos simulados.
+    setTurnoSim(
+      turnoSim.filter(
+        (r) =>
+          !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)
+      )
     );
   };
-
-  const borrarTurnoSimulado = (dia, hora, mes, zona, anio) => {
-    setTurnoSim(turnoSim.filter((r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)));
+  const agregarTurno = async (idAlumno) => {// Agrega un turno simulado a la lista de turnos del alumno seleccionado y actualiza el cambio en la base de datos
+    try {
+      const nuevosTurnos = [...alumnoSeleccionado.turnos, ...turnoSim];// Creamos los turnos simulados de la lista de turnos simulados y los turnos del alumno seleccionado      
+      await updateDoc(doc(db, "alumnos", idAlumno), { turnos: nuevosTurnos });// Actualiza el cambio en la base de datos      
+      setAlumnoSeleccionado((prev) => ({ ...prev, turnos: nuevosTurnos }));// Actualiza el alumno seleccionado con los nuevos turnos      
+      setTurnoSim([]);// Reset el turno simulado
+    } catch (error) {
+      console.error("Error agregando turno:", error);
+    }
   };
 
+  //================================================================//
+  // turnos EXISTENTES (base de datos)
+  //================================================================//  
   const borrarTurnoReservado = async (dia, hora, mes, zona, anio, idAlumno, confirmacion) => {
     const turnoBorrado = alumnoSeleccionado.turnos.filter((turno) => turno.dia !== dia || turno.hora !== hora || turno.mes !== mes || turno.zona !== zona || turno.anio !== anio);
-
     try {
       if (confirmacion === "si") {
         await updateDoc(doc(db, "alumnos", idAlumno), { turnos: turnoBorrado })
@@ -60,45 +90,17 @@ const ZonaTurnos = () => {
         setRefresh(prev => !prev)
         setAlumnoSeleccionado((prev) => ({ ...prev, turnos: turnoBorrado, }));
       }
-
     } catch (error) {
       console.error("Error borrando turno:", error);
     }
   }
-  const agregarTurno = async (idAlumno) => {
 
-    try {
-
-      const nuevosTurnos = [...alumnoSeleccionado.turnos, ...turnoSim];
-
-      await updateDoc(doc(db, "alumnos", idAlumno), { turnos: nuevosTurnos });
-      setAlumnoSeleccionado((prev) => ({ ...prev, turnos: nuevosTurnos }));
-      setTurnoSim([]);
-    } catch (error) {
-      console.error("Error agregando turno:", error);
-    }
-  };
-
-
-  // Cargamos los turnos al entrar en modo edición o al cambiar el alumno seleccionado
-  useEffect(() => {
-    if (alumnoSeleccionado.turnos) {
-      setTurnosEditables(alumnoSeleccionado.turnos.map((t) => ({ ...t })));
-    }
-  }, [alumnoSeleccionado]);
-
-  // Función para actualizar un turno editable
-  const handleEditarTurno = (e, index, campo) => {
-    const valor = ["dia", "mes", "anio"].includes(campo)
-      ? Number(e.target.value)
-      : e.target.value;
-
+  const handleEditarTurno = (e, index, campo) => {// Función para actualizar un turno editable
+    const valor = ["dia", "mes", "anio"].includes(campo) ? Number(e.target.value) : e.target.value;
     const turnosAlumnos = alumnos.map((alumno) => alumno.turnos).flat()
     const nuevosTurnos = [...turnosEditables];
     const turnoEditado = { ...nuevosTurnos[index], [campo]: valor };
-
-    // --- Validación de duplicados ---
-    const existeDuplicado = turnosAlumnos.some((t, i) =>
+    const existeDuplicado = turnosAlumnos.some((t, i) =>// --- Validación de duplicados ---
       i !== index &&
       t.dia === turnoEditado.dia &&
       t.mes === turnoEditado.mes &&
@@ -113,10 +115,23 @@ const ZonaTurnos = () => {
     // --- Si no hay duplicado, actualizamos ---
     nuevosTurnos[index] = turnoEditado;
     setTurnosEditables(nuevosTurnos);
-
     // Mantener sincronizado con alumnoSeleccionado
     handleEditar(e, index, campo);
   };
+
+  const handleReservaConfirmada = () => {
+    setModoSimulacion("readonly");
+    setSimulacion(true);
+    setVentanaReservar(false);
+  };
+
+
+  // Cargamos los turnos al entrar en modo edición o al cambiar el alumno seleccionado
+  useEffect(() => {
+    if (alumnoSeleccionado.turnos) {
+      setTurnosEditables(alumnoSeleccionado.turnos.map((t) => ({ ...t })));
+    }
+  }, [alumnoSeleccionado]);
 
   return (
     <div className="zona-turnos-container">
@@ -134,12 +149,11 @@ const ZonaTurnos = () => {
         capturarAlumno={capturarAlumno}
         setAlumnosFiltrados={setAlumnosFiltrados}
         setRenderBusqueda={setRenderBusqueda}
-        toggleZona={toggleZona}
+        handleToggleZona={handleToggleZona}
         setSimulacion={setSimulacion}
         simulacion={simulacion}
         ventanaReservar={ventanaReservar}
         setVentanaReservar={setVentanaReservar}
-        setWarningReserva={setWarningReserva}
         busquedaAlumno={busquedaAlumno}
         turnoSim={turnoSim}
         setTurnoSim={setTurnoSim}
@@ -153,7 +167,8 @@ const ZonaTurnos = () => {
         horariosTarde={horariosTarde}
         obtenerHorarios={obtenerHorarios}
         horarios={horarios}
-        setBotonReserva={setBotonReserva}
+        setModoSimulacion={setModoSimulacion}
+        modoSimulacion={modoSimulacion}
       />
 
       {dataAlumno && (
@@ -171,16 +186,12 @@ const ZonaTurnos = () => {
             borrarAlumno={borrarAlumno}
             borrarTurnoReservado={borrarTurnoReservado}
             setAlumnoSeleccionado={setAlumnoSeleccionado}
-            // nuevoTurno={nuevoTurno}
-            setNuevoTurno={setNuevoTurno}
             agregarTurno={agregarTurno}
-            // inputAgregarTurno={inputAgregarTurno}
-            setInputAgregarTurno={setInputAgregarTurno}
             turnoModificandose={turnoModificandose}
             setTurnoModificandose={setTurnoModificandose}
             todosLosTurnos={todosLosTurnos}
             capturarAlumno={capturarAlumno}
-            alumnosFiltrados={alumnosFiltrados}                        
+            alumnosFiltrados={alumnosFiltrados}
             editarTurnos={editarTurnos}
             setEditarTurnos={setEditarTurnos}
             dataAlumno={dataAlumno}
@@ -192,7 +203,8 @@ const ZonaTurnos = () => {
             setTurnosEditables={setTurnosEditables}
             setSimulacion={setSimulacion}
             setTurnoSim={setTurnoSim}
-            setWarningReserva={setWarningReserva}
+            modoSimulacion={modoSimulacion}
+            setModoSimulacion={setModoSimulacion}
           />
         </div>
       )}
@@ -204,9 +216,8 @@ const ZonaTurnos = () => {
           setTurnoSim={setTurnoSim}
           turnoSim={turnoSim}
           setVentanaReservar={setVentanaReservar}
-          warningReserva={warningReserva}
-          setWarningReserva={setWarningReserva}
-          botonReserva={botonReserva}
+          modoSimulacion={modoSimulacion}
+
         />
       )}
 
@@ -219,8 +230,8 @@ const ZonaTurnos = () => {
             turnoSim={turnoSim}
             setReserva={setReserva}
             setRefresh={setRefresh}
-            setWarningReserva={setWarningReserva}
-            setBotonReserva={setBotonReserva}
+            modoSimulacion={modoSimulacion}
+            handleReservaConfirmada={handleReservaConfirmada}
           />
         </div>
       )}

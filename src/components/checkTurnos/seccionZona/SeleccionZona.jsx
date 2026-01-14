@@ -9,10 +9,9 @@ const SeleccionZona = ({
     capturarAlumno,
     setAlumnosFiltrados,
     setRenderBusqueda,
-    toggleZona,
-    setSimulacion,
-    setWarningReserva,
-    setBotonReserva
+    handleToggleZona,
+    setSimulacion,    
+    setModoSimulacion
 }) => {
 
     return (
@@ -35,11 +34,12 @@ const SeleccionZona = ({
             <div className="zona-buttons-wrapper">
                 <h2>Zonas</h2>
                 <div className="zona-buttons">
-                    <button className="zona-btn" onClick={() => toggleZona("1")}>1</button>
-                    <button className="zona-btn" onClick={() => toggleZona("2")}>2</button>
-                    <button className="zona-btn" onClick={() => toggleZona("3")}>3</button>
-                    <button className="zona-btn" onClick={() => toggleZona("automatico")}>A</button>
-                    <button onClick={() => { setSimulacion(true); setWarningReserva(true); setBotonReserva(true) }} className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>
+                    <button className="zona-btn" onClick={() => handleToggleZona("1")}>1</button>
+                    <button className="zona-btn" onClick={() => handleToggleZona("2")}>2</button>
+                    <button className="zona-btn" onClick={() => handleToggleZona("3")}>3</button>
+                    <button className="zona-btn" onClick={() => handleToggleZona("automatico")}>A</button>
+                    <button onClick={() => { setSimulacion(true); setModoSimulacion("preview"); }} 
+                    className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>
                         +
                     </button>
                 </div>

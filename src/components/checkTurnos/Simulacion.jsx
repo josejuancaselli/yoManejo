@@ -2,8 +2,14 @@ import html2canvas from "html2canvas";
 import { useState } from "react";
 
 
-const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, warningReserva, setWarningReserva, botonReserva }) => {
+const Simulacion = ({ setSimulacion,
+    setTurnoSim,
+    turnoSim,
+    setVentanaReservar,
+    modoSimulacion }) => {
 
+    const isPreview = modoSimulacion === "preview";
+    const isReadonly = modoSimulacion === "readonly";
 
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-list");
@@ -29,6 +35,17 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
                 }
             });
     };
+
+    const handleImprimir = () => {
+        if (turnoSim.length === 0) {
+            alert("No hay turnos para simular");
+            setSimulacion(false);
+            return;
+        }
+        imprimirJPG();
+    };
+
+
     return (
         <div className="simulacion-modal-backdrop">
 
@@ -49,7 +66,7 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
                             </li>
                         ))}
 
-                    {warningReserva && (
+                    {isPreview && (
                         <div>
                             NO VALIDO COMO RESERVA
                         </div>
@@ -58,14 +75,14 @@ const Simulacion = ({ setSimulacion, setTurnoSim, turnoSim, setVentanaReservar, 
                 </ul>
 
                 <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: "10px" }}>
-                    <button className="btn-imprimir" onClick={() => turnoSim.length === 0 ? (() => { alert("No hay turnos para simular"); setSimulacion(false) })() : imprimirJPG()}>
-                        Simular
+                    <button className="btn-imprimir" onClick={handleImprimir}>
+                        {isReadonly ? "Imprimir" : "Simular"}
                     </button>
-                    {botonReserva && (
-                        <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false); setWarningReserva(false) }}>
+                    {isPreview && (
+                        <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false);}}>
                             Reservar
                         </button>
-                    )}
+                    )}                    
                 </div>
             </div>
 

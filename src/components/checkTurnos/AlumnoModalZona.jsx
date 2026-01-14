@@ -5,6 +5,10 @@ import TurnoData from '../alumnos/TurnoData';
 import { IoAdd } from 'react-icons/io5';
 
 const AlumnoModalZona = ({
+    // nuevoTurno,
+    // setNuevoTurno,
+    // inputAgregarTurno,
+    // setInputAgregarTurno,
     setVentanaAlumno,
     toggleAlumno,
     alumnos,
@@ -17,16 +21,12 @@ const AlumnoModalZona = ({
     borrarAlumno,
     borrarTurnoReservado,
     setAlumnoSeleccionado,
-    // nuevoTurno,
-    setNuevoTurno,
     agregarTurno,
-    // inputAgregarTurno,
-    // setInputAgregarTurno,
     turnoModificandose,
     setTurnoModificandose,
     todosLosTurnos,
     capturarAlumno,
-    alumnosFiltrados,    
+    alumnosFiltrados,
     editarTurnos,
     setEditarTurnos,
     dataAlumno,
@@ -37,8 +37,8 @@ const AlumnoModalZona = ({
     turnosEditables,
     setTurnosEditables,
     setSimulacion,
-    setTurnoSim,
-    setWarningReserva,
+    setTurnoSim,    
+    setModoSimulacion
 }) => {
 
 
@@ -68,9 +68,7 @@ const AlumnoModalZona = ({
                                 modoEdicion={modoEdicion}
                                 // setInputAgregarTurno={setInputAgregarTurno}
                                 // inputAgregarTurno={inputAgregarTurno}
-                                agregarTurno={agregarTurno}
-                                
-                                
+                                // agregarTurno={agregarTurno}
                                 handleEditarTurno={handleEditarTurno}
                                 turnosEditables={turnosEditables}
                                 setTurnosEditables={setTurnosEditables}
@@ -81,7 +79,7 @@ const AlumnoModalZona = ({
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}>Guardar cambios</button>
                             <button className="btn-guardar" onClick={() => agregarTurno(alumnoSeleccionado.id)}><IoAdd /></button>
-                            <button className="btn-cerrar" onClick={() => { setSimulacion(true); setTurnoSim([alumnoSeleccionado.turnos]); setWarningReserva(false) }}>Imprimir</button>
+                            <button className="btn-cerrar" onClick={() => { setSimulacion(true); setModoSimulacion("readonly"); setTurnoSim([alumnoSeleccionado.turnos]); {/*setWarningReserva(false)*/ }  }}>Imprimir</button>
                         </div>
                     </div>
                 )
@@ -97,7 +95,7 @@ const AlumnoModalZona = ({
                             editarAlumno={editarAlumno}
                             setModoEdicion={setModoEdicion}
                             modoEdicion={modoEdicion}
-                            agregarTurno={agregarTurno}                            
+
                         />
 
                         <div className="turnos-editables">
@@ -115,7 +113,7 @@ const AlumnoModalZona = ({
                                 modoEdicion={modoEdicion}
                                 // setInputAgregarTurno={setInputAgregarTurno}
                                 // inputAgregarTurno={inputAgregarTurno}
-                                agregarTurno={agregarTurno}                                
+                                // agregarTurno={agregarTurno}
                                 handleEditarTurno={handleEditarTurno}
                                 turnosEditables={turnosEditables}
                                 setTurnosEditables={setTurnosEditables}
@@ -126,7 +124,7 @@ const AlumnoModalZona = ({
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button className="btn-guardar" onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false) }}>Guardar cambios</button>
                             <button className="btn-guardar" onClick={() => agregarTurno(alumnoSeleccionado.id)}>Agregar</button>
-                            <button className="btn-cerrar" onClick={() => { setSimulacion(true) }}>Imprimir</button>
+                            <button className="btn-cerrar" onClick={() => { setSimulacion(true); setModoSimulacion("readonly")}}>Imprimir</button>
                         </div>
                     </div>
                 )

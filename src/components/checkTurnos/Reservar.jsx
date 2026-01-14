@@ -3,7 +3,15 @@ import { useForm } from 'react-hook-form'
 import { db } from "../../firebase/firebaseConfig";
 import { useState } from "react";
 
-const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, setRefresh, setWarningReserva, setBotonReserva }) => {
+const Reservar = ({ setVentanaReservar,
+    setSimulacion,
+    turnoSim,
+    setReserva,
+    setRefresh,
+    //   setWarningReserva, 
+    //   setBotonReserva, 
+    modoSimulacion, setModoSimulacion,
+    handleReservaConfirmada }) => {
 
 
     const { register, handleSubmit } = useForm();
@@ -28,13 +36,9 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, set
             await addDoc(collection(db, "alumnos"), nuevaReserva)
 
             // 3️⃣ Actualizo estado local
-            setReserva(nuevaReserva)
-            setVentanaReservar(false)
-            setSimulacion(true)
-            setWarningReserva(false)
-            setBotonReserva(false)
+            // setReserva(nuevaReserva)
+            handleReservaConfirmada()
             setRefresh(prev => !prev)
-
             console.log("Reserva guardada en Firebase ✅")
         } catch (err) {
             console.error("Error guardando reserva:", err)
@@ -52,7 +56,7 @@ const Reservar = ({ setVentanaReservar, setSimulacion, turnoSim, setReserva, set
 
                     <label className='reserva-label'>DNI</label>
                     <input type="text"  {...register("dni")} className='reserva-input' />
-                    <div style={{display:"flex"}}>
+                    <div style={{ display: "flex" }}>
                         <div>
                             <label className='reserva-label'>Calle</label>
                             <input type="text" {...register("calle")} className='reserva-input' />

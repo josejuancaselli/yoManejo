@@ -10,12 +10,12 @@ const ZonasSection = ({
     capturarAlumno,
     setAlumnosFiltrados,
     setRenderBusqueda,
-    toggleZona,
+    handleToggleZona,
     setSimulacion,
     simulacion,
     ventanaReservar,
     setVentanaReservar,
-    setWarningReserva,
+    // setWarningReserva,
     busquedaAlumno,
     turnoSim,
     setTurnoSim,
@@ -29,7 +29,9 @@ const ZonasSection = ({
     horariosTarde,
     obtenerHorarios,
     horarios,
-    setBotonReserva
+    // setBotonReserva,
+    modoSimulacion,
+    setModoSimulacion
 }) => {
     return (
         <div className="zonas-section">
@@ -41,11 +43,11 @@ const ZonasSection = ({
                     capturarAlumno={capturarAlumno}
                     setAlumnosFiltrados={setAlumnosFiltrados}
                     setRenderBusqueda={setRenderBusqueda}
-                    toggleZona={toggleZona}
-                    setSimulacion={setSimulacion}
-                    setWarningReserva={setWarningReserva}
-                    busquedaAlumno={busquedaAlumno}
-                    setBotonReserva={setBotonReserva}
+                    handleToggleZona={handleToggleZona}
+                    setSimulacion={setSimulacion}                    
+                    busquedaAlumno={busquedaAlumno}                    
+                    modoSimulacion={modoSimulacion}
+                    setModoSimulacion={setModoSimulacion}
                 />
 
                 {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
@@ -68,8 +70,7 @@ const ZonasSection = ({
                             alumnos={alumnos}
                             reserva={reserva}
                             setReserva={setReserva}
-                            setAlumnos={setAlumnos}
-                            ventanaReservar={ventanaReservar}
+                            setAlumnos={setAlumnos}                            
                             setVentanaReservar={setVentanaReservar}
                             horariosMañana={horariosMañana}
                             horariosTarde={horariosTarde}
