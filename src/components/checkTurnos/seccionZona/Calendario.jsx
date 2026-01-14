@@ -192,6 +192,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
             );
           })}
         </div>
+        
       </div>
     </>
   );
