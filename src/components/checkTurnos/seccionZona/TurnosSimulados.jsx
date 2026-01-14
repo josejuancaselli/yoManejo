@@ -11,7 +11,7 @@ const TurnosSimulados = ({turnoSim, borrarTurnoSimulado}) => {
                 return (
                     <li key={index} className="simulacion-container">
                         <p className="simulacion-item">
-                            {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")} - {e.hora} hs - Zona {e.zona}
+                            {"martes"}-{String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")} - {e.hora} hs - Zona {e.zona}
                         </p>
                         <button className="simulacion-delete-btn" onClick={() => { borrarTurnoSimulado(e.dia, e.hora, e.mes, e.zona, e.anio) }}><IoIosClose/></button>
                     </li>

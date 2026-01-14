@@ -227,6 +227,7 @@ const Profesores = () => {
                             </div>
                             <p>{turno.nombre}</p>
                             <p>{turno.telefono}</p>
+                            <p>{turno.observaciones}</p>
                             <div className='profe-warnings-wrapper'>
                                 <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.tm || turno.evaluacion?.tm }} onClick={() => setTopico("tm")}>TM</div>
                                 <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.im || turno.evaluacion?.im }} onClick={() => setTopico("im")}>IM</div>
