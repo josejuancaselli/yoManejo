@@ -86,7 +86,7 @@ const Simulacion = ({ setSimulacion,
                 </div>
             </div>
 
-        </div >
+        </div>
     )
 }
 
