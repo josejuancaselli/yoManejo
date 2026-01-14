@@ -117,8 +117,8 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
           className={`mañana-tab tab-zona-${zona}`}
           onClick={() => toggleMañanaTarde("mañana")}
           style={mañanaTarde.includes("mañana") && { zona }
-            ? {  }
-            : { filter: "brightness(90%)" }
+            ? { backgroundColor: "rgb(14 0 0 / 83%)", color: "#d5d5d5" }
+            : { }
           }
         >
           Mañana
@@ -127,8 +127,8 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
           className={`tarde-tab tab-zona-${zona}`}
           onClick={() => toggleMañanaTarde("tarde")}
           style={mañanaTarde.includes("tarde") && { zona }
-            ? {}
-            : {filter: "brightness(90%)"}
+            ? {backgroundColor: "rgb(14 0 0 / 83%)", color: "#d5d5d5"}
+            : {  }
           }
         >
           Tarde
