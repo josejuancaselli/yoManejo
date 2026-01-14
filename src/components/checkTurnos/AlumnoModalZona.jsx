@@ -49,32 +49,9 @@ const AlumnoModalZona = ({
             {!modoEdicion ? (
                 alumnoSeleccionado && (
                     <div className="alumno-modal-content">
-                        <AlumnoData
-                            setVentanaAlumno={setVentanaAlumno}
-                            toggleAlumno={toggleAlumno}
-                            alumnos={alumnos}
-                            ventanaAlumno={ventanaAlumno}
-                            modoEdicion={modoEdicion}
+                        <AlumnoData                            
                             setModoEdicion={setModoEdicion}
-                            alumnoSeleccionado={alumnoSeleccionado}
-                            handleEditar={handleEditar}
-                            editarAlumno={editarAlumno}
-                            borrarAlumno={borrarAlumno}
-                            borrarTurnoReservado={borrarTurnoReservado}
-                            setAlumnoSeleccionado={setAlumnoSeleccionado}
-                            nuevoTurno={nuevoTurno}
-                            setNuevoTurno={setNuevoTurno}
-                            agregarTurno={agregarTurno}
-                            inputAgregarTurno={inputAgregarTurno}
-                            setInputAgregarTurno={setInputAgregarTurno}
-                            turnoModificandose={turnoModificandose}
-                            setTurnoModificandose={setTurnoModificandose}
-                            todosLosTurnos={todosLosTurnos}
-                            capturarAlumno={capturarAlumno}
-                            alumnosFiltrados={alumnosFiltrados}
-                            editarTurnoAlumno={editarTurnoAlumno}
-                            setEditarTurnoAlumno={setEditarTurnoAlumno}
-                            dataAlumno={dataAlumno}
+                            alumnoSeleccionado={alumnoSeleccionado}                           
                             setDataAlumno={setDataAlumno}
                         />
 

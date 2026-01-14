@@ -198,24 +198,8 @@ const Alumnos = () => {
                             <div className='alumno-data'>
                                 <AlumnoData
                                     alumnoSeleccionado={alumnoSeleccionado}
-                                    handleEditar={handleEditar}
-                                    editarAlumno={editarAlumno}
-                                    borrarAlumno={borrarAlumno}
-                                    borrarTurnoReservado={borrarTurnoReservado}
-                                    setAlumnoSeleccionado={setAlumnoSeleccionado}
-                                    nuevoTurno={nuevoTurno}
-                                    setNuevoTurno={setNuevoTurno}
-                                    agregarTurno={agregarTurno}
-                                    inputAgregarTurno={inputAgregarTurno}
-                                    setInputAgregarTurno={setInputAgregarTurno}
-                                    turnoModificandose={turnoModificandose}
-                                    setTurnoModificandose={setTurnoModificandose}
-                                    todosLosTurnos={todosLosTurnos}
-                                    capturarAlumno={capturarAlumno}
-                                    editarTurnoAlumno={editarTurnoAlumno}
-                                    setEditarTurnoAlumno={setEditarTurnoAlumno}
-                                    dataAlumno={dataAlumno}
                                     setDataAlumno={setDataAlumno}
+                                    setModoEdicion={setModoEdicion}
                                 />
 
                                 <button onClick={() => setConfirmarBorrado(true)}>Borrar</button>
