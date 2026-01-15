@@ -104,8 +104,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
 
                                     {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()} >
-                                            <p>{ventanaDireccion.nombre.split(" ")[ventanaDireccion.nombre.split(" ").length - 1]}</p>
-                                            
+                                            <p>{ventanaDireccion.nombre.split(" ")[ventanaDireccion.nombre.split(" ").length - 1]}</p>                                            
                                             <p>{ventanaDireccion.direccion?.["calle"]} {ventanaDireccion.direccion?.["entrecalles"]}</p>
 
                                         </div>
