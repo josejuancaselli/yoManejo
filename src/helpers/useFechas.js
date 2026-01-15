@@ -27,5 +27,10 @@ export const useFechas = () => {
     const obtenerHorarios = () => [horariosMañana(), horariosTarde()].flat();
     const horarios = obtenerHorarios();
 
-    return { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes, obtenerDiasDelMes, obtenerHorarios, horarios, horariosMañana, horariosTarde };
+    const fechaDesdeDia = (fechaStr) => {
+        const [dia, mes, anio] = fechaStr.split("/").map(Number);
+        return new Date(anio, mes - 1, dia).toLocaleDateString('es-ES', { weekday: 'short' });
+    }
+
+    return { fecha, setFecha, hoy, diasSemana, meses, primerDia, diasDelMes, obtenerDiasDelMes, obtenerHorarios, horarios, horariosMañana, horariosTarde, fechaDesdeDia };
 }

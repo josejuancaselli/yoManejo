@@ -1,5 +1,6 @@
 import html2canvas from "html2canvas";
 import { useState } from "react";
+import { useFechas } from "../../helpers/useFechas";
 
 
 const Simulacion = ({ setSimulacion,
@@ -8,13 +9,11 @@ const Simulacion = ({ setSimulacion,
     setVentanaReservar,
     modoSimulacion }) => {
 
+    const { fechaDesdeDia } = useFechas();
     const isPreview = modoSimulacion === "preview";
     const isReadonly = modoSimulacion === "readonly";
 
-    const fechaDesdeDia = (fechaStr) => {
-        const [dia, mes, anio] = fechaStr.split("/").map(Number);
-        return new Date(anio, mes - 1, dia).toLocaleDateString('es-ES', { weekday: 'short' });
-    }
+
 
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-list");
