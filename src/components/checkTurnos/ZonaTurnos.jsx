@@ -135,6 +135,7 @@ const ZonaTurnos = () => {
 
   return (
     <div className="zona-turnos-container">
+      
       <div className='inicio-container'>
         <div className='nav-bar'>
           <Link className='auto-title' to="/turnos">Ir a Turnos</Link>

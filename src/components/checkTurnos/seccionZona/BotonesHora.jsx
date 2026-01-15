@@ -3,11 +3,14 @@ import React, { useRef, useState } from 'react'
 
 const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosMañana, horariosTarde, toggleHora, reservado, alumnos, fecha, horarios, dia, ventanaDia, ventanaDireccion, setVentanaDireccion }) => {
 
+
+
     return (
         <>
 
             <div ref={ventanaRef} className={`horarios-list ${ventanaDia === dia ? "visible" : ""}`} id={`horarios-${dia}`} >
-{console.log(ventanaDireccion)}
+
+
                 {mañanaTarde.includes("mañana") && (
                     <div className='botones-horarios-wrapper'>
 

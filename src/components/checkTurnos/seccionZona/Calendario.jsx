@@ -77,6 +77,8 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
     return yaExiste(dia, hora, mes, zona, anio) || estaReservado(dia, hora, mes, zona, anio);
   }
 
+
+
   // Toggle para agregar o quitar un turno
   const toggleHora = (dia, hora, mes, zona) => {
     const anio = fecha.anio; // lo tomás del estado de fecha
