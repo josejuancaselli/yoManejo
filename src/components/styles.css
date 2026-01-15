@@ -479,14 +479,12 @@ body {
   align-items: center;
   user-select: none;
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  /* height: 45px; */
+    min-width: 0;
+    overflow: visible;
 }
 
-/* Highlight today */
-.dia-mes.hoy {
-  border: 2px solid #54b198;
-  border-radius: 12px;
-  box-shadow: 0 0 12px #54b198;
-}
+
 
 /* Day number */
 .dia-mes>div:first-child {
@@ -782,10 +780,15 @@ body {
 }
 
 .horarios-wrapper {
-  position: relative;
-  display: inline-block;
+    position: absolute;
+    bottom: 230%;
+    left: 25%;    
+    width: max-content;
+    z-index: 9999;
 
-  right: 100%;
+  /* position: relative;
+  display: inline-block;
+  right: 100%; */
 
 }
 
@@ -1044,25 +1047,10 @@ body {
   box-shadow: 0 0 8px #54b198;
 }
 
-
-/* Ventana Reservado Backdrop */
-.ventana-reservado-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
 /* Ventana Reservado Modal */
 .ventana-reservado-modal {
   position: absolute;
-  top: 100%;
+  bottom: 85%;
   /* align top edges */
   left: 0;
   /* place immediately to the right of horarios-list */
