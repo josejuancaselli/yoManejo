@@ -11,6 +11,11 @@ const Simulacion = ({ setSimulacion,
     const isPreview = modoSimulacion === "preview";
     const isReadonly = modoSimulacion === "readonly";
 
+    const fechaDesdeDia = (fechaStr) => {
+        const [dia, mes, anio] = fechaStr.split("/").map(Number);
+        return new Date(anio, mes - 1, dia).toLocaleDateString('es-ES', { weekday: 'short' });
+    }
+
     const imprimirJPG = () => {
         const element = document.querySelector(".simulacion-list");
         if (!element) return;
@@ -62,7 +67,7 @@ const Simulacion = ({ setSimulacion,
                         })
                         .map((e, index) => (
                             <li key={index} className="simulacion-item" style={{ color: "#377363" }}>
-                                {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Coche {e.zona}
+                                {fechaDesdeDia(`${String(e.dia).padStart(2, "0")}/${String(e.mes + 1).padStart(2, "0")}/${e.anio}`)} - {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Coche {e.zona}
                             </li>
                         ))}
 
@@ -79,10 +84,10 @@ const Simulacion = ({ setSimulacion,
                         {isReadonly ? "Imprimir" : "Simular"}
                     </button>
                     {isPreview && (
-                        <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false);}}>
+                        <button className="btn-imprimir" onClick={() => { setVentanaReservar(true); setSimulacion(false); }}>
                             Reservar
                         </button>
-                    )}                    
+                    )}
                 </div>
             </div>
 
