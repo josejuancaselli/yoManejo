@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BotonesHora from "./BotonesHora";
 
-const DiasDelMes = ({ horarios, reservado, horariosMañana, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosTarde, esHoy, alumnos, toggleHora, fecha, zona, dia, disabled, setVentanaDireccion, ventanaDireccion }) => {
+const DiasDelMes = ({ abreArriba, horarios, reservado, horariosMañana, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosTarde, alumnos, toggleHora, fecha, zona, dia, disabled, setVentanaDireccion, ventanaDireccion }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
 
@@ -15,7 +15,7 @@ const DiasDelMes = ({ horarios, reservado, horariosMañana, activeHora, setActiv
 
 
             {horariosVisible && mañanaTarde.length > 0 && (
-                <div className="horarios-wrapper">
+                <div className={`horarios-wrapper ${abreArriba ? "arriba" : "abajo"}`}>
                     <BotonesHora
                         horarios={horarios}
                         toggleHora={toggleHora}

@@ -117,6 +117,12 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
     
   };
 
+  /* ====== CÁLCULO DE FILAS PARA EL MODAL ====== */
+  const columnas = 7;
+  const totalCeldas = diasDelMes.length + primerDia;
+  const filas = Math.ceil(totalCeldas / columnas);
+  /* ========================================== */
+
   return (
     <>
       <div className="zona-tabs">
@@ -169,15 +175,16 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
 
           {/* días reales del mes */}
           {diasDelMes.map((dia, index) => {
-            const esHoy =
-              dia === hoy.getDate() &&
-              fecha.mes === hoy.getMonth() &&
-              fecha.anio === hoy.getFullYear();
+            const indexReal = index + primerDia;
+            const filaActual = Math.floor(indexReal / columnas) + 1;
+            const abreArriba = filaActual > filas - 2;
+
+            
 
             return (
-              <div key={index}>
+              <div key={index} >
                 <DiasDelMes
-                  esHoy={esHoy}
+                  abreArriba={abreArriba}
                   dia={dia}
                   disabled={disabled}
                   ventanaDireccion={ventanaDireccion}
