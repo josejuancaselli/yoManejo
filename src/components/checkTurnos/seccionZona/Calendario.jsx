@@ -175,7 +175,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
               fecha.anio === hoy.getFullYear();
 
             return (
-              <div key={index}>
+              <div key={index} >
                 <DiasDelMes
                   esHoy={esHoy}
                   dia={dia}

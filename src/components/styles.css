@@ -410,6 +410,81 @@ body {
   justify-content: space-between;
 }
 
+/* Day names */
+.dia-semana {
+  padding: 6px 0;
+  text-decoration: underline;
+}
+
+/* Empty day placeholder */
+.dia-vacio {
+  background: transparent;
+  /* height: 180px;  */
+}
+
+/* Days container as grid */
+.dias-mes {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 16px;
+  row-gap: 40px;
+}
+
+/* Day card */
+.dia-mes {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  /* height: 45px; */
+    min-width: 0;
+    overflow: visible;
+}
+
+
+
+/* Day number */
+.dia-mes>div:first-child {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+  color: #222;
+}
+
+.dia-num-btn {
+  all: unset;
+  background: #f0fffe;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.15);
+  padding: 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  color: #222;
+  width: 50%;
+  text-align: center;
+}
+
+.dia-num-btn:hover {
+  background-color: rgb(84 177 152);
+}
+
+.disabled {
+  background-color: #a9a9a9;
+}
+
+/* Destacar hoy */
+.dia-num-btn.hoy {
+  border: 2px solid #54b198;
+  box-shadow: 0 0 12px #54b198;
+}
 
 /* Navigation buttons */
 .nav-btn {
@@ -452,47 +527,84 @@ body {
   user-select: none;
 }
 
-/* Day names */
-.dia-semana {
-  padding: 6px 0;
-  text-decoration: underline;
-}
-
-/* Empty day placeholder */
-.dia-vacio {
-  background: transparent;
-  /* height: 180px;  */
-}
-
-/* Days container as grid */
-.dias-mes {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  column-gap: 16px;
-  row-gap: 40px;
-}
-
-/* Day card */
-.dia-mes {
-  position: relative;
+/* horarios-list as floating popup */
+.horarios-list {
+  max-height: fit-content;
+  /* or any fixed height you prefer */
+  /* overflow-y: auto; */
+  margin: 0;
+  /* position: relative; */
+  /* position: absolute; */
+  top: 85%;
+  left: 50%;
+  transform: translateY(0%);
+  background-color: #f0fffe;
+  /* border: 1px solid #54b198; */
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgb(44 44 44);
+  padding: 10px 12px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 200;
   user-select: none;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  /* height: 45px; */
-    min-width: 0;
-    overflow: visible;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
 
 
-/* Day number */
-.dia-mes>div:first-child {
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 14px;
-  color: #222;
+.botones-horarios-wrapper {
+  display: flex;
+  flex-direction: row;
 }
+
+.horarios-wrapper {
+    position: absolute;
+    top: -93%;
+    left: 25%;    
+    width: max-content;
+    z-index: 9999;
+
+  /* position: relative;
+  display: inline-block;
+  right: 100%; */
+
+}
+.horarios-bridge{
+  height: 7px;
+  width: 314px;
+}
+.horarios-list::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+/* Horarios buttons */
+
+.horarios-list button {
+  margin: 2px 0;
+  width: 100%;
+  min-width: 48px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(84, 177, 152, 0.3);
+  user-select: none;
+}
+
+.horarios-list button:hover,
+.horarios-list button:focus {
+  background-color: #3d7d6a;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
+}
+
+/*Search Bar*/
 
 .searchbar-wrapper {
   width: 25rem;
@@ -745,114 +857,10 @@ body {
   box-shadow: 0 4px 8px rgba(84, 177, 152, 0.4);
 }
 
-/* Horarios container */
 
-/* horarios-list as floating popup */
-.horarios-list {
-  max-height: fit-content;
-  /* or any fixed height you prefer */
-  /* overflow-y: auto; */
-  margin: 0;
-  /* position: relative; */
-  position: absolute;
-  top: 85%;
-  left: 50%;
-  transform: translateY(0%);
-  background-color: #f0fffe;
-  /* border: 1px solid #54b198; */
-  border-radius: 10px;
-  box-shadow: 0 6px 15px rgb(44 44 44);
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 200;
-  user-select: none;
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE and Edge */
-}
 
-.botones-horarios-wrapper {
-  display: flex;
-  flex-direction: row;
-}
 
-.horarios-wrapper {
-    position: absolute;
-    top: -93%;
-    left: 25%;    
-    width: max-content;
-    z-index: 9999;
 
-  /* position: relative;
-  display: inline-block;
-  right: 100%; */
-
-}
-
-.horarios-list::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari, Opera */
-}
-
-/* Horarios buttons */
-
-.horarios-list button {
-  margin: 2px 0;
-  width: 100%;
-  min-width: 48px;
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 6px rgba(84, 177, 152, 0.3);
-  user-select: none;
-}
-
-.horarios-list button:hover,
-.horarios-list button:focus {
-  background-color: #3d7d6a;
-  outline: none;
-  box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
-}
-
-/* Botón que reemplaza al div */
-.dia-num-btn {
-  all: unset;
-  background: #f0fffe;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.15);
-  padding: 14px 14px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  user-select: none;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 0;
-  color: #222;
-  width: 50%;
-  text-align: center;
-}
-
-.dia-num-btn:hover {
-  background-color: rgb(84 177 152);
-}
-
-.disabled {
-  background-color: #a9a9a9;
-}
-
-/* Destacar hoy */
-.dia-num-btn.hoy {
-  border: 2px solid #54b198;
-  box-shadow: 0 0 12px #54b198;
-}
 
 .botones-wrapper {
   position: relative;
