@@ -35,6 +35,7 @@ const DiasDelMes = ({ abreArriba, horarios, reservado, horariosMañana, activeHo
                     />
                 </div>
             )}
+            
         </div>
     )
 }
