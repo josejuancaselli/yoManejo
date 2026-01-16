@@ -4,15 +4,33 @@ import BotonesHora from "./BotonesHora";
 const DiasDelMes = ({ abreArriba, horarios, reservado, horariosMañana, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosTarde, alumnos, toggleHora, fecha, zona, dia, disabled, setVentanaDireccion, ventanaDireccion }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
+    const handleMouseEnter = () => {
+        if (!disabled.includes(dia)) {
+            return setHorariosVisible(true);
+        }
+    }
+    const handleMouseLeave = () => {
+        return setHorariosVisible(false)
+    }
+
+    const bgrColor = () => {
+        if (disabled.includes(dia)) {
+            return "#a9a9a9"
+        }
+    }
+
+    const pointer = () => {
+        if (disabled.includes(dia)) {
+            return "not-allowed"
+        } else {
+            return "pointer"
+        }
+    }
 
     return (
-        <div className="dia-mes " onMouseEnter={() => { !disabled.includes(dia) && setHorariosVisible(true) }} onMouseLeave={() => setHorariosVisible(false)} >
+        <div className="dia-mes " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ backgroundColor: bgrColor(), cursor: pointer() }} >
 
-            {/* este boton estas al pedo , lo tengo que sacar en algun momento y convertirlo en un DIV*/}
-            <button className="dia-num-btn" style={{ backgroundColor: disabled.includes(dia) && "#a9a9a9", cursor: disabled.includes(dia) ? "not-allowed" : "pointer" }}>
-                {dia}
-            </button>
-
+            {dia}
 
             {horariosVisible && mañanaTarde.length > 0 && (
                 <div className={`horarios-wrapper ${abreArriba ? "arriba" : "abajo"}`}>
@@ -35,7 +53,7 @@ const DiasDelMes = ({ abreArriba, horarios, reservado, horariosMañana, activeHo
                     />
                 </div>
             )}
-            
+
         </div>
     )
 }
