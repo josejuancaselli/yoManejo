@@ -270,6 +270,8 @@ body {
 .zonas {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 auto;
 }
 
 .zona-selected {
@@ -290,10 +292,6 @@ body {
   justify-content: start;
   gap: 0;
   /* No gap between tabs for seamless look */
-
-  margin: 2px 2px 0 2px;
-
-
   position: relative;
   z-index: 1;
   /* Ensure tabs are above container if overlapping */
@@ -341,11 +339,11 @@ body {
 .calendario-container {
   padding: 20px 15px 15px;
   box-shadow: 2px 2px 3px rgb(84 177 152);
-  max-width: 500px;
+  /* max-width: 500px; */
   min-width: 499px;
   border-radius: 0 0 10px 10px;
   /* Bottom rounded only */
-  margin: 0 16px 2px 2px;
+  margin-right: 16px;
   /* Top margin 0 to connect */
   position: relative;
   top: -2px;
@@ -426,53 +424,34 @@ body {
 .dias-mes {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  column-gap: 16px;
+  column-gap: 26px;
   row-gap: 40px;
 }
 
 /* Day card */
 .dia-mes {
-  position: relative;
-  display: flex;
-  align-items: center;
-  user-select: none;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  /* height: 45px; */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    /* height: 45px; */
     min-width: 0;
     overflow: visible;
+    background: #f0fffe;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(84, 177, 152, 0.15);
+    padding: 14px 14px 14px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    color: #222;
 }
 
 
-
-/* Day number */
-.dia-mes>div:first-child {
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 14px;
-  color: #222;
-}
-
-.dia-num-btn {
-  all: unset;
-  background: #f0fffe;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(84, 177, 152, 0.15);
-  padding: 14px 14px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  user-select: none;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 0;
-  color: #222;
-  width: 50%;
-  text-align: center;
-}
-
-.dia-num-btn:hover {
+.dia-mes:hover,
+.dia-mes:focus{
   background-color: rgb(84 177 152);
 }
 
@@ -499,8 +478,7 @@ body {
   border-radius: 6px;
 }
 
-.nav-btn:hover,
-.nav-btn:focus {
+.nav-btn:hover {
   background-color: #54b198;
   color: #f0fffe;
   outline: none;
@@ -525,6 +503,7 @@ body {
   font-size: 0.9rem;
   margin-bottom: 12px;
   user-select: none;
+  column-gap: 26px;
 }
 
 /* horarios-list as floating popup */

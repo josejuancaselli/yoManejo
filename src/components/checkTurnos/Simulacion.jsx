@@ -10,6 +10,7 @@ const Simulacion = ({ setSimulacion,
     modoSimulacion }) => {
 
     const { fechaDesdeDia } = useFechas();
+
     const isPreview = modoSimulacion === "preview";
     const isReadonly = modoSimulacion === "readonly";
 
@@ -66,7 +67,7 @@ const Simulacion = ({ setSimulacion,
                         })
                         .map((e, index) => (
                             <li key={index} className="simulacion-item" style={{ color: "#377363" }}>
-                                {fechaDesdeDia(`${String(e.dia).padStart(2, "0")}/${String(e.mes + 1).padStart(2, "0")}/${e.anio}`)} - {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Coche {e.zona}
+                                {fechaDesdeDia(e.dia,e.mes,e.anio)} - {String(e.dia).padStart(2, "0")}/{String(e.mes + 1).padStart(2, "0")}/{e.anio} - {e.hora} hs - Coche {e.zona}
                             </li>
                         ))}
 
@@ -87,6 +88,7 @@ const Simulacion = ({ setSimulacion,
                             Reservar
                         </button>
                     )}
+                    
                 </div>
             </div>
 

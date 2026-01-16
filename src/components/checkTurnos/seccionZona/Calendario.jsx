@@ -85,7 +85,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
   // 2. Si el turno pertenece a un alumno real, mostramos la ventana de info
   // 3. Si no está ni reservado ni seleccionado, lo agregamos
   const toggleHora = (dia, hora, mes, anio, zona) => {
-    
+
     const nuevoTurno = { dia, mes, anio, hora, zona };
 
     // 1. Si el turno ya está en tu lista de simulación, lo borramos (toggle OFF)
@@ -114,9 +114,8 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
 
     // 3. Si no está ni reservado ni seleccionado, lo agregamos
     setTurnoSim(prev => [...prev, nuevoTurno]);
-    
-  };
 
+  };
   /* ====== CÁLCULO DE FILAS PARA EL MODAL ====== */
   const columnas = 7;
   const totalCeldas = diasDelMes.length + primerDia;
@@ -131,7 +130,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
           onClick={() => toggleMañanaTarde("mañana")}
           style={mañanaTarde.includes("mañana") && { zona }
             ? { backgroundColor: "rgb(14 0 0 / 83%)", color: "#d5d5d5" }
-            : { }
+            : {}
           }
         >
           Mañana
@@ -140,8 +139,8 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
           className={`tarde-tab tab-zona-${zona}`}
           onClick={() => toggleMañanaTarde("tarde")}
           style={mañanaTarde.includes("tarde") && { zona }
-            ? {backgroundColor: "rgb(14 0 0 / 83%)", color: "#d5d5d5"}
-            : {  }
+            ? { backgroundColor: "rgb(14 0 0 / 83%)", color: "#d5d5d5" }
+            : {}
           }
         >
           Tarde
@@ -179,8 +178,6 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
             const filaActual = Math.floor(indexReal / columnas) + 1;
             const abreArriba = filaActual > filas - 2;
 
-            
-
             return (
               <div key={index} >
                 <DiasDelMes
@@ -206,7 +203,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
             );
           })}
         </div>
-        
+
       </div>
     </>
   );
