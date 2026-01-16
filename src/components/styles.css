@@ -781,7 +781,7 @@ body {
 
 .horarios-wrapper {
     position: absolute;
-    bottom: 230%;
+    top: -93%;
     left: 25%;    
     width: max-content;
     z-index: 9999;

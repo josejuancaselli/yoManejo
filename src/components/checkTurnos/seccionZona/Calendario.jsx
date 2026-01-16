@@ -80,19 +80,23 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
 
 
   // Toggle para agregar o quitar un turno
-  const toggleHora = (dia, hora, mes, zona) => {
-    const anio = fecha.anio; // lo tomás del estado de fecha
+  // Este toggle sirve para dos cosas:
+  // 1. Si el turno ya está en tu lista de simulación, lo borramos (toggle OFF)
+  // 2. Si el turno pertenece a un alumno real, mostramos la ventana de info
+  // 3. Si no está ni reservado ni seleccionado, lo agregamos
+  const toggleHora = (dia, hora, mes, anio, zona) => {
+    
     const nuevoTurno = { dia, mes, anio, hora, zona };
 
-    // 1️⃣ Si el turno ya está en tu lista de simulación, lo borramos (toggle OFF)
+    // 1. Si el turno ya está en tu lista de simulación, lo borramos (toggle OFF)
     const yaSeleccionado = turnoSim.some(t => t.dia === dia && t.hora === hora && t.mes === mes && t.zona === zona && t.anio === anio);
-
     if (yaSeleccionado) {
+      // Borramos el turno de la lista de simulación
       setTurnoSim(turnoSim.filter(t => !(t.dia === dia && t.hora === hora && t.mes === mes && t.zona === zona && t.anio === anio)));
       return;
     }
 
-    // 2️⃣ Si el turno pertenece a un alumno real, mostramos la ventana de info
+    // 2. Si el turno pertenece a un alumno real, mostramos la ventana de info
     const alumnoCorrespondiente = alumnos.find(alumno =>
       alumno.turnos.some(t =>
         t.dia === dia &&
@@ -102,14 +106,15 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
         t.zona.toString() === zona.toString()
       )
     );
-
     if (alumnoCorrespondiente) {
+      // Mostramos la ventana de info del alumno correspondiente
       setVentanaDireccion(alumnoCorrespondiente);
       return;
     }
 
-    // 3️⃣ Si no está ni reservado ni seleccionado, lo agregamos
+    // 3. Si no está ni reservado ni seleccionado, lo agregamos
     setTurnoSim(prev => [...prev, nuevoTurno]);
+    
   };
 
   return (
