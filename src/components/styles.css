@@ -563,20 +563,28 @@ body {
 
 .horarios-wrapper {
     position: absolute;
-    top: -93%;
-    left: 25%;    
+    top: -93%;     
     width: max-content;
     z-index: 9999;
-
   /* position: relative;
   display: inline-block;
   right: 100%; */
-
 }
+
+.horarios-wrapper.abajo {
+  top: 100%;
+}
+
+.horarios-wrapper.arriba {
+  bottom: 100%;
+  top: auto;
+}
+
 .horarios-bridge{
   height: 7px;
   width: 314px;
 }
+
 .horarios-list::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera */
