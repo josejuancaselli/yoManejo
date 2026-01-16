@@ -159,7 +159,7 @@ const Profesores = () => {
 
                                             }}
                                         >
-                                            {e.direccion.calle} {e.direccion.altura}
+                                            {e.direccion.calle} {e.direccion.entrecalles} {e.direccion.altura}
                                         </p>
                                         <p>{e.nombre} {e.telefono}</p>
 

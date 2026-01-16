@@ -30,7 +30,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes, zona)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes, fecha.anio, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
@@ -83,7 +83,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes, zona)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes,fecha.anio, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
