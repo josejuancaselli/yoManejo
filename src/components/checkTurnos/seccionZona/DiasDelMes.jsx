@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BotonesHora from "./BotonesHora";
 
 const DiasDelMes = ({ abreArriba, horarios, reservado, horariosMañana, activeHora, setActiveHora, mañanaTarde, setMañanaTarde, horariosTarde, alumnos, toggleHora, fecha, zona, dia, disabled, setVentanaDireccion, ventanaDireccion }) => {
 
     const [horariosVisible, setHorariosVisible] = useState(false);
+
+    const openTimeoutRef = useRef(null);
+
+
+
     const handleMouseEnter = () => {
         if (!disabled.includes(dia)) {
-            return setHorariosVisible(true);
+            openTimeoutRef.current = setTimeout(() => {
+                setHorariosVisible(true);
+            }, 200);
         }
-    }
+    };
+
     const handleMouseLeave = () => {
-        return setHorariosVisible(false)
-    }
+    clearTimeout(openTimeoutRef.current);
+    openTimeoutRef.current = null;
+    setHorariosVisible(false);
+};
+
 
     const bgrColor = () => {
         if (disabled.includes(dia)) {
