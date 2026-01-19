@@ -11,6 +11,7 @@ import { toggleZona } from "../../helpers/zonaHelper";
 
 
 import { Link } from "react-router-dom";
+import ReservarPrueba from "./ReservarPrueba";
 
 
 const ZonaTurnos = () => {
@@ -225,7 +226,7 @@ const ZonaTurnos = () => {
       {/* Render de ventana de reservar */}
       {ventanaReservar && (
         <div className="reserva-modal-backdrop">
-          <Reservar
+          <ReservarPrueba
             setVentanaReservar={setVentanaReservar}
             setSimulacion={setSimulacion}
             turnoSim={turnoSim}
