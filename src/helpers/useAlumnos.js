@@ -55,21 +55,17 @@ export const useAlumnos = () => {
 
     };
 
-    const handleEditar = (e, idxTurno = null, campoTurno = null, subCampoDireccion = null) => {
+    const handleEditar = (e, idxTurno = null, campoTurno = null, tipoDireccion = null, subCampo = null) => {
         const { name, value } = e.target;
 
         // Campos numéricos
         const camposNumericos = ["dia", "mes", "anio"];
         const valor = camposNumericos.includes(name) || camposNumericos.includes(campoTurno) ? Number(value) : value;
 
-        if (subCampoDireccion) {
+        if (tipoDireccion && subCampo) {
             // Estamos editando un subcampo de la dirección
             setAlumnoSeleccionado(prev => ({
-                ...prev,
-                direccion: {
-                    ...prev.direccion,
-                    [subCampoDireccion]: valor
-                }
+                ...prev, [tipoDireccion]: { ...prev[tipoDireccion], [subCampo]: valor }
             }));
         } else if (idxTurno !== null && campoTurno) {
             // Estamos editando un campo dentro de un turno
@@ -156,6 +152,6 @@ export const useAlumnos = () => {
         alumnos, setAlumnos, alumnosFiltrados, setAlumnosFiltrados, ventanaAlumno, setVentanaAlumno, busquedaAlumno,
         setBusquedaAlumno, modoEdicion, setModoEdicion, alumnoSeleccionado, setAlumnoSeleccionado,
         toggleAlumno, handleEditar, editarAlumno, normalizar, borrarAlumno, turnoModificandose,
-        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno,capturarAlumno
+        setTurnoModificandose, todosLosTurnos, refresh, setRefresh, validacion, handleBusqueda, renderBusqueda, setRenderBusqueda, dataAlumno, setDataAlumno, capturarAlumno
     }
 }

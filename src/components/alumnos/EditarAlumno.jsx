@@ -12,7 +12,7 @@ const EditarAlumno = ({ editarAlumno, setModoEdicion, alumnoSeleccionado, handle
                 </div>
                 <button className="turno-btn-cerrar" style={{ marginBottom: "40px" }} onClick={() => setModoEdicion(null)}><IoIosClose /></button>
             </div>
-            
+
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="editar-alumno-modal-1">
 
@@ -21,17 +21,36 @@ const EditarAlumno = ({ editarAlumno, setModoEdicion, alumnoSeleccionado, handle
                         <input
                             placeholder="Calle"
                             value={alumnoSeleccionado.direccion?.calle || ""}
-                            onChange={(e) => handleEditar(e, null, null, "calle")}
+                            onChange={(e) => handleEditar(e, null, null, "direccion", "calle")}
                         />
                         <input
                             placeholder="Número"
                             value={alumnoSeleccionado.direccion?.altura || ""}
-                            onChange={(e) => handleEditar(e, null, null, "altura")}
+                            onChange={(e) => handleEditar(e, null, null, "direccion", "altura")}
                         />
                         <input
                             placeholder="Entre calles"
                             value={alumnoSeleccionado.direccion?.entrecalles || ""}
-                            onChange={(e) => handleEditar(e, null, null, "entrecalles")}
+                            onChange={(e) => handleEditar(e, null, null, "direccion", "entrecalles")}
+                        />
+                    </div>
+
+                    <div>
+                        <p>Punto de encuentro:</p>
+                        <input
+                            placeholder="Calle"
+                            value={alumnoSeleccionado.puntoEncuentro?.calle || ""}
+                            onChange={(e) => handleEditar(e, null, null, "puntoEncuentro", "calle")}
+                        />
+                        <input
+                            placeholder="Número"
+                            value={alumnoSeleccionado.puntoEncuentro?.altura || ""}
+                            onChange={(e) => handleEditar(e, null, null, "puntoEncuentro", "altura")}
+                        />
+                        <input
+                            placeholder="Entre calles"
+                            value={alumnoSeleccionado.puntoEncuentro?.entrecalles || ""}
+                            onChange={(e) => handleEditar(e, null, null, "puntoEncuentro", "entrecalles")}
                         />
                     </div>
 

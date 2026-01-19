@@ -106,8 +106,9 @@ const Profesores = () => {
 
     return (
         <div className="profe-wrapper">
+
             <div className="profe-header">
-                
+
                 <h2 className={`profe-fecha ${modo}`}>
                     Coche {auto}
                 </h2>
@@ -127,15 +128,13 @@ const Profesores = () => {
                 ))}
             </div>
 
-            <h2  className={`profe-fecha ${modo}`} style={{margin:"0 auto"}}>
-                {modo === "hoy"
-                    ? "HOY"
-                    : "MAÑANA"
-                }
+            <h2 className={`profe-fecha ${modo}`} style={{ margin: "0 auto" }}>
+                {modo === "hoy" ? "HOY" : "MAÑANA"}
             </h2>
 
             {auto && (
                 <div className={`profe-alm-wrapper ${modo === "hoy" ? "h" : "m"}`}>
+
                     <div className="profe-data-alm">
                         <h3
                             className={`turno-header ${turnoSeleccionado === "mañana" ? "abierto" : ""}`}
@@ -151,16 +150,21 @@ const Profesores = () => {
                                         onClick={() => setTurno(e)}
                                         className="profe-data-alm"
                                     >
-                                        <p>{e.hora}</p>
-                                        <p
-                                            style={{
-                                                fontSize: "1.1rem",
-                                                fontWeight: "bold",
 
-                                            }}
-                                        >
+                                        <p>{e.hora}</p>
+
+                                        {e.puntoEncuentro ? (
+                                            <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                                                {e.puntoEncuentro.calle} {e.puntoEncuentro.entrecalles} {e.puntoEncuentro.altura}
+                                            </p>
+                                        ) : (
+                                            <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                                                {e.direccion.calle} {e.direccion.entrecalles} {e.direccion.altura}
+                                            </p>
+                                        )}
+                                        {/* <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
                                             {e.direccion.calle} {e.direccion.entrecalles} {e.direccion.altura}
-                                        </p>
+                                        </p> */}
                                         <p>{e.nombre} {e.telefono}</p>
 
                                     </div>
@@ -187,9 +191,19 @@ const Profesores = () => {
                                         onClick={() => setTurno(e)}
                                         className="profe-data-alm"
                                     >
-                                        <p>{e.hora}</p>
 
-                                        <p
+                                        <p>{e.hora}</p>
+                                        {e.puntoEncuentro?.calle || e.puntoEncuentro?.entrecalles || e.puntoEncuentro?.altura ? (
+                                            <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                                                {e.puntoEncuentro.calle} {e.puntoEncuentro.entrecalles} {e.puntoEncuentro.altura}
+                                            </p>
+                                        ) : (
+                                            <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                                                {e.direccion.calle} {e.direccion.entrecalles} {e.direccion.altura}
+                                            </p>
+                                        )}
+
+                                        {/* <p
                                             style={{
                                                 fontSize: "1.1rem",
                                                 fontWeight: "bold",
@@ -197,7 +211,7 @@ const Profesores = () => {
                                             }}
                                         >
                                             {e.direccion.calle} {e.direccion.altura}
-                                        </p>
+                                        </p> */}
                                         <p>{e.nombre} {e.telefono}</p>
                                     </div>
                                 ))
@@ -216,14 +230,27 @@ const Profesores = () => {
                         <div className='evaluacion' style={{ backgroundColor: "#e2eeedff" }}>
                             <p>{turno.hora}</p>
                             <div style={{}}>
-                                <a
-                                    style={{ display: "flex", flexDirection: "row" }}
-                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.direccion["calle"]} ${turno.direccion["altura"]}, la plata`)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {turno.direccion["calle"]} {turno.direccion["altura"]} {turno.direccion["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
-                                </a>
+
+                                {turno.puntoEncuentro?.calle || turno.puntoEncuentro?.entrecalles || turno.puntoEncuentro?.altura ? (
+                                    <a
+                                        style={{ display: "flex", flexDirection: "row" }}
+                                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.puntoEncuentro["calle"]} ${turno.puntoEncuentro["altura"]}, la plata`)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {turno.puntoEncuentro["calle"]} {turno.puntoEncuentro["altura"]} {turno.puntoEncuentro["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
+                                    </a>
+                                ) : (
+                                    <a
+                                        style={{ display: "flex", flexDirection: "row" }}
+                                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.direccion["calle"]} ${turno.direccion["altura"]}, la plata`)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {turno.direccion["calle"]} {turno.direccion["altura"]} {turno.direccion["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
+                                    </a>
+                                )}
+
                             </div>
                             <p>{turno.nombre}</p>
                             <p>{turno.telefono}</p>

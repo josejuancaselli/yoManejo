@@ -14,6 +14,7 @@ const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
         <>
 
             <div className="nombre-alumno-wrapper" >
+                {console.log(alumnoSeleccionado)}
                 <div style={{ display: "flex" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>
                 </div>
@@ -24,6 +25,10 @@ const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
                     <div>
                         <p>Direccion:</p>
                         <p style={{ flex: 1 }}>{alumnoSeleccionado.direccion?.["calle"]} {alumnoSeleccionado.direccion?.["altura"] ? `n° ${alumnoSeleccionado.direccion?.["altura"]}` : '"s/n"'} {alumnoSeleccionado.direccion?.["entrecalles"]}</p>
+                    </div>
+                    <div>
+                        <p>Punto de encuentro:</p>
+                        <p style={{ flex: 1 }}>{alumnoSeleccionado.puntoEncuentro?.["calle"]} {alumnoSeleccionado.puntoEncuentro?.["altura"] ? `n° ${alumnoSeleccionado.puntoEncuentro?.["altura"]}` : '"s/n"'} {alumnoSeleccionado.puntoEncuentro?.["entrecalles"]}</p>
                     </div>
                     <div>
                         <p>DNI: </p>

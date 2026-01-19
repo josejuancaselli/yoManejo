@@ -30,9 +30,9 @@ const ReservarPrueba = ({setVentanaReservar,
             }
 
             const puntoEncuentro = {
-                calle: data.calle || "",
-                altura: data.altura || "",
-                entrecalles: data.entrecalles || ""
+                calle: data.encuentroCalle || "",
+                altura: data.encuentroAltura || "",
+                entrecalles: data.encuentroEntrecalles || ""
             }
 
             // 2️⃣ Armo el objeto completo de reserva, excluyendo los campos individuales
@@ -47,6 +47,7 @@ const ReservarPrueba = ({setVentanaReservar,
             handleReservaConfirmada()
             setRefresh(prev => !prev)
             console.log("Reserva guardada en Firebase ✅")
+            console.log(nuevaReserva)
         } catch (err) {
             console.error("Error guardando reserva:", err)
         }

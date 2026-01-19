@@ -114,7 +114,7 @@ const Calendario = ({ zona, turnoSim, setTurnoSim, alumnos, horariosMañana, hor
 
     // 3. Si no está ni reservado ni seleccionado, lo agregamos
     setTurnoSim(prev => [...prev, nuevoTurno]);
-
+console.log(turnoSim)
   };
   /* ====== CÁLCULO DE FILAS PARA EL MODAL ====== */
   const columnas = 7;
