@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useFechas } from '../../helpers/useFechas'
 import { useAlumnos } from '../../helpers/useAlumnos'
-import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from '../../firebase/firebaseConfig';
 import { SiGooglemaps } from "react-icons/si";
 import "./profesores.css"
@@ -32,18 +32,22 @@ const Profesores = () => {
     }, [hoy])
 
     // 🔹 Cargar alumnos desde Firebase
+
+
     useEffect(() => {
-        const fetchAlumnos = async () => {
-            try {
-                const alumnosCollection = collection(db, "alumnos")
-                const alumnosSnapshot = await getDocs(alumnosCollection)
-                const alumnosList = alumnosSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-                setAlumnos(alumnosList)
-            } catch (error) {
-                console.error("Error cargando alumnos desde Firebase:", error)
-            }
-        }
-        fetchAlumnos()
+        const alumnosCollection = collection(db, "alumnos")
+
+        const unsubscribe = onSnapshot(alumnosCollection, (snapshot) => {
+            const alumnosList = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            setAlumnos(alumnosList)
+        }, (error) => {
+            console.error("Error escuchando alumnos en tiempo real:", error)
+        })
+
+        return () => unsubscribe()
     }, [])
 
     // 🔹 Elegir si mostrar turnos de hoy o de mañana

@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { db } from "../firebase/firebaseConfig"
 
@@ -25,18 +25,20 @@ export const useAlumnos = () => {
 
 
     useEffect(() => {
-        const fetchAlumnos = async () => {
-            try {
-                const alumnosCollection = collection(db, "alumnos")
-                const alumnosSnapshot = await getDocs(alumnosCollection)
-                const alumnosList = alumnosSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-                setAlumnos(alumnosList)
-            } catch (error) {
-                console.error("Error cargando alumnos desde Firebase:", error)
-            }
-        }
-        fetchAlumnos()
-    }, [refresh])
+        const alumnosCollection = collection(db, "alumnos")
+
+        const unsubscribe = onSnapshot(alumnosCollection, (snapshot) => {
+            const alumnosList = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            setAlumnos(alumnosList)
+        }, (error) => {
+            console.error("Error en onSnapshot alumnos:", error)
+        })
+
+        return () => unsubscribe()
+    }, [])
 
     const toggleAlumno = (e) => {
         setVentanaAlumno((prev) => {
