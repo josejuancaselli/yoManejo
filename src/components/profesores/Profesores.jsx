@@ -236,23 +236,13 @@ const Profesores = () => {
                             <div style={{}}>
 
                                 {turno.puntoEncuentro?.calle || turno.puntoEncuentro?.entrecalles || turno.puntoEncuentro?.altura ? (
-                                    <a
-                                        style={{ display: "flex", flexDirection: "row" }}
-                                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.puntoEncuentro["calle"]} ${turno.puntoEncuentro["altura"]}, la plata`)}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
+                                    <p style={{ display: "flex", flexDirection: "row", color: "black" }}                                                                           >
                                         {turno.puntoEncuentro["calle"]} {turno.puntoEncuentro["altura"]} {turno.puntoEncuentro["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
-                                    </a>
+                                    </p>
                                 ) : (
-                                    <a
-                                        style={{ display: "flex", flexDirection: "row" }}
-                                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`calle ${turno.direccion["calle"]} ${turno.direccion["altura"]}, la plata`)}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
+                                    <p style={{ display: "flex", flexDirection: "row", color: "black" }}                                    >
                                         {turno.direccion["calle"]} {turno.direccion["altura"]} {turno.direccion["entrecalles"]}<SiGooglemaps style={{ color: "#dd1a22" }} />
-                                    </a>
+                                    </p>
                                 )}
 
                             </div>
