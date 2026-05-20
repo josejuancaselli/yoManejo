@@ -7,7 +7,7 @@ import EditarAlumno from './EditarAlumno'
 import "./alumnos.css"
 import { Link } from 'react-router-dom'
 
-const ITEMS_POR_PAGINA = 10
+const ITEMS_POR_PAGINA = 50
 const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 const Alumnos = () => {
