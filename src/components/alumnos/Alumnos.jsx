@@ -218,13 +218,16 @@ const Alumnos = () => {
                             </div>
                         )
                     ) : (
+                        
                         <EditarAlumno
+                        style={{justifyContent:" unset"}}
                             alumnoSeleccionado={alumnoSeleccionado}
                             handleEditar={handleEditar}
                             editarAlumno={editarAlumno}
                             setModoEdicion={setModoEdicion}
                             modoEdicion={modoEdicion}
                         />
+                        
                     )
                 )}
             </div>
