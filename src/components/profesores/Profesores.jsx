@@ -10,6 +10,7 @@ const Profesores = () => {
     const [auto, setAuto] = useState(null)
     const [turno, setTurno] = useState(null)
     const [topico, setTopico] = useState(null)
+    const [anotacion, setAnotacion] = useState("")
     const [evaluacion, setEvaluacion] = useState({})
     const [modo, setModo] = useState("hoy") // 👈 Nuevo estado para cambiar entre HOY y MAÑANA
     const [alumnos, setAlumnos] = useState([])
@@ -18,9 +19,6 @@ const Profesores = () => {
     const horasManiana = ["07:45", "08:45", "09:45", "10:45", "11:45"];
     const horasTarde = ["14:00", "15:00", "16:00", "17:00", "18:00"];
     const [turnoSeleccionado, setTurnoSeleccionado] = useState("");
-
-
-
 
     const { fecha, hoy } = useFechas()
 
@@ -76,7 +74,10 @@ const Profesores = () => {
     const cambiarColor = (idAlumno, aspecto, color) => {
         setEvaluacion(prev => ({
             ...prev,
-            [idAlumno]: { ...prev[idAlumno], [aspecto]: color }
+            [idAlumno]: {
+                ...prev[idAlumno],
+                [aspecto]: color
+            }
         }))
     }
 
@@ -87,13 +88,42 @@ const Profesores = () => {
 
             if (snapshot.exists()) {
                 const data = snapshot.data();
-                const evaluacionActual = data.evaluacion || {};
-                const nuevosCambios = evaluacion[id] || {};
-                const evaluacionActualizada = { ...evaluacionActual, ...nuevosCambios };
 
-                await updateDoc(ref, { evaluacion: evaluacionActualizada });
+                const evaluacionDB = data.evaluacion || {};
+
+                const tieneSistemaNuevo =
+                    evaluacionDB.actual || evaluacionDB.historial
+
+                const evaluacionActual = tieneSistemaNuevo
+                    ? evaluacionDB.actual || {}
+                    : evaluacionDB
+
+                const historialActual = tieneSistemaNuevo
+                    ? evaluacionDB.historial || []
+                    : []
+
+                const nuevosCambios = evaluacion[id] || {};
+
+                const evaluacionActualizada = {
+                    ...evaluacionActual,
+                    ...nuevosCambios,
+                    anotaciones: anotacion
+                };
+
+                const nuevaClase = {
+                    fecha: new Date().toISOString(),
+                    evaluacion: evaluacionActualizada,
+                };
+
+                await updateDoc(ref, {
+                    evaluacion: {
+                        actual: evaluacionActualizada,
+                        historial: [...historialActual, nuevaClase]
+                    }
+                });
 
                 setTopico(null);
+                setAnotacion("");
                 setTurno(null);
 
                 console.log("Evaluación actualizada correctamente para el alumno:", id);
@@ -157,7 +187,7 @@ const Profesores = () => {
 
                                         <p>{e.hora}</p>
 
-                                        {e.puntoEncuentro ? (
+                                        {e.puntoEncuentro?.calle || e.puntoEncuentro?.entrecalles || e.puntoEncuentro?.altura ?(
                                             <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
                                                 {e.puntoEncuentro.calle} {e.puntoEncuentro.entrecalles} {e.puntoEncuentro.altura}
                                             </p>
@@ -188,6 +218,7 @@ const Profesores = () => {
                             Turnos tarde
                         </h3>
                         <div className={`turno-lista acordeon ${turnoSeleccionado === "tarde" ? "abierto" : ""}`}>
+                            {console.log(turno)}
                             {turnosTarde.length > 0 ? (
                                 turnosTarde.map((e, index) => (
                                     <div
@@ -207,15 +238,6 @@ const Profesores = () => {
                                             </p>
                                         )}
 
-                                        {/* <p
-                                            style={{
-                                                fontSize: "1.1rem",
-                                                fontWeight: "bold",
-
-                                            }}
-                                        >
-                                            {e.direccion.calle} {e.direccion.altura}
-                                        </p> */}
                                         <p>{e.nombre} {e.telefono}</p>
                                     </div>
                                 ))
@@ -250,9 +272,9 @@ const Profesores = () => {
                             <p>{turno.telefono}</p>
                             <p>{turno.observaciones}</p>
                             <div className='profe-warnings-wrapper'>
-                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.tm || turno.evaluacion?.tm }} onClick={() => setTopico("tm")}>TM</div>
-                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.im || turno.evaluacion?.im }} onClick={() => setTopico("im")}>IM</div>
-                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.df || turno.evaluacion?.df }} onClick={() => setTopico("df")}>DF</div>
+                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.tm || turno.evaluacion?.actual?.tm }} onClick={() => setTopico("tm")}>TM</div>
+                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.im || turno.evaluacion?.actual?.im }} onClick={() => setTopico("im")}>IM</div>
+                                <div className='profe-warnings' style={{ backgroundColor: evaluacion[turno.id]?.df || turno.evaluacion?.actual?.df }} onClick={() => setTopico("df")}>DF</div>
                             </div>
                         </div>
 
@@ -260,11 +282,11 @@ const Profesores = () => {
                         <div className='evaluacion' style={{ backgroundColor: "#c8d6d5ff" }}>
                             <h2>DOMINIO BASICO</h2>
                             <ul>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.volante || turno.evaluacion?.volante }} onClick={() => setTopico("volante")}>Volante</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.embriague || turno.evaluacion?.embriague }} onClick={() => setTopico("embriague")}>Embriague</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.caja || turno.evaluacion?.caja }} onClick={() => setTopico("caja")}>Caja</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.freno || turno.evaluacion?.freno }} onClick={() => setTopico("freno")}>Freno/Acelerador</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.posicion || turno.evaluacion?.posicion }} onClick={() => setTopico("posicion")}>Posición Manejo</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.volante || turno.evaluacion?.actual?.volante }} onClick={() => setTopico("volante")}>Volante</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.embriague || turno.evaluacion?.actual?.embriague }} onClick={() => setTopico("embriague")}>Embriague</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.caja || turno.evaluacion?.actual?.caja }} onClick={() => setTopico("caja")}>Caja</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.freno || turno.evaluacion?.actual?.freno }} onClick={() => setTopico("freno")}>Freno/Acelerador</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.posicion || turno.evaluacion?.actual?.posicion }} onClick={() => setTopico("posicion")}>Posición Manejo</li>
                             </ul>
                         </div>
 
@@ -272,12 +294,12 @@ const Profesores = () => {
                         <div className='evaluacion' style={{ backgroundColor: "#b8c5c4ff" }}>
                             <h2>CIRCULACION</h2>
                             <ul>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.carril || turno.evaluacion?.carril }} onClick={() => setTopico("carril")}>Carril</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.velocidad || turno.evaluacion?.velocidad }} onClick={() => setTopico("velocidad")}>Velocidad</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.señalizacion || turno.evaluacion?.señalizacion }} onClick={() => setTopico("señalizacion")}>Señalización</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.calles || turno.evaluacion?.calles }} onClick={() => setTopico("calles")}>Calles</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.avenidas || turno.evaluacion?.avenidas }} onClick={() => setTopico("avenidas")}>Avenidas</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.rotondas || turno.evaluacion?.rotondas }} onClick={() => setTopico("rotondas")}>Rotondas</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.carril || turno.evaluacion?.actual?.carril }} onClick={() => setTopico("carril")}>Carril</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.velocidad || turno.evaluacion?.actual?.velocidad }} onClick={() => setTopico("velocidad")}>Velocidad</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.señalizacion || turno.evaluacion?.actual?.señalizacion }} onClick={() => setTopico("señalizacion")}>Señalización</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.calles || turno.evaluacion?.actual?.calles }} onClick={() => setTopico("calles")}>Calles</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.avenidas || turno.evaluacion?.actual?.avenidas }} onClick={() => setTopico("avenidas")}>Avenidas</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.rotondas || turno.evaluacion?.actual?.rotondas }} onClick={() => setTopico("rotondas")}>Rotondas</li>
                             </ul>
                         </div>
 
@@ -285,12 +307,34 @@ const Profesores = () => {
                         <div className='evaluacion' style={{ backgroundColor: "#aeb9b9ff" }}>
                             <h2>ESTACIONAMIENTO</h2>
                             <ul>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloDerecho || turno.evaluacion?.paraleloDerecho }} onClick={() => setTopico("paraleloDerecho")}>Paralelo Derecho</li>
-                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloIzquierdo || turno.evaluacion?.paraleloIzquierdo }} onClick={() => setTopico("paraleloIzquierdo")}>Paralelo Izquierdo</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloDerecho || turno.evaluacion?.actual?.paraleloDerecho }} onClick={() => setTopico("paraleloDerecho")}>Paralelo Derecho</li>
+                                <li style={{ backgroundColor: evaluacion[turno.id]?.paraleloIzquierdo || turno.evaluacion?.actual?.paraleloIzquierdo }} onClick={() => setTopico("paraleloIzquierdo")}>Paralelo Izquierdo</li>
                             </ul>
                         </div>
 
-                        <button onClick={() => { setTurno(null); terminarClase(turno.id) }}>X</button>
+                        {/*ANOTACIONES*/}
+                        <div className='evaluacion' style={{ backgroundColor: "rgb(141, 150, 150)", justifyContent: "unset", alignItems: "unset" }}>
+                            <h2 style={{ margin: "20px auto" }}>ANOTACIONES</h2>
+                            <textarea
+                                value={anotacion}
+                                onChange={(e) => setAnotacion(e.target.value)}
+                                style={{ height: "100px", width: "70%", resize: "none", margin: "0 auto" }}>
+                            </textarea>
+                            <ul>
+                                {
+                                    turno.evaluacion.historial?.map((e, index) => {
+                                        return (
+                                            <li index={index} style={{ listStyle: "none", overflowWrap: "break"}}>
+                                                {new Date(e.fecha).toLocaleDateString()} - {e.evaluacion.anotaciones}
+                                            </li>
+
+                                        )
+                                    })
+                                }
+                            </ul>
+
+                        </div>
+                        <button onClick={() => { terminarClase(turno.id) }}>X</button>
 
                         {topico && (
                             <div className='profe-color'>
