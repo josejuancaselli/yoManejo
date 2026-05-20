@@ -187,7 +187,7 @@ const Profesores = () => {
 
                                         <p>{e.hora}</p>
 
-                                        {e.puntoEncuentro?.calle || e.puntoEncuentro?.entrecalles || e.puntoEncuentro?.altura ?(
+                                        {e.puntoEncuentro?.calle || e.puntoEncuentro?.entrecalles || e.puntoEncuentro?.altura ? (
                                             <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
                                                 {e.puntoEncuentro.calle} {e.puntoEncuentro.entrecalles} {e.puntoEncuentro.altura}
                                             </p>
@@ -320,14 +320,19 @@ const Profesores = () => {
                                 onChange={(e) => setAnotacion(e.target.value)}
                                 style={{ height: "100px", width: "70%", resize: "none", margin: "0 auto" }}>
                             </textarea>
-                            <ul>
+                            <ul style={{padding:"0"}}>
                                 {
                                     turno.evaluacion.historial?.map((e, index) => {
                                         return (
-                                            <li index={index} style={{ listStyle: "none", overflowWrap: "break"}}>
-                                                {new Date(e.fecha).toLocaleDateString()} - {e.evaluacion.anotaciones}
-                                            </li>
+                                            e.evaluacion.anotaciones === "" ? null : (
+                                                <li key={index} style={{listStyle: "none", backgroundColor: "#d3d3d3", marginTop: "8px", padding: "4px", borderRadius: "8px" }}                                                >
+                                                    <p style={{ fontSize: "0.9rem", color: "#555"}}>
+                                                        {new Date(e.fecha).toLocaleDateString()}
+                                                    </p>
 
+                                                    <p style={{overflowWrap: "break-word"}}>{e.evaluacion.anotaciones}</p>
+                                                </li>
+                                            )
                                         )
                                     })
                                 }
