@@ -109,7 +109,7 @@ const Alumnos = () => {
 
     return (
         <div className='alumnos-wrapper'>
-
+            {console.log(alumnoSeleccionado)}
             <div className='inicio-container'>
                 <div className='nav-bar'>
                     <Link className='auto-title' to="/turnos">Ir a Turnos</Link>
@@ -157,51 +157,49 @@ const Alumnos = () => {
             </div>
 
             <div className='alumnos-content'>
+                <div style={{ width: "20%", height: "10%" }}>
+                    {alumnosPagina.map((alumno) => (
+                        <div
+                            key={alumno.id}
+                            className='alumnos'
+                            onClick={() => {
+                                setAlumnoSeleccionado(alumno)
+                                setDataAlumno(true)
+                            }}
+                        >
+                            <h2>{alumno.nombre}</h2>
+                        </div>
+                    ))}
 
-                {alumnosPagina.map((alumno) => (
-                    <div
-                        key={alumno.id}
-                        className='alumnos'
-                        onClick={() => {
-                            setAlumnoSeleccionado(alumno)
-                            setDataAlumno(true)
-                        }}
-                    >
-                        <h2>{alumno.nombre}</h2>
+                    {/* CONTROLES DE PAGINACIÓN */}
+                    <div style={{ display: "flex", justifyContent: "center", gap: "16px", margin: "24px" }}>
+                        <button
+                            disabled={paginaActual === 0}
+                            onClick={() => setPaginaActual(p => p - 1)}
+                        >
+                            Anterior
+                        </button>
+
+                        <span>
+                            Página {paginaActual + 1} de {totalPaginas}
+                        </span>
+
+                        <button
+                            disabled={paginaActual >= totalPaginas - 1}
+                            onClick={() => setPaginaActual(p => p + 1)}
+                        >
+                            Siguiente
+                        </button>
                     </div>
-                ))}
-
-                {/* CONTROLES DE PAGINACIÓN */}
-                <div style={{ display: "flex", justifyContent: "center", gap: "16px", margin: "24px" }}>
-                    <button
-                        disabled={paginaActual === 0}
-                        onClick={() => setPaginaActual(p => p - 1)}
-                    >
-                        Anterior
-                    </button>
-
-                    <span>
-                        Página {paginaActual + 1} de {totalPaginas}
-                    </span>
-
-                    <button
-                        disabled={paginaActual >= totalPaginas - 1}
-                        onClick={() => setPaginaActual(p => p + 1)}
-                    >
-                        Siguiente
-                    </button>
                 </div>
-
                 {dataAlumno && (
                     !modoEdicion ? (
                         alumnoSeleccionado && (
-                            <div className='alumno-data'>
-                                <AlumnoData
-                                    alumnoSeleccionado={alumnoSeleccionado}
-                                    setDataAlumno={setDataAlumno}
-                                    setModoEdicion={setModoEdicion}
-                                />
-
+                            <div style={{ margin: "0 auto" }} >
+                                <p>{alumnoSeleccionado.nombre}</p>
+                                <p>{alumnoSeleccionado.telefono}</p>
+                               
+                                {console.log(alumnoSeleccionado.evaluacion.actual.calles)}
                                 <button onClick={() => setConfirmarBorrado(true)}>Borrar</button>
 
                                 {confirmarBorrado && (
@@ -218,16 +216,16 @@ const Alumnos = () => {
                             </div>
                         )
                     ) : (
-                        
+
                         <EditarAlumno
-                        style={{justifyContent:" unset"}}
+
                             alumnoSeleccionado={alumnoSeleccionado}
                             handleEditar={handleEditar}
                             editarAlumno={editarAlumno}
                             setModoEdicion={setModoEdicion}
                             modoEdicion={modoEdicion}
                         />
-                        
+
                     )
                 )}
             </div>

@@ -20,6 +20,7 @@
 }
 
 .alumnos-content {
+    display: flex;
     position: relative;
     margin: 24px 0;
     
@@ -35,14 +36,14 @@
 .alumnos {
     display: flex;
     align-items: center;
-    height: 10%;
+    
     background-color: #f9f9f9;
     margin: 0 8px;
     border-radius: 3%;
     box-shadow: 0 0 8px rgba(104, 104, 104, 0.3);
     border: solid 1px #00000030;
     padding: 0 16px;
-    width: 20%;
+    
 }
 
 .alumnos:hover {

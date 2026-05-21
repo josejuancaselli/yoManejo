@@ -14,7 +14,7 @@ const AlumnoData = ({ setModoEdicion, setDataAlumno, alumnoSeleccionado, }) => {
         <>
 
             <div className="nombre-alumno-wrapper" >
-                {console.log(alumnoSeleccionado)}
+                
                 <div style={{ display: "flex" }}>
                     <h3>{alumnoSeleccionado.nombre}</h3>
                 </div>
