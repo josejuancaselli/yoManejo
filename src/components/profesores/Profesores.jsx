@@ -322,7 +322,7 @@ const Profesores = () => {
                             </textarea>
                             <ul style={{padding:"0"}}>
                                 {
-                                    turno.evaluacion.historial?.map((e, index) => {
+                                    turno.evaluacion?.historial?.map((e, index) => {
                                         return (
                                             e.evaluacion.anotaciones === "" ? null : (
                                                 <li key={index} style={{listStyle: "none", backgroundColor: "#d3d3d3", marginTop: "8px", padding: "4px", borderRadius: "8px" }}                                                >

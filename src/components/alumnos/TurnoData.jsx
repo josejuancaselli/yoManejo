@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
-import AgregarTurno from "./AgregarTurno";
-import { IoAdd } from "react-icons/io5";
-import { IoIosClose } from "react-icons/io";
-import { useFechas } from "../../helpers/useFechas";
+import React, { useState } from "react"
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa"
+import { IoIosClose } from "react-icons/io"
+import { useFechas } from "../../helpers/useFechas"
 
 const TurnoData = ({
     turnosEditables,
@@ -14,22 +12,23 @@ const TurnoData = ({
     obtenerHorarios,
     obtenerDiasDelMes,
     alumnoSeleccionado,
-    inputAgregarTurno,
-    setInputAgregarTurno,
-    agregarTurno,
-    nuevoTurno,
-    setNuevoTurno,
+    turnoSim,               // 👈 nuevo
+    borrarTurnoSimulado,    // 👈 nuevo
 }) => {
-    // 🔹 Guardamos el índice del turno que queremos borrar (en lugar de true/false)
-    const [turnoAEliminar, setTurnoAEliminar] = useState(null);
-    const { fechaDesdeDia } = useFechas();
+    const [turnoAEliminar, setTurnoAEliminar] = useState(null)
+    const { fechaDesdeDia } = useFechas()
+
+    const formatearTurno = (turno) =>
+        `${fechaDesdeDia(turno.dia, turno.mes, turno.anio)} - ${String(turno.dia).padStart(2, "0")}/${String(turno.mes + 1).padStart(2, "0")} - ${turno.hora} hs - Coche ${turno.zona}`
+
     return (
         <>
+            {/* ── Turnos confirmados ── */}
             <ul className="turnos-lista">
                 {[...turnosEditables.flat()]
                     .sort((a, b) => {
-                        const fechaA = new Date(a.anio, a.mes, a.dia, parseInt(a.hora));
-                        const fechaB = new Date(b.anio, b.mes, b.dia, parseInt(b.hora));
+                        const fechaA = new Date(a.anio, a.mes, a.dia, parseInt(a.hora))
+                        const fechaB = new Date(b.anio, b.mes, b.dia, parseInt(b.hora))
                         return fechaA - fechaB
                     })
                     .map((turno, index) => (
@@ -37,12 +36,7 @@ const TurnoData = ({
                             {editarTurnos !== index ? (
                                 <div className="turno-editable">
                                     <div className="turno-editable-info">
-                                        <p>
-                                            {fechaDesdeDia(turno.dia, turno.mes, turno.anio)} -{" "}
-                                            {String(turno.dia).padStart(2, "0")}/{String(turno.mes + 1).padStart(2, "0")} -{" "}
-                                            {turno.hora} hs -{" "}
-                                            Coche {turno.zona}
-                                        </p>
+                                        <p>{formatearTurno(turno)}</p>
                                         <div>
                                             <button
                                                 className="turnos-btn-editar"
@@ -76,7 +70,6 @@ const TurnoData = ({
                                             ))}
                                         </select>
                                     </div>
-
                                     <div>
                                         <label>Mes</label>
                                         <select
@@ -91,7 +84,6 @@ const TurnoData = ({
                                             ))}
                                         </select>
                                     </div>
-
                                     <div>
                                         <label>Año</label>
                                         <select
@@ -107,7 +99,6 @@ const TurnoData = ({
                                             </option>
                                         </select>
                                     </div>
-
                                     <div>
                                         <label>Hora</label>
                                         <select
@@ -122,7 +113,6 @@ const TurnoData = ({
                                             ))}
                                         </select>
                                     </div>
-
                                     <div>
                                         <label>Coche</label>
                                         <select
@@ -136,7 +126,6 @@ const TurnoData = ({
                                             <option value="automatico">Atm</option>
                                         </select>
                                     </div>
-
                                     <button
                                         className="turno-btn-cerrar"
                                         onClick={() => setEditarTurnos(null)}
@@ -144,11 +133,8 @@ const TurnoData = ({
                                         <IoIosClose />
                                     </button>
                                 </div>
-                            )
-                            }
+                            )}
 
-
-                            {/* 🔹 Modal de confirmación — solo se muestra para el turno seleccionado */}
                             {turnoAEliminar === index && (
                                 <div className="turno-borrar-wrapper">
                                     <p>¿Está seguro que desea borrar el turno?</p>
@@ -162,8 +148,8 @@ const TurnoData = ({
                                                 turno.anio,
                                                 alumnoSeleccionado.id,
                                                 "si"
-                                            );
-                                            setTurnoAEliminar(null);
+                                            )
+                                            setTurnoAEliminar(null)
                                         }}
                                     >
                                         SI
@@ -175,29 +161,37 @@ const TurnoData = ({
                     ))}
             </ul>
 
-            {/* <button
-                className="turno-btn-agregar"
-                onClick={() => setInputAgregarTurno(true)}
-            >
-                <IoAdd />
-            </button> */}
-
-            {/* {inputAgregarTurno && (
-                <div className="turno-item">
-                    <AgregarTurno
-                        inputAgregarTurno={inputAgregarTurno}
-                        setInputAgregarTurno={setInputAgregarTurno}
-                        agregarTurno={agregarTurno}
-                        alumnoSeleccionado={alumnoSeleccionado}
-                        setNuevoTurno={setNuevoTurno}
-                        nuevoTurno={nuevoTurno}
-                        obtenerDiasDelMes={obtenerDiasDelMes}
-                        obtenerHorarios={obtenerHorarios}
-                    />
+            {/* ── Turnos pendientes de confirmar ── */}
+            {turnoSim && turnoSim.length > 0 && (
+                <div className="turnos-pendientes">
+                    <p className="turnos-pendientes-label">Por confirmar:</p>
+                    <ul className="turnos-lista">
+                        {[...turnoSim.flat()]
+                            .sort((a, b) => {
+                                const fechaA = new Date(a.anio, a.mes, a.dia, parseInt(a.hora))
+                                const fechaB = new Date(b.anio, b.mes, b.dia, parseInt(b.hora))
+                                return fechaA - fechaB
+                            })
+                            .map((turno, index) => (
+                                <li key={index} className="turno-item turno-item--pendiente">
+                                    <div className="turno-editable">
+                                        <div className="turno-editable-info">
+                                            <p>{formatearTurno(turno)}</p>
+                                            <button
+                                                className="turnos-btn-borrar"
+                                                onClick={() => borrarTurnoSimulado(turno.dia, turno.hora, turno.mes, turno.zona, turno.anio)}
+                                            >
+                                                <IoIosClose />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            ))}
+                    </ul>
                 </div>
-            )} */}
+            )}
         </>
-    );
-};
+    )
+}
 
-export default TurnoData;
+export default TurnoData

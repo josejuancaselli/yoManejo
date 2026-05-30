@@ -171,6 +171,7 @@ const ZonaTurnos = () => {
         horarios={horarios}
         setModoSimulacion={setModoSimulacion}
         modoSimulacion={modoSimulacion}
+        dataAlumno={dataAlumno}
       />
 
       {dataAlumno && (
@@ -207,6 +208,8 @@ const ZonaTurnos = () => {
             setTurnoSim={setTurnoSim}
             modoSimulacion={modoSimulacion}
             setModoSimulacion={setModoSimulacion}
+            turnoSim={turnoSim}
+            borrarTurnoSimulado = {borrarTurnoSimulado}
           />
         </div>
       )}

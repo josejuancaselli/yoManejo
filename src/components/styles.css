@@ -1802,7 +1802,22 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 4px 10px rgba(61, 125, 106, 0.6);
 }
 
+.turno-item--pendiente {
+    opacity: 0.5;
+    pointer-events: none; /* no se puede editar ni borrar accidentalmente */
+}
 
+.turno-item--pendiente .turnos-btn-borrar {
+    pointer-events: all; /* excepto el botón de eliminar, que sí funciona */
+}
+
+.turnos-pendientes-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 8px 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
 /* Para pantallas desde 360px hasta 500px */
 @media (min-width: 360px) and (max-width: 500px) {

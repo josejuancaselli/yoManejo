@@ -15,7 +15,6 @@ const ZonasSection = ({
     simulacion,
     ventanaReservar,
     setVentanaReservar,
-    // setWarningReserva,
     busquedaAlumno,
     turnoSim,
     setTurnoSim,
@@ -29,9 +28,9 @@ const ZonasSection = ({
     horariosTarde,
     obtenerHorarios,
     horarios,
-    // setBotonReserva,
     modoSimulacion,
-    setModoSimulacion
+    setModoSimulacion,
+    dataAlumno,        // 👈 nuevo
 }) => {
     return (
         <div className="zonas-section">
@@ -44,13 +43,14 @@ const ZonasSection = ({
                     setAlumnosFiltrados={setAlumnosFiltrados}
                     setRenderBusqueda={setRenderBusqueda}
                     handleToggleZona={handleToggleZona}
-                    setSimulacion={setSimulacion}                    
-                    busquedaAlumno={busquedaAlumno}                    
+                    setSimulacion={setSimulacion}
+                    busquedaAlumno={busquedaAlumno}
                     modoSimulacion={modoSimulacion}
                     setModoSimulacion={setModoSimulacion}
                 />
 
-                {turnoSim.length > 0 && !simulacion && !ventanaReservar && (
+                {/* Solo mostramos TurnosSimulados si NO hay alumno abierto */}
+                {turnoSim.length > 0 && !simulacion && !ventanaReservar && !dataAlumno && (
                     <TurnosSimulados
                         turnoSim={turnoSim}
                         borrarTurnoSimulado={borrarTurnoSimulado}
@@ -62,7 +62,7 @@ const ZonasSection = ({
                 {zonasSeleccionadas.map((zona) => (
                     <div key={zona} className="zona-selected">
                         <Calendario
-                            zona={zona} // 👈 se pasa la zona específica
+                            zona={zona}
                             turnoSim={turnoSim}
                             setTurnoSim={setTurnoSim}
                             simulacion={simulacion}
@@ -70,7 +70,7 @@ const ZonasSection = ({
                             alumnos={alumnos}
                             reserva={reserva}
                             setReserva={setReserva}
-                            setAlumnos={setAlumnos}                            
+                            setAlumnos={setAlumnos}
                             setVentanaReservar={setVentanaReservar}
                             horariosMañana={horariosMañana}
                             horariosTarde={horariosTarde}
