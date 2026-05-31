@@ -139,30 +139,34 @@ const Profesores = () => {
     const turnosTarde = turnosOrdenados.filter((t) => t.zona === auto && horasTarde.includes(t.hora));
 
     return (
-        <div className="profe-wrapper">
+        <div className={`profe-wrapper ${modo === "hoy" ? "modo-hoy" : "modo-manana"}`}>
 
             <div className="profe-header">
 
                 <h2 className={`profe-fecha ${modo}`}>
                     Coche {auto}
                 </h2>
-                <button className="hoy" onClick={() => setModo("hoy")}                >
+                <button className={`btn-modo ${modo === "hoy" ? "btn-modo--activo-hoy" : ""}`}
+                    onClick={() => setModo("hoy")}               >
                     Hoy
                 </button>
-                <button className="mañana" onClick={() => setModo("mañana")}                >
+                <button className={`btn-modo ${modo === "mañana" ? "btn-modo--activo-manana" : ""}`}
+                    onClick={() => setModo("mañana")}              >
                     Mañana
                 </button>
             </div>
 
             <div className='profe-btn-wrapper'>
                 {autos.map((e, index) => (
-                    <button key={index} onClick={() => { setAuto(e); setTurno(null) }}>
+                    <button key={index}
+                        className={auto === e ? "btn-coche--activo" : ""}
+                        onClick={() => { setAuto(e); setTurno(null) }}>
                         Coche {e}
                     </button>
                 ))}
             </div>
 
-            <h2 className={`profe-fecha ${modo}`} style={{ margin: "0 auto" }}>
+            <h2 className={`profe-modo-badge ${modo}`} style={{ margin: "0 auto" }}>
                 {modo === "hoy" ? "HOY" : "MAÑANA"}
             </h2>
 
@@ -320,17 +324,17 @@ const Profesores = () => {
                                 onChange={(e) => setAnotacion(e.target.value)}
                                 style={{ height: "100px", width: "70%", resize: "none", margin: "0 auto" }}>
                             </textarea>
-                            <ul style={{padding:"0"}}>
+                            <ul style={{ padding: "0" }}>
                                 {
                                     turno.evaluacion?.historial?.map((e, index) => {
                                         return (
                                             e.evaluacion.anotaciones === "" ? null : (
-                                                <li key={index} style={{listStyle: "none", backgroundColor: "#d3d3d3", marginTop: "8px", padding: "4px", borderRadius: "8px" }}                                                >
-                                                    <p style={{ fontSize: "0.9rem", color: "#555"}}>
+                                                <li key={index} style={{ listStyle: "none", backgroundColor: "#d3d3d3", marginTop: "8px", padding: "4px", borderRadius: "8px" }}                                                >
+                                                    <p style={{ fontSize: "0.9rem", color: "#555" }}>
                                                         {new Date(e.fecha).toLocaleDateString()}
                                                     </p>
 
-                                                    <p style={{overflowWrap: "break-word"}}>{e.evaluacion.anotaciones}</p>
+                                                    <p style={{ overflowWrap: "break-word" }}>{e.evaluacion.anotaciones}</p>
                                                 </li>
                                             )
                                         )
