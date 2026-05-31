@@ -215,17 +215,22 @@ const FichaAlumno = ({
                                     ))}
                                     <div>
                                         <h5 className="ficha-eval-categoria-titulo">Anotaciones</h5>
-                                        {evaluacionHistorica?.map((e, index) => {
-                                            return (
-                                                <div key = {index}>
 
-                                                    <span style={{ fontWeight: "300", fontStyle: "italic", fontSize: "14px" }}>
-                                                        - "{e.evaluacion.anotaciones === "" ? "sin anotaciones" : e.evaluacion.anotaciones} ({new Date(e.fecha).toLocaleDateString("es-AR")})"
+                                        {evaluacionHistorica?.map((e, index) =>
+                                            e.evaluacion.anotaciones ? (
+                                                <div key={index}>
+                                                    <span
+                                                        style={{
+                                                            fontWeight: "300",
+                                                            fontStyle: "italic",
+                                                            fontSize: "14px",
+                                                        }}
+                                                    >
+                                                        - "{e.evaluacion.anotaciones}" ({new Date(e.fecha).toLocaleDateString("es-AR")})
                                                     </span>
-
                                                 </div>
-                                            )
-                                        })}
+                                            ) : null
+                                        )}
                                     </div>
 
                                 </div>
