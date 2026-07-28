@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 
@@ -6,13 +6,20 @@ export const useTurnos = ({
     alumnoSeleccionado,
     setAlumnoSeleccionado,
     alumnos,
+    setAlumnos,
     setRefresh,
     handleEditar,
-    setAlumnos
 }) => {
 
     const [turnoSim, setTurnoSim] = useState([]);
     const [turnosEditables, setTurnosEditables] = useState([]);
+
+    // Sincroniza turnosEditables cada vez que cambia el alumno seleccionado
+    useEffect(() => {
+        if (alumnoSeleccionado?.turnos) {
+            setTurnosEditables(alumnoSeleccionado.turnos.map((t) => ({ ...t })));
+        }
+    }, [alumnoSeleccionado]);
 
     // =========================
     // SIMULADOS
@@ -21,41 +28,39 @@ export const useTurnos = ({
     const borrarTurnoSimulado = (dia, hora, mes, zona, anio) => {
         setTurnoSim(prev =>
             prev.filter(
-                (r) =>
-                    !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)
+                (r) => !(r.dia === dia && r.hora === hora && r.mes === mes && r.zona === zona && r.anio === anio)
             )
         );
     };
 
-const agregarTurno = async (idAlumno) => {
-    try {
-        const nuevosTurnos = [...alumnoSeleccionado.turnos, ...turnoSim];
+    const agregarTurno = async (idAlumno) => {
+        try {
+            const nuevosTurnos = [...alumnoSeleccionado.turnos, ...turnoSim];
 
-        await updateDoc(doc(db, "alumnos", idAlumno), {
-            turnos: nuevosTurnos
-        });
+            await updateDoc(doc(db, "alumnos", idAlumno), {
+                turnos: nuevosTurnos
+            });
 
-        setAlumnoSeleccionado(prev => ({
-            ...prev,
-            turnos: nuevosTurnos
-        }));
+            setAlumnoSeleccionado(prev => ({
+                ...prev,
+                turnos: nuevosTurnos
+            }));
 
-        // 🔥 CLAVE: actualizar lista global
-        setAlumnos(prev =>
-            prev.map(alumno =>
-                alumno.id === idAlumno
-                    ? { ...alumno, turnos: nuevosTurnos }
-                    : alumno
-            )
-        );
+            setAlumnos(prev =>
+                prev.map(alumno =>
+                    alumno.id === idAlumno
+                        ? { ...alumno, turnos: nuevosTurnos }
+                        : alumno
+                )
+            );
 
-        setRefresh(prev => !prev);
-        setTurnoSim([]);
+            setRefresh(prev => !prev);
+            setTurnoSim([]);
 
-    } catch (error) {
-        console.error("Error agregando turno:", error);
-    }
-};
+        } catch (error) {
+            console.error("Error agregando turno:", error);
+        }
+    };
 
     // =========================
     // RESERVADOS
@@ -77,6 +82,7 @@ const agregarTurno = async (idAlumno) => {
                     turnos: turnoBorrado
                 });
 
+                alert("Turno borrado con éxito");
                 setRefresh(prev => !prev);
 
                 setAlumnoSeleccionado(prev => ({
@@ -99,7 +105,6 @@ const agregarTurno = async (idAlumno) => {
             : e.target.value;
 
         const turnosAlumnos = alumnos.map((a) => a.turnos).flat();
-
         const nuevosTurnos = [...turnosEditables];
         const turnoEditado = {
             ...nuevosTurnos[index],
@@ -122,7 +127,6 @@ const agregarTurno = async (idAlumno) => {
 
         nuevosTurnos[index] = turnoEditado;
         setTurnosEditables(nuevosTurnos);
-
         handleEditar(e, index, campo);
     };
 
@@ -134,6 +138,6 @@ const agregarTurno = async (idAlumno) => {
         borrarTurnoSimulado,
         agregarTurno,
         borrarTurnoReservado,
-        handleEditarTurno
+        handleEditarTurno,
     };
 };
