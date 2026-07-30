@@ -22,7 +22,7 @@ const ReservarPrueba = ({
     const [carrito, setCarrito] = useState([])
     const [medioPago, setMedioPago] = useState("efectivo")
     const [tipoAuto, setTipoAuto] = useState("manual")
-    const [esAlumno, setEsAlumno] = useState(true)
+    
 
     if (cargando) return null
 
@@ -40,7 +40,7 @@ const ReservarPrueba = ({
     const contarPaq = (id) => carrito.filter(i => i.id === id).length
 
     const agregarPaq = (paq) => {
-        const precioCalculado = getPrecio(paq, tipoAuto, esAlumno)
+        const precioCalculado = getPrecio(paq, tipoAuto, false)
         setCarrito(prev => [...prev, { ...paq, precioCalculado }])
     }
 
@@ -56,18 +56,11 @@ const ReservarPrueba = ({
         // Recalcular precios del carrito
         setCarrito(prev => prev
             .filter(p => tipo === "automatico" ? !p.soloManual : true)
-            .map(p => ({ ...p, precioCalculado: getPrecio(p, tipo, esAlumno) }))
+            .map(p => ({ ...p, precioCalculado: getPrecio(p, tipo, false) }))
         )
     }
 
-    const handleEsAlumno = (valor) => {
-        setEsAlumno(valor)
-        // Recalcular precios de examenes en el carrito
-        setCarrito(prev => prev.map(p => ({
-            ...p,
-            precioCalculado: getPrecio(p, tipoAuto, valor)
-        })))
-    }
+
 
     const enviar = async (data) => {
         try {
@@ -104,7 +97,7 @@ const ReservarPrueba = ({
                     montoBase: item.precioCalculado,
                     medioPago,
                     tipoAuto,
-                    esAlumno: item.esExamen ? esAlumno : null,
+                    esAlumno: item.esExamen ? false : null,
                     recargoAplicado: conRecargo,
                 })
             }))
@@ -238,24 +231,7 @@ const ReservarPrueba = ({
                                 </div>
                             </div>
 
-                            {/* Es alumno (solo visible si hay examen en carrito o siempre para anticipar) */}
-                            <div className="form-group">
-                                <label className="reserva-label">¿Es alumno de la escuela?</label>
-                                <div className="medio-grid">
-                                    <div
-                                        className={`medio-btn ${esAlumno ? "medio-btn--activo" : ""}`}
-                                        onClick={() => handleEsAlumno(true)}
-                                    >
-                                        Sí
-                                    </div>
-                                    <div
-                                        className={`medio-btn ${!esAlumno ? "medio-btn--activo" : ""}`}
-                                        onClick={() => handleEsAlumno(false)}
-                                    >
-                                        No
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                             {/* Paquetes */}
                             <div className="form-group">
@@ -263,7 +239,7 @@ const ReservarPrueba = ({
                                 <div className="paq-grid">
                                     {paquetesFiltrados.map(paq => {
                                         const count = contarPaq(paq.id)
-                                        const precio = getPrecio(paq, tipoAuto, esAlumno)
+                                        const precio = getPrecio(paq, tipoAuto, false)
                                         return (
                                             <div
                                                 key={paq.id}
