@@ -1,0 +1,158 @@
+.admin-wrapper {
+    min-height: 100vh;
+    background-color: #5cad97a8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 40px;
+}
+
+.admin-header {
+    padding: 24px 32px 16px;
+}
+
+.admin-titulo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+}
+
+.admin-content {
+    padding: 0 32px;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1.5px solid rgba(84, 177, 152, 0.15);
+    box-shadow: 0 2px 12px rgba(84, 177, 152, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 600px;
+}
+
+.admin-card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #54b198;
+    margin: 0;
+}
+
+.admin-card-sub {
+    font-size: 0.82rem;
+    color: #aaa;
+    margin: 0;
+}
+
+.admin-empty {
+    font-size: 0.85rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+.admin-paquetes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.admin-paq-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: #f0fffe;
+    border-radius: 8px;
+    border-left: 3px solid #54b198;
+    flex-wrap: wrap;
+}
+
+.admin-paq-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.admin-paq-nombre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2d4a44;
+}
+
+.admin-paq-clases {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.admin-paq-precio-actual {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 100px;
+}
+
+.admin-paq-precio-label {
+    font-size: 0.7rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-paq-precio-valor {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #54b198;
+}
+
+.admin-paq-editar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.admin-input {
+    border: 1.5px solid rgba(84, 177, 152, 0.3);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.88rem;
+    color: #2d4a44;
+    width: 120px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.admin-input:focus {
+    border-color: #54b198;
+}
+
+.admin-btn-guardar {
+    background: #54b198;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.admin-btn-guardar:hover:not(:disabled) {
+    background: #3d7d6a;
+}
+
+.admin-btn-guardar:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.admin-btn-guardado {
+    background: #2bcb2b !important;
+}

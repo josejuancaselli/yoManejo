@@ -1,85 +1,129 @@
-import { collection, addDoc } from "firebase/firestore"
+import { collection, addDoc, Timestamp } from "firebase/firestore"
 import { useForm } from 'react-hook-form'
-import { db } from "../../firebase/firebaseConfig";
-import { useState } from "react";
+import { db } from "../../firebase/firebaseConfig"
+import { useState } from "react"
+import { usePaquetes, getPrecio } from "../../helpers/usePaquetes"
 
-const ReservarPrueba = ({setVentanaReservar,
-    setSimulacion,
+const MEDIOS_PAGO = ["efectivo", "transferencia", "credito"]
+const RECARGO_CREDITO = 0.35
+
+const ReservarPrueba = ({
+    setVentanaReservar,
     turnoSim,
-    setReserva,
     setRefresh,
-    //   setWarningReserva, 
-    //   setBotonReserva, 
-    modoSimulacion, setModoSimulacion,
-    handleReservaConfirmada }) =>  {
-
-
-    const { register, handleSubmit } = useForm();
+    handleReservaConfirmada
+}) => {
+    const { register, handleSubmit } = useForm()
+    const { paquetes, cargando } = usePaquetes()
     const turnos = turnoSim
- const [step, setStep] = useState(1);
-  const totalSteps = 3; 
 
+    const [step, setStep] = useState(1)
+    const totalSteps = 4
+    const [carrito, setCarrito] = useState([])
+    const [medioPago, setMedioPago] = useState("efectivo")
+    const [tipoAuto, setTipoAuto] = useState("manual")
+    const [esAlumno, setEsAlumno] = useState(true)
+
+    if (cargando) return null
+
+    const paquetesFiltrados = paquetes.filter(p =>
+        tipoAuto === "manual" ? true : !p.soloManual
+    )
+
+    const conRecargo = medioPago === "credito"
+
+    const totalBase = carrito.reduce((acc, item) => acc + item.precioCalculado, 0)
+    const totalFinal = conRecargo
+        ? Math.round(totalBase * (1 + RECARGO_CREDITO))
+        : totalBase
+
+    const contarPaq = (id) => carrito.filter(i => i.id === id).length
+
+    const agregarPaq = (paq) => {
+        const precioCalculado = getPrecio(paq, tipoAuto, esAlumno)
+        setCarrito(prev => [...prev, { ...paq, precioCalculado }])
+    }
+
+    const quitarItem = (index) => {
+        setCarrito(prev => prev.filter((_, i) => i !== index))
+    }
+
+    const handleTipoAuto = (tipo) => {
+        setTipoAuto(tipo)
+        if (tipo === "automatico") {
+            setCarrito(prev => prev.filter(p => !p.soloManual))
+        }
+        // Recalcular precios del carrito
+        setCarrito(prev => prev
+            .filter(p => tipo === "automatico" ? !p.soloManual : true)
+            .map(p => ({ ...p, precioCalculado: getPrecio(p, tipo, esAlumno) }))
+        )
+    }
+
+    const handleEsAlumno = (valor) => {
+        setEsAlumno(valor)
+        // Recalcular precios de examenes en el carrito
+        setCarrito(prev => prev.map(p => ({
+            ...p,
+            precioCalculado: getPrecio(p, tipoAuto, valor)
+        })))
+    }
 
     const enviar = async (data) => {
         try {
-            // 🔹 Combino los campos de dirección en uno solo
             const direccion = {
                 calle: data.calle || "",
                 altura: data.altura || "",
                 entrecalles: data.entrecalles || ""
             }
-
             const puntoEncuentro = {
                 calle: data.encuentroCalle || "",
                 altura: data.encuentroAltura || "",
                 entrecalles: data.encuentroEntrecalles || ""
             }
 
-            // 2️⃣ Armo el objeto completo de reserva, excluyendo los campos individuales
-            const { calle, altura, entrecalles, encuentroCalle, encuentroAltura, encuentroEntrecalles, ...otrosCampos } = data;
-            const nuevaReserva = { ...otrosCampos, direccion, puntoEncuentro, turnos };
+            const { calle, altura, entrecalles, encuentroCalle,
+                encuentroAltura, encuentroEntrecalles, ...otrosCampos } = data
 
-            // 2️⃣ Pusheo a Firebase
-            await addDoc(collection(db, "alumnos"), nuevaReserva)
+            const nuevaReserva = { ...otrosCampos, direccion, puntoEncuentro, turnos }
+            const docRef = await addDoc(collection(db, "alumnos"), nuevaReserva)
 
-            // 3️⃣ Actualizo estado local
-            // setReserva(nuevaReserva)
+            await Promise.all(carrito.map(item => {
+                const precioFinal = conRecargo
+                    ? Math.round(item.precioCalculado * (1 + RECARGO_CREDITO))
+                    : item.precioCalculado
+
+                return addDoc(collection(db, "pagos"), {
+                    idAlumno: docRef.id,
+                    nombreAlumno: data.nombre || "",
+                    fecha: Timestamp.now(),
+                    tipo: item.esExamen ? "examen" : "paquete",
+                    paquete: item.esExamen ? null : item.id,
+                    cantidadClases: item.clases,
+                    monto: precioFinal,
+                    montoBase: item.precioCalculado,
+                    medioPago,
+                    tipoAuto,
+                    esAlumno: item.esExamen ? esAlumno : null,
+                    recargoAplicado: conRecargo,
+                })
+            }))
+
             handleReservaConfirmada()
             setRefresh(prev => !prev)
-            console.log("Reserva guardada en Firebase ✅")
-            console.log(nuevaReserva)
+
         } catch (err) {
             console.error("Error guardando reserva:", err)
         }
     }
 
-    const nextStep = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (step < totalSteps) {
-            setStep(step + 1);
-        }
-    };
-
-    const prevStep = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (step > 1) {
-            setStep(step - 1);
-        }
-    };
+    const nextStep = (e) => { e.preventDefault(); e.stopPropagation(); if (step < totalSteps) setStep(step + 1) }
+    const prevStep = (e) => { e.preventDefault(); e.stopPropagation(); if (step > 1) setStep(step - 1) }
 
     return (
         <div className="reserva-overlay">
             <div className="reserva-modal">
-                <button
-                    type="button"
-                    className="reserva-close-btn"
-                    onClick={() => setVentanaReservar?.(false)}
-                    aria-label="Cerrar"
-                >
-                    &times;
-                </button>
+                <button type="button" className="reserva-close-btn" onClick={() => setVentanaReservar?.(false)}>&times;</button>
 
                 <div className="reserva-header">
                     <h2 className="reserva-title">Reservar Turno</h2>
@@ -94,20 +138,26 @@ const ReservarPrueba = ({setVentanaReservar,
                             <span className="step-label">Dirección</span>
                         </div>
                         <div className="step-connector"></div>
-                        <div className={`wizard-step ${step >= 3 ? "active" : ""}`}>
+                        <div className={`wizard-step ${step >= 3 ? "active" : ""} ${step > 3 ? "completed" : ""}`}>
                             <div className="step-number">3</div>
                             <span className="step-label">Contacto</span>
+                        </div>
+                        <div className="step-connector"></div>
+                        <div className={`wizard-step ${step >= 4 ? "active" : ""}`}>
+                            <div className="step-number">4</div>
+                            <span className="step-label">Pago</span>
                         </div>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit(enviar)} className="reserva-form">
                     <div className="wizard-content">
-                        {/* Step 1: Datos personales */}
+
+                        {/* Step 1 */}
                         <div className={`wizard-panel ${step === 1 ? "visible" : ""}`}>
                             <div className="form-group">
                                 <label className="reserva-label">Nombre</label>
-                                <input type="text" {...register("nombre")} className="reserva-input" placeholder="Ingrese su nombre completo" />
+                                <input type="text" {...register("nombre")} className="reserva-input" placeholder="Nombre completo" />
                             </div>
                             <div className="form-group">
                                 <label className="reserva-label">DNI</label>
@@ -115,17 +165,17 @@ const ReservarPrueba = ({setVentanaReservar,
                             </div>
                         </div>
 
-                        {/* Step 2: Direcciones */}
+                        {/* Step 2 */}
                         <div className={`wizard-panel ${step === 2 ? "visible" : ""}`}>
                             <fieldset className="address-fieldset">
-                                <legend className="reserva-legend">Direccion</legend>
+                                <legend className="reserva-legend">Dirección</legend>
                                 <div className="address-grid">
                                     <div className="form-group">
                                         <label className="reserva-label">Calle</label>
                                         <input type="text" {...register("calle")} className="reserva-input" />
                                     </div>
                                     <div className="form-group">
-                                        <label className="reserva-label">Numero</label>
+                                        <label className="reserva-label">Número</label>
                                         <input type="text" {...register("altura")} className="reserva-input" />
                                     </div>
                                     <div className="form-group form-group-full">
@@ -134,7 +184,6 @@ const ReservarPrueba = ({setVentanaReservar,
                                     </div>
                                 </div>
                             </fieldset>
-
                             <fieldset className="address-fieldset">
                                 <legend className="reserva-legend">Punto de encuentro</legend>
                                 <div className="address-grid">
@@ -143,7 +192,7 @@ const ReservarPrueba = ({setVentanaReservar,
                                         <input type="text" {...register("encuentroCalle")} className="reserva-input" />
                                     </div>
                                     <div className="form-group">
-                                        <label className="reserva-label">Numero</label>
+                                        <label className="reserva-label">Número</label>
                                         <input type="text" {...register("encuentroAltura")} className="reserva-input" />
                                     </div>
                                     <div className="form-group form-group-full">
@@ -154,10 +203,10 @@ const ReservarPrueba = ({setVentanaReservar,
                             </fieldset>
                         </div>
 
-                        {/* Step 3: Contacto */}
+                        {/* Step 3 */}
                         <div className={`wizard-panel ${step === 3 ? "visible" : ""}`}>
                             <div className="form-group">
-                                <label className="reserva-label">Telefono</label>
+                                <label className="reserva-label">Teléfono</label>
                                 <input type="text" {...register("telefono")} className="reserva-input" placeholder="Ej: 221-1234567" />
                             </div>
                             <div className="form-group">
@@ -169,13 +218,123 @@ const ReservarPrueba = ({setVentanaReservar,
                                 <textarea {...register("observaciones")} className="reserva-input reserva-textarea" placeholder="Notas adicionales..." rows={3} />
                             </div>
                         </div>
+
+                        {/* Step 4 */}
+                        <div className={`wizard-panel ${step === 4 ? "visible" : ""}`}>
+
+                            {/* Tipo de auto */}
+                            <div className="form-group">
+                                <label className="reserva-label">Tipo de auto</label>
+                                <div className="medio-grid">
+                                    {["manual", "automatico"].map(tipo => (
+                                        <div
+                                            key={tipo}
+                                            className={`medio-btn ${tipoAuto === tipo ? "medio-btn--activo" : ""}`}
+                                            onClick={() => handleTipoAuto(tipo)}
+                                        >
+                                            {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Es alumno (solo visible si hay examen en carrito o siempre para anticipar) */}
+                            <div className="form-group">
+                                <label className="reserva-label">¿Es alumno de la escuela?</label>
+                                <div className="medio-grid">
+                                    <div
+                                        className={`medio-btn ${esAlumno ? "medio-btn--activo" : ""}`}
+                                        onClick={() => handleEsAlumno(true)}
+                                    >
+                                        Sí
+                                    </div>
+                                    <div
+                                        className={`medio-btn ${!esAlumno ? "medio-btn--activo" : ""}`}
+                                        onClick={() => handleEsAlumno(false)}
+                                    >
+                                        No
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Paquetes */}
+                            <div className="form-group">
+                                <label className="reserva-label">Paquetes</label>
+                                <div className="paq-grid">
+                                    {paquetesFiltrados.map(paq => {
+                                        const count = contarPaq(paq.id)
+                                        const precio = getPrecio(paq, tipoAuto, esAlumno)
+                                        return (
+                                            <div
+                                                key={paq.id}
+                                                className={`paq-btn ${count > 0 ? "paq-btn--activo" : ""} ${paq.esExamen ? "paq-btn--examen" : ""}`}
+                                                onClick={() => agregarPaq(paq)}
+                                            >
+                                                {count > 0 && <span className="paq-badge">{count}</span>}
+                                                <span className="paq-nombre">{paq.label}</span>
+                                                {paq.clases > 0 && (
+                                                    <span className="paq-clases">{paq.clases} clase{paq.clases > 1 ? "s" : ""}</span>
+                                                )}
+                                                <span className="paq-precio">${precio.toLocaleString("es-AR")}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Medio de pago */}
+                            <div className="form-group">
+                                <label className="reserva-label">Medio de pago</label>
+                                <div className="medio-grid">
+                                    {MEDIOS_PAGO.map(medio => (
+                                        <div
+                                            key={medio}
+                                            className={`medio-btn ${medioPago === medio ? "medio-btn--activo" : ""}`}
+                                            onClick={() => setMedioPago(medio)}
+                                        >
+                                            {medio.charAt(0).toUpperCase() + medio.slice(1)}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Carrito */}
+                            <div className="pago-carrito">
+                                <label className="reserva-label">Resumen</label>
+                                {carrito.length === 0 ? (
+                                    <p className="pago-carrito-empty">Sin paquetes seleccionados</p>
+                                ) : (
+                                    <>
+                                        {carrito.map((item, i) => (
+                                            <div key={i} className="pago-carrito-item">
+                                                <span>{item.label}</span>
+                                                <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+                                                    <span>${item.precioCalculado.toLocaleString("es-AR")}</span>
+                                                    <button type="button" className="pago-carrito-quitar" onClick={() => quitarItem(i)}>×</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {conRecargo && (
+                                            <div className="pago-carrito-item pago-recargo">
+                                                <span>Recargo crédito (35%)</span>
+                                                <span>+${(totalFinal - totalBase).toLocaleString("es-AR")}</span>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                                <div className="pago-total">
+                                    <span>Total</span>
+                                    <span className="pago-total-monto">${totalFinal.toLocaleString("es-AR")}</span>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div className="reserva-footer">
                         <button type="button" className="reserva-btn reserva-btn-secondary" onClick={() => setVentanaReservar?.(false)}>
                             Cancelar
                         </button>
-
                         <div className="reserva-nav-buttons">
                             {step > 1 && (
                                 <button type="button" className="reserva-btn reserva-btn-outline" onClick={prevStep}>
@@ -194,56 +353,6 @@ const ReservarPrueba = ({setVentanaReservar,
                         </div>
                     </div>
                 </form>
-                {/* <form onSubmit={handleSubmit(enviar)} className='reserva-form'>
-                    <label className='reserva-label'>Nombre</label>
-                    <input type="text" {...register("nombre")} className='reserva-input' />
-
-                    <label className='reserva-label'>DNI</label>
-                    <input type="text"  {...register("dni")} className='reserva-input' />
-
-                    <label className="reserva-label"> Dirección</label>
-                    <div style={{ display: "flex" }}>
-                        <div>
-                            <label className='reserva-label'>Calle</label>
-                            <input type="text" {...register("calle")} className='reserva-input' />
-                        </div>
-                        <div>
-                            <label className='reserva-label'>Número</label>
-                            <input type="text" {...register("altura")} className='reserva-input' />
-                        </div>
-                        <div>
-                            <label className='reserva-label'>Entre calles</label>
-                            <input type="text" {...register("entrecalles")} className='reserva-input' />
-                        </div>
-                    </div>
-
-                    <label className="reserva-label">Punto de encuentro</label>
-                    <div style={{ display: "flex" }}>
-                        <div>
-                            <label className='reserva-label'>Calle</label>
-                            <input type="text" {...register("calle")} className='reserva-input' />
-                        </div>
-                        <div>
-                            <label className='reserva-label'>Número</label>
-                            <input type="text" {...register("altura")} className='reserva-input' />
-                        </div>
-                        <div>
-                            <label className='reserva-label'>Entre calles</label>
-                            <input type="text" {...register("entrecalles")} className='reserva-input' />
-                        </div>
-                    </div>
-
-                    <label className='reserva-label'>Teléfono</label>
-                    <input type="text" {...register("telefono")} className='reserva-input' />
-
-                    <label className='reserva-label'>E-mail</label>
-                    <input type="text" {...register("correo")} className='reserva-input' />
-
-                    <label className='reserva-label'>Observaciones</label>
-                    <input type="text" {...register("observaciones")} className='reserva-input' />
-                    <button type="submit">Guardar turno</button>
-                    <button onClick={() => { setVentanaReservar(false) }}>Cerrar</button>
-                </form> */}
             </div>
         </div>
     )

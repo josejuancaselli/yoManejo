@@ -57,7 +57,9 @@ const Alumnos = () => {
             <div className='inicio-container'>
                 <div className='nav-bar'>
                     <Link className='auto-title' to="/turnos">Ir a Turnos</Link>
+                    <Link className='auto-title' to="/alumnos"> Alumnos </Link>
                     <Link className='auto-title' to="/profesores">Profesores</Link>
+                    <Link className='auto-title' to="/contabilidad"> Contabildad </Link>
                 </div>
             </div>
 
