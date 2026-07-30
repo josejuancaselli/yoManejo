@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { IoIosClose } from "react-icons/io"
 import { FaEdit } from "react-icons/fa"
 import EditarAlumno from "./EditarAlumno"
 import { useFechas } from "../../helpers/useFechas"
+import { collection, onSnapshot, query, where } from "firebase/firestore"
+import { db } from "../../firebase/firebaseConfig"
 
 const ESCALA_COLORES = {
     "#d74545": "Necesita mejorar",
@@ -59,6 +61,14 @@ const FichaAlumno = ({
     const [confirmarBorrado, setConfirmarBorrado] = useState(false)
     const [mostrarEvaluacion, setMostrarEvaluacion] = useState(false)
     const { fechaDesdeDia } = useFechas()
+    const [pagosAlumno, setPagosAlumno] = useState([])
+    const LABEL_PAQUETE = {
+        pack1: "1 clase",
+        pack4: "4 clases",
+        pack8: "8 clases",
+        pack12: "12 clases",
+        examen: "Examen",
+    }
 
     if (!alumnoSeleccionado) return null
 
@@ -75,6 +85,23 @@ const FichaAlumno = ({
 
     const evaluacionActual = alumnoSeleccionado.evaluacion?.actual ?? {}
     const evaluacionHistorica = alumnoSeleccionado.evaluacion?.historial ?? []
+
+    useEffect(() => {
+        if (!alumnoSeleccionado?.id) return
+        const q = query(
+            collection(db, "pagos"),
+            where("idAlumno", "==", alumnoSeleccionado.id)
+        )
+        const unsub = onSnapshot(q, (snapshot) => {
+            const lista = snapshot.docs.map(d => ({
+                id: d.id,
+                ...d.data(),
+                fecha: d.data().fecha?.toDate()
+            }))
+            setPagosAlumno(lista.sort((a, b) => b.fecha - a.fecha))
+        })
+        return () => unsub()
+    }, [alumnoSeleccionado?.id])
 
     const formatTurno = (t) =>
         `${fechaDesdeDia(t.dia, t.mes, t.anio)} ${String(t.dia).padStart(2, "0")}/${String(t.mes + 1).padStart(2, "0")}/${t.anio} — ${t.hora} hs — Coche ${t.zona}`
@@ -237,9 +264,38 @@ const FichaAlumno = ({
                             )}
                         </div>
 
-                        {/* ── Contabilidad (futuro) ── */}
-                        <div className="ficha-seccion ficha-seccion-disabled">
-                            <h4 className="ficha-seccion-titulo">Contabilidad <span className="ficha-proximamente">próximamente</span></h4>
+                        {/* ── Contabilidad ── */}
+                        <div className="ficha-seccion">
+                            <h4 className="ficha-seccion-titulo">
+                                Contabilidad
+                                {pagosAlumno.length > 0 && (
+                                    <span className="ficha-badge-count">{pagosAlumno.length}</span>
+                                )}
+                            </h4>
+                            {pagosAlumno.length === 0 ? (
+                                <p className="ficha-empty">Sin compras registradas</p>
+                            ) : (
+                                <ul className="ficha-turnos-lista">
+                                    {pagosAlumno.map(pago => (
+                                        <li key={pago.id} className="ficha-turno-item ficha-pago-item">
+                                            <div className="ficha-pago-row">
+                                                <div className="ficha-pago-info">
+                                                    <span className="ficha-pago-label">
+                                                        {pago.tipo === "examen" ? "Examen" : LABEL_PAQUETE[pago.paquete] ?? pago.paquete}
+                                                    </span>
+                                                    <span className="ficha-pago-fecha">
+                                                        {pago.fecha?.toLocaleDateString("es-AR")} — {pago.medioPago}
+                                                        {pago.recargoAplicado && " (+35% crédito)"}
+                                                    </span>
+                                                </div>
+                                                <span className="ficha-pago-monto">
+                                                    ${pago.monto?.toLocaleString("es-AR")}
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
 
                         {/* ── Borrar alumno ── */}

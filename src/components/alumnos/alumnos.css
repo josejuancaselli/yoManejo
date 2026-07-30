@@ -526,6 +526,44 @@
     background-color: #b83030;
 }
 
+.ficha-pago-item {
+    background-color: #f0fffe;
+    border-left: 3px solid #54b198;
+    padding: 8px 12px;
+}
+
+.ficha-pago-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.ficha-pago-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ficha-pago-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2d4a44;
+}
+
+.ficha-pago-fecha {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-transform: capitalize;
+}
+
+.ficha-pago-monto {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #54b198;
+    white-space: nowrap;
+}
+
 /* ════════════════════════════════════════
    RESPONSIVE
 ════════════════════════════════════════ */

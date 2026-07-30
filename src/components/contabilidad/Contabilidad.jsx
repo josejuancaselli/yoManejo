@@ -59,19 +59,19 @@ const Contabilidad = () => {
             .sort((a, b) => a.dia - b.dia)
     }, [pagosMes])
 
-    const porPaquete = useMemo(() => {
-        return paquetes.map(paq => {
-            const ventas = pagosMes.filter(p =>
-                paq.id === "suelta" ? p.tipo === "suelta" : p.paquete === paq.id
-            )
-            return {
-                ...paq,
-                cantidad: ventas.length,
-                total: ventas.reduce((acc, p) => acc + (p.monto || 0), 0),
-                ventas
-            }
-        })
-    }, [pagosMes])
+const porPaquete = useMemo(() => {
+    return paquetes.map(paq => {
+        const ventas = pagosMes.filter(p =>
+            paq.id === "examen" ? p.tipo === "examen" : p.paquete === paq.id
+        )
+        return {
+            ...paq,
+            cantidad: ventas.length,
+            total: ventas.reduce((acc, p) => acc + (p.monto || 0), 0),
+            ventas
+        }
+    })
+}, [pagosMes, paquetes])
 
     const aniosDisponibles = useMemo(() => {
         const set = new Set(pagos.map(p => p.fecha?.getFullYear()).filter(Boolean))
@@ -101,6 +101,7 @@ const Contabilidad = () => {
                     <Link className="auto-title" to="/turnos">Turnos</Link>
                     <Link className="auto-title" to="/alumnos">Alumnos</Link>
                     <Link className="auto-title" to="/profesores">Profesores</Link>
+                    <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
                 </div>
             </div>
 

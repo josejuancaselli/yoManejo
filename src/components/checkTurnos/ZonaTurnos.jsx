@@ -84,7 +84,7 @@ const ZonaTurnos = () => {
 
       <div className='inicio-container'>
         <div className='nav-bar'>
-          <Link className='auto-title' to="/turnos">Ir a Turnos</Link>
+          <Link className='auto-title' to="/turnos">Turnos</Link>
           <Link className='auto-title' to="/alumnos">Alumnos</Link>
           <Link className='auto-title' to="/profesores">Profesores</Link>
           <Link className='auto-title' to="/contabilidad"> Contabildad </Link>
@@ -152,11 +152,15 @@ const ZonaTurnos = () => {
 
       {simulacion && (
         <Simulacion
-          setSimulacion={setSimulacion}
-          setTurnoSim={setTurnoSim}
-          turnoSim={turnoSim}
-          setVentanaReservar={setVentanaReservar}
-          modoSimulacion={modoSimulacion}
+       setSimulacion={setSimulacion}
+        setTurnoSim={setTurnoSim}
+        turnoSim={turnoSim}
+        setVentanaReservar={setVentanaReservar}
+        modoSimulacion={modoSimulacion}
+        alumnos={alumnos}
+        agregarTurno={agregarTurno}
+        setAlumnoSeleccionado={setAlumnoSeleccionado}
+        setDataAlumno={setDataAlumno}
         />
       )}
 
