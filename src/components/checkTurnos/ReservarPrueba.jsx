@@ -283,17 +283,17 @@ const ReservarPrueba = ({
                                     <>
                                         {carrito.map((item, i) => (
                                             <div key={i} className="pago-carrito-item">
-                                                <span>{item.label}</span>
+                                                <span >{item.label}</span>
                                                 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                                                    <span>${item.precioCalculado.toLocaleString("es-AR")}</span>
+                                                    <span >${item.precioCalculado.toLocaleString("es-AR")}</span>
                                                     <button type="button" className="pago-carrito-quitar" onClick={() => quitarItem(i)}>×</button>
                                                 </div>
                                             </div>
                                         ))}
                                         {conRecargo && (
                                             <div className="pago-carrito-item pago-recargo">
-                                                <span>Recargo crédito (35%)</span>
-                                                <span>+${(totalFinal - totalBase).toLocaleString("es-AR")}</span>
+                                                <span className="sim-recargo">Recargo crédito (35%)</span>
+                                                <span className="sim-recargo">+${(totalFinal - totalBase).toLocaleString("es-AR")}</span>
                                             </div>
                                         )}
                                     </>

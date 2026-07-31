@@ -42,7 +42,6 @@ const ZonasSection = ({
                     capturarAlumno={capturarAlumno}
                     setAlumnosFiltrados={setAlumnosFiltrados}
                     setRenderBusqueda={setRenderBusqueda}
-                    handleToggleZona={handleToggleZona}
                     setSimulacion={setSimulacion}
                     busquedaAlumno={busquedaAlumno}
                     modoSimulacion={modoSimulacion}
@@ -58,28 +57,43 @@ const ZonasSection = ({
                 )}
             </div>
 
-            <div className="zonas">
-                {zonasSeleccionadas.map((zona) => (
-                    <div key={zona} className="zona-selected">
-                        <Calendario
-                            zona={zona}
-                            turnoSim={turnoSim}
-                            setTurnoSim={setTurnoSim}
-                            simulacion={simulacion}
-                            setSimulacion={setSimulacion}
-                            alumnos={alumnos}
-                            reserva={reserva}
-                            setReserva={setReserva}
-                            setAlumnos={setAlumnos}
-                            setVentanaReservar={setVentanaReservar}
-                            horariosMañana={horariosMañana}
-                            horariosTarde={horariosTarde}
-                            obtenerHorarios={obtenerHorarios}
-                            horarios={horarios}
-                        />
+            <div style={{display:"flex", marginTop:"30px"}}>
+                <div className="zona-buttons-wrapper">
+                    <h2>Zonas</h2>
+                    <div className="zona-buttons">
+                        <button className="zona-btn" onClick={() => handleToggleZona("1")}>1</button>
+                        <button className="zona-btn" onClick={() => handleToggleZona("2")}>2</button>
+                        <button className="zona-btn" onClick={() => handleToggleZona("3")}>3</button>
+                        <button className="zona-btn" onClick={() => handleToggleZona("automatico")}>A</button>                        
                     </div>
-                ))}
+                </div>
+
+                <div className="zonas">
+                    {zonasSeleccionadas.map((zona) => (
+                        <div key={zona} className="zona-selected">
+                            <Calendario
+                                zona={zona}
+                                turnoSim={turnoSim}
+                                setTurnoSim={setTurnoSim}
+                                simulacion={simulacion}
+                                setSimulacion={setSimulacion}
+                                alumnos={alumnos}
+                                reserva={reserva}
+                                setReserva={setReserva}
+                                setAlumnos={setAlumnos}
+                                setVentanaReservar={setVentanaReservar}
+                                horariosMañana={horariosMañana}
+                                horariosTarde={horariosTarde}
+                                obtenerHorarios={obtenerHorarios}
+                                horarios={horarios}
+                            />
+                        </div>
+                    ))}
+                </div>
+
             </div>
+
+
         </div>
     )
 }

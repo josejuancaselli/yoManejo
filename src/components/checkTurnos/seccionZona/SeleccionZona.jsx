@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoIosClose } from 'react-icons/io'
 
-const SeleccionZona = ({ 
+const SeleccionZona = ({
     busquedaAlumno,
     handleBusqueda,
     renderBusqueda,
@@ -9,8 +9,8 @@ const SeleccionZona = ({
     capturarAlumno,
     setAlumnosFiltrados,
     setRenderBusqueda,
-    handleToggleZona,
-    setSimulacion,    
+
+    setSimulacion,
     setModoSimulacion
 }) => {
 
@@ -31,19 +31,11 @@ const SeleccionZona = ({
                     </div>
                 )}
             </div>
-            <div className="zona-buttons-wrapper">
-                <h2>Zonas</h2>
-                <div className="zona-buttons">
-                    <button className="zona-btn" onClick={() => handleToggleZona("1")}>1</button>
-                    <button className="zona-btn" onClick={() => handleToggleZona("2")}>2</button>
-                    <button className="zona-btn" onClick={() => handleToggleZona("3")}>3</button>
-                    <button className="zona-btn" onClick={() => handleToggleZona("automatico")}>A</button>
-                    <button onClick={() => { setSimulacion(true); setModoSimulacion("preview"); }} 
-                    className="zona-btn" style={{ borderRadius: "10px", backgroundColor: "#333433" }}>
-                        +
-                    </button>
-                </div>
-            </div>
+
+            <button onClick={() => { setSimulacion(true); setModoSimulacion("preview"); }} className="zona-btn" >
+                +
+            </button>
+
         </>
     )
 }
