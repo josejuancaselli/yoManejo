@@ -98,40 +98,38 @@ const Simulacion = ({
         ? alumnos.filter(a => normalizar(a.nombre).includes(normalizar(busqueda)))
         : []
 
-    const handleConfirmarAlumnoExistente = async () => {
-        if (!alumnoElegido) return
+const handleConfirmarAlumnoExistente = async () => {
+    if (!alumnoElegido) return
 
-        // Agregar turnos
-        await agregarTurno(alumnoElegido.id)
+    setAlumnoSeleccionado(alumnoElegido)
+    await agregarTurno(alumnoElegido.id)
 
-        // Registrar pagos si hay carrito
-        if (carrito.length > 0) {
-            await Promise.all(carrito.map(item => {
-                const precioFinal = conRecargo
-                    ? Math.round(item.precioCalculado * (1 + RECARGO_CREDITO))
-                    : item.precioCalculado
+    if (carrito.length > 0) {
+        await Promise.all(carrito.map(item => {
+            const precioFinal = conRecargo
+                ? Math.round(item.precioCalculado * (1 + RECARGO_CREDITO))
+                : item.precioCalculado
 
-                return addDoc(collection(db, "pagos"), {
-                    idAlumno: alumnoElegido.id,
-                    nombreAlumno: alumnoElegido.nombre,
-                    fecha: Timestamp.now(),
-                    tipo: item.esExamen ? "examen" : "paquete",
-                    paquete: item.esExamen ? null : item.id,
-                    cantidadClases: item.clases,
-                    monto: precioFinal,
-                    montoBase: item.precioCalculado,
-                    medioPago,
-                    tipoAuto,
-                    esAlumno: item.esExamen ? true : null,
-                    recargoAplicado: conRecargo,
-                })
-            }))
-        }
-
-        setAlumnoSeleccionado(alumnoElegido)
-        setDataAlumno(true)
-        setSimulacion(false)
+            return addDoc(collection(db, "pagos"), {
+                idAlumno: alumnoElegido.id,
+                nombreAlumno: alumnoElegido.nombre,
+                fecha: Timestamp.now(),
+                tipo: item.esExamen ? "examen" : "paquete",
+                paquete: item.esExamen ? null : item.id,
+                cantidadClases: item.clases,
+                monto: precioFinal,
+                montoBase: item.precioCalculado,
+                medioPago,
+                tipoAuto,
+                esAlumno: item.esExamen ? true : null,
+                recargoAplicado: conRecargo,
+            })
+        }))
     }
+
+    setDataAlumno(true)
+    setSimulacion(false)
+}
 
     const cerrar = () => {
         setSimulacion(false)

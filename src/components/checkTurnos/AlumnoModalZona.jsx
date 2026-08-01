@@ -84,20 +84,20 @@ const AlumnoModalZona = ({
 
             {/* Botones */}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {/* <button
+                <button
                     className="btn-guardar"
                     onClick={() => { editarAlumno(alumnoSeleccionado.id); setDataAlumno(false); setEditarTurnos(null) }}
                 >
                     Guardar cambios
-                </button> */}
-                <button
+                </button>
+                {/* <button
                     className="btn-guardar"
                     onClick={() => agregarTurno(alumnoSeleccionado.id)}
                     disabled={turnoSim.length === 0}
                     title={turnoSim.length === 0 ? "Seleccioná turnos en el calendario primero" : `Confirmar ${turnoSim.length} turno/s`}
                 >
                     Agregar Turnos
-                </button>
+                </button> */}
                 <button
                     className="btn-cerrar"
                     onClick={handleImprimir}

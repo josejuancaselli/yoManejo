@@ -16,8 +16,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/turnos" element={<ZonaTurnos />} />
+          {/* <Route path="/" element={<Inicio />} /> */}
+          <Route path="/" element={<ZonaTurnos />} />
           <Route path="/alumnos" element={<Alumnos />} />
           <Route path="/profesores" element={<Profesores />} />
           <Route path="/contabilidad" element={<Contabilidad />} />

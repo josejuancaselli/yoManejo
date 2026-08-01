@@ -156,3 +156,23 @@
 .admin-btn-guardado {
     background: #2bcb2b !important;
 }
+
+.admin-paq-precios {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.admin-precio-fila {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-precio-tipo {
+    font-size: 0.78rem;
+    color: #888;
+    min-width: 160px;
+}
