@@ -24,13 +24,13 @@ const PERIODOS = [
 
 const Contabilidad = () => {
     const [pagos, setPagos] = useState([])
+    const [gastos, setGastos] = useState([])
     const [mes, setMes] = useState(hoy.getMonth())
     const [anio, setAnio] = useState(hoy.getFullYear())
     const [paqueteAbierto, setPaqueteAbierto] = useState(null)
     const [confirmarBorrado, setConfirmarBorrado] = useState(null)
     const { paquetes, cargando } = usePaquetes()
 
-    // Panel período
     const [periodo, setPeriodo] = useState("6m")
     const [customDesde, setCustomDesde] = useState({ mes: 0, anio: hoy.getFullYear() })
     const [customHasta, setCustomHasta] = useState({ mes: hoy.getMonth(), anio: hoy.getFullYear() })
@@ -47,6 +47,18 @@ const Contabilidad = () => {
         return () => unsub()
     }, [])
 
+    useEffect(() => {
+        const unsub = onSnapshot(collection(db, "gastos"), (snapshot) => {
+            const lista = snapshot.docs.map(d => ({
+                id: d.id,
+                ...d.data(),
+                fecha: d.data().fecha?.toDate()
+            }))
+            setGastos(lista)
+        })
+        return () => unsub()
+    }, [])
+
     // ── Mes actual ──
     const pagosMes = useMemo(() =>
         pagos.filter(p =>
@@ -59,6 +71,30 @@ const Contabilidad = () => {
         pagosMes.reduce((acc, p) => acc + (p.monto || 0), 0)
         , [pagosMes])
 
+    const gastosMes = useMemo(() =>
+        gastos.filter(g =>
+            g.fecha &&
+            g.fecha.getMonth() === mes &&
+            g.fecha.getFullYear() === anio
+        ), [gastos, mes, anio])
+
+    const totalGastosMes = useMemo(() =>
+        gastosMes.reduce((acc, g) => acc + (g.monto || 0), 0)
+        , [gastosMes])
+
+    const netoMes = totalMes - totalGastosMes
+
+    const porTipoGastoMes = useMemo(() => {
+        const mapa = {}
+        gastosMes.forEach(g => {
+            if (!mapa[g.nombreTipo]) mapa[g.nombreTipo] = 0
+            mapa[g.nombreTipo] += g.monto || 0
+        })
+        return Object.entries(mapa)
+            .map(([nombre, monto]) => ({ nombre, monto }))
+            .sort((a, b) => b.monto - a.monto)
+    }, [gastosMes])
+
     const porDia = useMemo(() => {
         const mapa = {}
         pagosMes.forEach(p => {
@@ -70,19 +106,19 @@ const Contabilidad = () => {
             .sort((a, b) => a.dia - b.dia)
     }, [pagosMes])
 
-const porPaquete = useMemo(() => {
-    return paquetes.map(paq => {
-        const ventas = pagosMes.filter(p =>
-            paq.id === "examen" ? p.tipo === "examen" : p.paquete === paq.id
-        )
-        return {
-            ...paq,
-            cantidad: ventas.length,
-            total: ventas.reduce((acc, p) => acc + (p.monto || 0), 0),
-            ventas
-        }
-    })
-}, [pagosMes, paquetes])
+    const porPaquete = useMemo(() => {
+        return paquetes.map(paq => {
+            const ventas = pagosMes.filter(p =>
+                paq.id === "examen" ? p.tipo === "examen" : p.paquete === paq.id
+            )
+            return {
+                ...paq,
+                cantidad: ventas.length,
+                total: ventas.reduce((acc, p) => acc + (p.monto || 0), 0),
+                ventas
+            }
+        })
+    }, [pagosMes, paquetes])
 
     const aniosDisponibles = useMemo(() => {
         const set = new Set(pagos.map(p => p.fecha?.getFullYear()).filter(Boolean))
@@ -127,13 +163,22 @@ const porPaquete = useMemo(() => {
             return fechaMes >= rangoFechas.desde && fechaMes <= rangoFechas.hasta
         }), [pagos, rangoFechas])
 
+    const gastosPeriodo = useMemo(() =>
+        gastos.filter(g => {
+            if (!g.fecha) return false
+            const fechaMes = new Date(g.fecha.getFullYear(), g.fecha.getMonth(), 1)
+            return fechaMes >= rangoFechas.desde && fechaMes <= rangoFechas.hasta
+        }), [gastos, rangoFechas])
+
     const totalPeriodo = useMemo(() =>
         pagosPeriodo.reduce((acc, p) => acc + (p.monto || 0), 0)
         , [pagosPeriodo])
 
-    const promedioPeriodo = useMemo(() =>
-        Math.round(totalPeriodo / rangoFechas.meses)
-        , [totalPeriodo, rangoFechas])
+    const totalGastosPeriodo = useMemo(() =>
+        gastosPeriodo.reduce((acc, g) => acc + (g.monto || 0), 0)
+        , [gastosPeriodo])
+
+    const netoPeriodo = totalPeriodo - totalGastosPeriodo
 
     const mediosPago = useMemo(() => {
         const medios = { efectivo: 0, transferencia: 0, credito: 0 }
@@ -231,13 +276,46 @@ const porPaquete = useMemo(() => {
 
                 {/* ── Columna izquierda ── */}
                 <div className="cont-col">
+
+                    {/* Resumen del mes */}
                     <div className="cont-card">
-                        <p className="cont-card-label">Total ingresado</p>
-                        <p className="cont-card-label">{MESES[mes]} {anio}</p>
-                        <p className="cont-total">${totalMes.toLocaleString("es-AR")}</p>
+                        <p className="cont-card-label">Resumen — {MESES[mes]} {anio}</p>
+
+                        <div className="cont-resumen-fila">
+                            <span className="cont-resumen-label">Ingresos</span>
+                            <span className="cont-total cont-total--ing">${totalMes.toLocaleString("es-AR")}</span>
+                        </div>
                         <p className="cont-card-sub">{pagosMes.length} transacción{pagosMes.length !== 1 ? "es" : ""}</p>
+
+                        <div className="cont-resumen-fila" style={{ marginTop: "8px" }}>
+                            <span className="cont-resumen-label">Gastos</span>
+                            <span className="cont-total cont-total--gasto">${totalGastosMes.toLocaleString("es-AR")}</span>
+                        </div>
+
+                        {porTipoGastoMes.length > 0 && (
+                            <div className="cont-gastos-desglose">
+                                {porTipoGastoMes.map(({ nombre, monto }) => (
+                                    <div key={nombre} className="cont-gasto-tipo-row">
+                                        <span className="cont-gasto-tipo-nombre">{nombre}</span>
+                                        <span className="cont-gasto-tipo-monto">${monto.toLocaleString("es-AR")}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {gastosMes.length === 0 && (
+                            <p className="cont-empty">Sin gastos registrados este mes</p>
+                        )}
+
+                        <div className="cont-neto">
+                            <span className="cont-neto-label">Resultado neto</span>
+                            <span className={`cont-neto-valor ${netoMes >= 0 ? "cont-neto--positivo" : "cont-neto--negativo"}`}>
+                                ${netoMes.toLocaleString("es-AR")}
+                            </span>
+                        </div>
                     </div>
 
+                    {/* Paquetes vendidos */}
                     <div className="cont-card">
                         <p className="cont-card-label">Paquetes vendidos</p>
                         <div className="cont-paquetes">
@@ -261,11 +339,23 @@ const porPaquete = useMemo(() => {
 
                                     {paqueteAbierto === paq.id && (
                                         <div className="cont-paq-detalle">
+
                                             {paq.ventas.map((venta, i) => (
                                                 <div key={venta.id}>
+                                                    {console.log(venta)}
                                                     <div className="cont-venta-row">
                                                         <div className="cont-venta-info">
                                                             <span className="cont-venta-nombre">{venta.nombreAlumno}</span>
+                                                            {venta.dni && (
+                                                                <span className="cont-venta-fecha">DNI: {venta.dni}</span>
+                                                            )}
+                                                            {venta.direccion?.calle && (
+                                                                <span className="cont-venta-fecha">
+                                                                    {venta.direccion.calle}
+                                                                    {venta.direccion.altura ? ` ${venta.direccion.altura}` : ""}
+                                                                    {venta.direccion.entrecalles ? ` (${venta.direccion.entrecalles})` : ""}
+                                                                </span>
+                                                            )}
                                                             <span className="cont-venta-fecha">
                                                                 {venta.fecha.toLocaleDateString("es-AR")} — {venta.medioPago}
                                                             </span>
@@ -340,7 +430,6 @@ const porPaquete = useMemo(() => {
                     </div>
                 </div>
 
-                {/* Selectores personalizados */}
                 {periodo === "custom" && (
                     <div className="cont-custom-rango">
                         <span className="cont-custom-label">Desde</span>
@@ -365,15 +454,23 @@ const porPaquete = useMemo(() => {
                     {/* Métricas principales */}
                     <div className="cont-panel-metricas">
                         <div className="cont-metrica">
-                            <p className="cont-card-label">Total — {labelPeriodo()}</p>
+                            <p className="cont-card-label">Ingresos — {labelPeriodo()}</p>
                             <p className="cont-total">${totalPeriodo.toLocaleString("es-AR")}</p>
                             <p className="cont-card-sub">{pagosPeriodo.length} transacciones</p>
                         </div>
-                        {/* <div className="cont-metrica">
-                            <p className="cont-card-label">Promedio mensual</p>
-                            <p className="cont-total cont-total--sm">${promedioPeriodo.toLocaleString("es-AR")}</p>
-                            <p className="cont-card-sub">{rangoFechas.meses} mes{rangoFechas.meses !== 1 ? "es" : ""}</p>
-                        </div> */}
+                        <div className="cont-metrica">
+                            <p className="cont-card-label">Gastos — {labelPeriodo()}</p>
+                            <p className="cont-total cont-total--gasto cont-total--sm">
+                                ${totalGastosPeriodo.toLocaleString("es-AR")}
+                            </p>
+                            <p className="cont-card-sub">{gastosPeriodo.length} registro{gastosPeriodo.length !== 1 ? "s" : ""}</p>
+                        </div>
+                        <div className="cont-metrica">
+                            <p className="cont-card-label">Neto — {labelPeriodo()}</p>
+                            <p className={`cont-total cont-total--sm ${netoPeriodo >= 0 ? "cont-neto--positivo" : "cont-neto--negativo"}`}>
+                                ${netoPeriodo.toLocaleString("es-AR")}
+                            </p>
+                        </div>
                     </div>
 
                     {/* Paquetes del período */}
@@ -397,7 +494,36 @@ const porPaquete = useMemo(() => {
                             ))}
                         </div>
 
-
+                        {dataTortaPaquetes.length > 0 && (
+                            <div className="cont-torta-wrapper">
+                                <ResponsiveContainer width="100%" height={200}>
+                                    <PieChart>
+                                        <Pie
+                                            data={dataTortaPaquetes}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={50}
+                                            outerRadius={80}
+                                            paddingAngle={3}
+                                            dataKey="value"
+                                        >
+                                            {dataTortaPaquetes.map((_, i) => (
+                                                <Cell key={i} fill={COLORES_TORTA[i % COLORES_TORTA.length]} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip
+                                            formatter={(value, name) => [`$${value.toLocaleString("es-AR")}`, name]}
+                                            contentStyle={{ borderRadius: "8px", fontSize: "0.8rem" }}
+                                        />
+                                        <Legend
+                                            iconType="circle"
+                                            iconSize={8}
+                                            formatter={(value) => <span style={{ fontSize: "0.75rem", color: "#555" }}>{value}</span>}
+                                        />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                        )}
                     </div>
 
                     {/* Medios de pago */}
@@ -417,70 +543,40 @@ const porPaquete = useMemo(() => {
                                 </div>
                             ))}
                         </div>
-                        
-                            {dataTortaPaquetes.length > 0 && (
-                                <div className="cont-torta-wrapper">
-                                    <ResponsiveContainer width="100%" height={200}>
-                                        <PieChart>
-                                            <Pie
-                                                data={dataTortaPaquetes}
-                                                cx="50%"
-                                                cy="50%"
-                                                innerRadius={50}
-                                                outerRadius={80}
-                                                paddingAngle={3}
-                                                dataKey="value"
-                                            >
-                                                {dataTortaPaquetes.map((_, i) => (
-                                                    <Cell key={i} fill={COLORES_TORTA[i % COLORES_TORTA.length]} />
-                                                ))}
-                                            </Pie>
-                                            <Tooltip
-                                                formatter={(value, name) => [`$${value.toLocaleString("es-AR")}`, name]}
-                                                contentStyle={{ borderRadius: "8px", fontSize: "0.8rem" }}
-                                            />
-                                            <Legend
-                                                iconType="circle"
-                                                iconSize={8}
-                                                formatter={(value) => <span style={{ fontSize: "0.75rem", color: "#555" }}>{value}</span>}
-                                            />
-                                        </PieChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            )}
 
-                            {dataTortaMedios.length > 0 && (
-                                <div className="cont-torta-wrapper">
-                                    <ResponsiveContainer width="100%" height={200}>
-                                        <PieChart>
-                                            <Pie
-                                                data={dataTortaMedios}
-                                                cx="50%"
-                                                cy="50%"
-                                                innerRadius={50}
-                                                outerRadius={80}
-                                                paddingAngle={3}
-                                                dataKey="value"
-                                            >
-                                                {dataTortaMedios.map((_, i) => (
-                                                    <Cell key={i} fill={COLORES_TORTA[i % COLORES_TORTA.length]} />
-                                                ))}
-                                            </Pie>
-                                            <Tooltip
-                                                formatter={(value, name) => [`$${value.toLocaleString("es-AR")}`, name]}
-                                                contentStyle={{ borderRadius: "8px", fontSize: "0.8rem" }}
-                                            />
-                                            <Legend
-                                                iconType="circle"
-                                                iconSize={8}
-                                                formatter={(value) => <span style={{ fontSize: "0.75rem", color: "#555" }}>{value}</span>}
-                                            />
-                                        </PieChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            )}
-                        
+                        {dataTortaMedios.length > 0 && (
+                            <div className="cont-torta-wrapper">
+                                <ResponsiveContainer width="100%" height={200}>
+                                    <PieChart>
+                                        <Pie
+                                            data={dataTortaMedios}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={50}
+                                            outerRadius={80}
+                                            paddingAngle={3}
+                                            dataKey="value"
+                                        >
+                                            {dataTortaMedios.map((_, i) => (
+                                                <Cell key={i} fill={COLORES_TORTA[i % COLORES_TORTA.length]} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip
+                                            formatter={(value, name) => [`$${value.toLocaleString("es-AR")}`, name]}
+                                            contentStyle={{ borderRadius: "8px", fontSize: "0.8rem" }}
+                                        />
+                                        <Legend
+                                            iconType="circle"
+                                            iconSize={8}
+                                            formatter={(value) => <span style={{ fontSize: "0.75rem", color: "#555" }}>{value}</span>}
+                                        />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                        )}
                     </div>
+
+
 
                 </div>
             </div>

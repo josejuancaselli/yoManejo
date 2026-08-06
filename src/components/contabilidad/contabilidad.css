@@ -453,6 +453,87 @@
     padding-top: 12px;
 }
 
+/* ── Resumen con gastos ── */
+.cont-resumen-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.cont-resumen-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888;
+}
+
+.cont-total--ing {
+    color: #2d4a44;
+}
+
+.cont-total--gasto {
+    color: #d74545;
+    font-size: 1.8rem;
+}
+
+.cont-gastos-desglose {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 0 4px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.cont-gasto-tipo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #555;
+}
+
+.cont-gasto-tipo-nombre {
+    color: #555;
+}
+
+.cont-gasto-tipo-monto {
+    font-weight: 600;
+    color: #d74545;
+}
+
+.cont-neto {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 12px;
+    border-top: 2px solid rgba(0,0,0,0.08);
+    margin-top: 4px;
+}
+
+.cont-neto-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888;
+}
+
+.cont-neto-valor {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.cont-neto--positivo {
+    color: #54b198;
+}
+
+.cont-neto--negativo {
+    color: #d74545;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
     .cont-content {

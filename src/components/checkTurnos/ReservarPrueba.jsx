@@ -22,7 +22,7 @@ const ReservarPrueba = ({
     const [carrito, setCarrito] = useState([])
     const [medioPago, setMedioPago] = useState("efectivo")
     const [tipoAuto, setTipoAuto] = useState("manual")
-    
+
 
     if (cargando) return null
 
@@ -90,6 +90,8 @@ const ReservarPrueba = ({
                     idAlumno: docRef.id,
                     nombreAlumno: data.nombre || "",
                     fecha: Timestamp.now(),
+                    dni: data.dni || "",                    // 👈
+                    direccion: direccion,                   // 👈 ya existe como variable
                     tipo: item.esExamen ? "examen" : "paquete",
                     paquete: item.esExamen ? null : item.id,
                     cantidadClases: item.clases,
@@ -231,7 +233,7 @@ const ReservarPrueba = ({
                                 </div>
                             </div>
 
-                            
+
 
                             {/* Paquetes */}
                             <div className="form-group">
