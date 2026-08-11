@@ -52,7 +52,11 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     {activeHora === hora && ventanaDireccion && (
                                         <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
                                             <p>{ventanaDireccion.nombre}</p>
-                                            <p>{ventanaDireccion.direccion["calle"]} {ventanaDireccion.direccion["entrecalles"]}</p>
+                                            {ventanaDireccion.puntoEncuentro?.calle && ventanaDireccion.puntoEncuentro?.entrecalles ? (
+                                                <p>{ventanaDireccion.puntoEncuentro.calle} {ventanaDireccion.puntoEncuentro.entrecalles}</p>
+                                            ) : (
+                                                <p>{ventanaDireccion.direccion?.calle} {ventanaDireccion.direccion?.entrecalles}</p>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -83,7 +87,7 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     <button
                                         key={hora}
                                         className="horario-btn"
-                                        onClick={() => toggleHora(dia, hora, fecha.mes,fecha.anio, zona)}
+                                        onClick={() => toggleHora(dia, hora, fecha.mes, fecha.anio, zona)}
                                         onMouseEnter={() => {
                                             if (alumnoCorrespondiente) {
                                                 setActiveHora(hora);
@@ -103,10 +107,13 @@ const BotonesHora = ({ ventanaRef, zona, activeHora, setActiveHora, mañanaTarde
                                     </button>
 
                                     {activeHora === hora && ventanaDireccion && (
-                                        <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()} >
-                                            <p>{ventanaDireccion.nombre}</p>                                            
-                                            <p>{ventanaDireccion.direccion?.["calle"]} {ventanaDireccion.direccion?.["entrecalles"]}</p>
-
+                                        <div className="ventana-reservado-modal" onClick={(e) => e.stopPropagation()}>
+                                            <p>{ventanaDireccion.nombre}</p>
+                                            {ventanaDireccion.puntoEncuentro?.calle && ventanaDireccion.puntoEncuentro?.entrecalles ? (
+                                                <p>{ventanaDireccion.puntoEncuentro.calle} {ventanaDireccion.puntoEncuentro.entrecalles}</p>
+                                            ) : (
+                                                <p>{ventanaDireccion.direccion?.calle} {ventanaDireccion.direccion?.entrecalles}</p>
+                                            )}
                                         </div>
                                     )}
                                 </div>

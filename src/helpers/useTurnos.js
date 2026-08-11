@@ -57,6 +57,8 @@ export const useTurnos = ({
             setRefresh(prev => !prev);
             setTurnoSim([]);
 
+            console.log(nuevosTurnos)
+
         } catch (error) {
             console.error("Error agregando turno:", error);
         }
