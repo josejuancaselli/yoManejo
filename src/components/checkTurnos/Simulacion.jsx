@@ -102,7 +102,7 @@ const Simulacion = ({
         if (!alumnoElegido) return
 
         setAlumnoSeleccionado(alumnoElegido)
-        await agregarTurno(alumnoElegido.id)
+        // await agregarTurno(alumnoElegido.id)
 
         if (carrito.length > 0) {
             await Promise.all(carrito.map(item => {
@@ -131,6 +131,7 @@ const Simulacion = ({
 
         setDataAlumno(true)
         setSimulacion(false)
+        setTurnoSim([])
     }
 
     const cerrar = () => {
@@ -323,7 +324,7 @@ const Simulacion = ({
                         </div>
 
                         <button className="sim-btn-confirmar" onClick={handleConfirmarAlumnoExistente}>
-                            Confirmar y agregar turnos
+                            Confirmar y agregar paquetes
                         </button>
                         <button className="sim-btn-volver" onClick={() => { setPantalla("buscar"); setCarrito([]) }}>
                             ← Volver
