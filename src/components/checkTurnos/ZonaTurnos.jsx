@@ -83,11 +83,12 @@ const ZonaTurnos = () => {
     <div className="zona-turnos-container">
 
       <div className='inicio-container'>
-        <div className='nav-bar'>
-          <Link className='auto-title' to="/">Turnos</Link>
-          <Link className='auto-title' to="/alumnos">Alumnos</Link>
-          <Link className='auto-title' to="/profesores">Profesores</Link>
-          <Link className='auto-title' to="/contabilidad"> Contabildad </Link>
+        <div className='nav-bar'>          
+          <Link className="auto-title" to="/">Turnos</Link>
+          <Link className="auto-title" to="/alumnos">Alumnos</Link>
+          <Link className="auto-title" to="/profesores">Profesores</Link>
+          <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
+          <Link className='auto-title' to="/admin"> Administración </Link>
         </div>
       </div>
 
@@ -152,15 +153,15 @@ const ZonaTurnos = () => {
 
       {simulacion && (
         <Simulacion
-       setSimulacion={setSimulacion}
-        setTurnoSim={setTurnoSim}
-        turnoSim={turnoSim}
-        setVentanaReservar={setVentanaReservar}
-        modoSimulacion={modoSimulacion}
-        alumnos={alumnos}
-        agregarTurno={agregarTurno}
-        setAlumnoSeleccionado={setAlumnoSeleccionado}
-        setDataAlumno={setDataAlumno}
+          setSimulacion={setSimulacion}
+          setTurnoSim={setTurnoSim}
+          turnoSim={turnoSim}
+          setVentanaReservar={setVentanaReservar}
+          modoSimulacion={modoSimulacion}
+          alumnos={alumnos}
+          agregarTurno={agregarTurno}
+          setAlumnoSeleccionado={setAlumnoSeleccionado}
+          setDataAlumno={setDataAlumno}
         />
       )}
 

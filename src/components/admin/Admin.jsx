@@ -5,12 +5,16 @@ import { collection, onSnapshot, addDoc, deleteDoc, doc, Timestamp } from "fireb
 import { db } from "../../firebase/firebaseConfig"
 import { FaRegTrashAlt } from "react-icons/fa"
 import { IoIosClose } from "react-icons/io"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase/firebaseConfig"
 import "./admin.css"
 
 const MESES = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ]
+
+const cerrarSesion = () => signOut(auth)
 
 const hoy = new Date()
 
@@ -65,11 +69,11 @@ const Admin = () => {
                 g.fecha.getFullYear() === anioGastos
             )
             .sort((a, b) => b.fecha - a.fecha)
-    , [gastos, mesGastos, anioGastos])
+        , [gastos, mesGastos, anioGastos])
 
     const totalGastosMes = useMemo(() =>
         gastosMes.reduce((acc, g) => acc + (g.monto || 0), 0)
-    , [gastosMes])
+        , [gastosMes])
 
     const gastosPorTipo = useMemo(() => {
         const mapa = {}
@@ -164,10 +168,12 @@ const Admin = () => {
         <div className="admin-wrapper">
             <div className="inicio-container">
                 <div className="nav-bar">
+                    <button className="btn-cerrar-sesion" onClick={cerrarSesion}>Cerrar sesión</button>
                     <Link className="auto-title" to="/">Turnos</Link>
                     <Link className="auto-title" to="/alumnos">Alumnos</Link>
                     <Link className="auto-title" to="/profesores">Profesores</Link>
                     <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
+                    <Link className='auto-title' to="/admin"> Administración </Link>                    
                 </div>
             </div>
 

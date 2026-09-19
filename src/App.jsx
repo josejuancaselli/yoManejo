@@ -6,7 +6,7 @@ import Alumnos from "./components/alumnos/Alumnos"
 import Profesores from "./components/profesores/Profesores"
 import Contabilidad from "./components/contabilidad/Contabilidad"
 import Admin from "./components/admin/Admin"
-
+import RutaProtegida from "./components/auth/RutaProtegida"
 
 
 function App() {
@@ -16,12 +16,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Inicio />} /> */}
           <Route path="/" element={<ZonaTurnos />} />
           <Route path="/alumnos" element={<Alumnos />} />
           <Route path="/profesores" element={<Profesores />} />
-          <Route path="/contabilidad" element={<Contabilidad />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/contabilidad" element={<RutaProtegida><Contabilidad /></RutaProtegida>} />
+          <Route path="/admin" element={<RutaProtegida><Admin /></RutaProtegida>} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1834,6 +1834,29 @@ input[type=number]::-webkit-outer-spin-button {
   gap: 6px;
 }
 
+.nav-bar .btn-cerrar-sesion {
+    background: #222;
+    margin-left: 8px;
+    margin-right: auto;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: unset;
+}
+
+.nav-bar .btn-cerrar-sesion:hover {
+    /* background: rgba(215, 69, 69, 0.8); */
+    border-color: transparent;
+}
+
 @media (min-width: 360px) and (max-width: 500px) {
   .zona-turnos-container {
     width: 100vw;

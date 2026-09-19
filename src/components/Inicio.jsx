@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom'
 const Inicio = () => {
 
   return (
-    <div style={{margin:"24px"}}>
+    <div style={{ margin: "24px" }}>
       <div className='inicio-container'>
-        <div className='nav-bar'>
-          <Link className='auto-title' to="/">Turnos</Link>
-          <Link className='auto-title' to="/alumnos">Alumnos</Link>
-          <Link className='auto-title' to="/profesores">Profesores</Link>
-          <Link className='auto-title' to="/contabilidad">Contabilidad</Link>
+        <div className='nav-bar'>          
+          <Link className="auto-title" to="/">Turnos</Link>
+          <Link className="auto-title" to="/alumnos">Alumnos</Link>
+          <Link className="auto-title" to="/profesores">Profesores</Link>
+          <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
+          <Link className='auto-title' to="/admin"> Administración </Link>
         </div>
       </div>
     </div>

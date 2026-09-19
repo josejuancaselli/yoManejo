@@ -55,11 +55,12 @@ const Alumnos = () => {
     return (
         <div className='alumnos-wrapper'>
             <div className='inicio-container'>
-                <div className='nav-bar'>
-                    <Link className='auto-title' to="/">Turnos</Link>
-                    <Link className='auto-title' to="/alumnos"> Alumnos </Link>
-                    <Link className='auto-title' to="/profesores">Profesores</Link>
-                    <Link className='auto-title' to="/contabilidad"> Contabildad </Link>
+                <div className='nav-bar'>                    
+                    <Link className="auto-title" to="/">Turnos</Link>
+                    <Link className="auto-title" to="/alumnos">Alumnos</Link>
+                    <Link className="auto-title" to="/profesores">Profesores</Link>
+                    <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
+                    <Link className='auto-title' to="/admin"> Administración </Link>       
                 </div>
             </div>
 

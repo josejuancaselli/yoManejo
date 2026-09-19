@@ -1,11 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
   console.log("Project ID:", import.meta.env.VITE_FIREBASE_PROJECT_ID)
 console.log("Bucket:", import.meta.env.VITE_FIREBASE_STORAGE_BUCKET)
 const firebaseConfig = {
-
-
 
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -17,9 +16,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 export const db = getFirestore(app);
-
+export const auth = getAuth(app);
 
 
 

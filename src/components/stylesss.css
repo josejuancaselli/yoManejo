@@ -2398,6 +2398,26 @@ input[type=number]::-webkit-outer-spin-button {
   gap: 6px;
 }
 
+.btn-cerrar-sesion {
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-cerrar-sesion:hover {
+    background: rgba(215, 69, 69, 0.8);
+    border-color: transparent;
+}
+
 /* Para pantallas desde 360px hasta 500px */
 @media (min-width: 360px) and (max-width: 500px) {
   .zona-turnos-container {

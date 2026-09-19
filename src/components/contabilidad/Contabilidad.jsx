@@ -6,12 +6,17 @@ import { FaRegTrashAlt } from "react-icons/fa"
 import { IoIosClose } from "react-icons/io"
 import { usePaquetes } from "../../helpers/usePaquetes"
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase/firebaseConfig"
+
 import "./contabilidad.css"
 
 const MESES = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ]
+
+const cerrarSesion = () => signOut(auth)
 
 const hoy = new Date()
 
@@ -253,10 +258,12 @@ const Contabilidad = () => {
 
             <div className="inicio-container">
                 <div className="nav-bar">
+                    <button className="btn-cerrar-sesion" onClick={cerrarSesion}>Cerrar sesión</button>
                     <Link className="auto-title" to="/">Turnos</Link>
                     <Link className="auto-title" to="/alumnos">Alumnos</Link>
                     <Link className="auto-title" to="/profesores">Profesores</Link>
                     <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
+                    <Link className='auto-title' to="/admin"> Administración </Link>       
                 </div>
             </div>
 
