@@ -4,9 +4,9 @@ import { useFechas } from "../../helpers/useFechas"
 import { usePaquetes, getPrecio } from "../../helpers/usePaquetes"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
 import { db } from "../../firebase/firebaseConfig"
-
+import { useConfiguracion } from "../../helpers/useConfiguracion"
 const MEDIOS_PAGO = ["efectivo", "transferencia", "credito"]
-const RECARGO_CREDITO = 0.35
+
 
 const Simulacion = ({
     setSimulacion,
@@ -34,9 +34,12 @@ const Simulacion = ({
     const isPreview = modoSimulacion === "preview"
     const isReadonly = modoSimulacion === "readonly"
 
+    const { recargo: RECARGO_CREDITO } = useConfiguracion()
     const conRecargo = medioPago === "credito"
     const totalBase = carrito.reduce((acc, item) => acc + item.precioCalculado, 0)
     const totalFinal = conRecargo ? Math.round(totalBase * (1 + RECARGO_CREDITO)) : totalBase
+
+    
 
     const paquetesFiltrados = paquetes.filter(p =>
         tipoAuto === "manual" ? true : !p.soloManual
@@ -311,7 +314,7 @@ const Simulacion = ({
                                     ))}
                                     {conRecargo && (
                                         <div className="sim-carrito-item sim-recargo">
-                                            <span>Recargo crédito (35%)</span>
+                                            <span>Recargo crédito ({RECARGO_CREDITO * 100}%)</span>
                                             <span>+${(totalFinal - totalBase).toLocaleString("es-AR")}</span>
                                         </div>
                                     )}

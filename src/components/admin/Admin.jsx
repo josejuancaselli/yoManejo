@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo } from "react"
 import { usePaquetes } from "../../helpers/usePaquetes"
 import { Link } from "react-router-dom"
-import { collection, onSnapshot, addDoc, deleteDoc, doc, Timestamp } from "firebase/firestore"
+import { collection, onSnapshot, addDoc, deleteDoc, doc, Timestamp, setDoc } from "firebase/firestore"
 import { db } from "../../firebase/firebaseConfig"
 import { FaRegTrashAlt } from "react-icons/fa"
 import { IoIosClose } from "react-icons/io"
 import { signOut } from "firebase/auth"
 import { auth } from "../../firebase/firebaseConfig"
+import { useConfiguracion } from "../../helpers/useConfiguracion"
 import "./admin.css"
 
 const MESES = [
@@ -19,6 +20,11 @@ const cerrarSesion = () => signOut(auth)
 const hoy = new Date()
 
 const Admin = () => {
+
+    const { recargo, cargando: cargandoRecargo } = useConfiguracion()
+    const [nuevoRecargo, setNuevoRecargo] = useState("")
+    const [recargoGuardado, setRecargoGuardado] = useState(false)
+
     const { paquetes, cargando, actualizarPrecio } = usePaquetes()
     const [precios, setPrecios] = useState({})
     const [guardado, setGuardado] = useState(null)
@@ -60,6 +66,15 @@ const Admin = () => {
         })
         return () => unsub()
     }, [])
+
+    const guardarRecargo = async () => {
+        const valor = Number(nuevoRecargo)
+        if (isNaN(valor) || valor < 0 || valor > 100) return
+        await setDoc(doc(db, "configuracion", "recargo"), { porcentaje: valor / 100 })
+        setNuevoRecargo("")
+        setRecargoGuardado(true)
+        setTimeout(() => setRecargoGuardado(false), 2000)
+    }
 
     const gastosMes = useMemo(() =>
         gastos
@@ -173,7 +188,7 @@ const Admin = () => {
                     <Link className="auto-title" to="/alumnos">Alumnos</Link>
                     <Link className="auto-title" to="/profesores">Profesores</Link>
                     <Link className="auto-title" to="/contabilidad">Contabilidad</Link>
-                    <Link className='auto-title' to="/admin"> Administración </Link>                    
+                    <Link className='auto-title' to="/admin"> Administración </Link>
                 </div>
             </div>
 
@@ -265,6 +280,41 @@ const Admin = () => {
                     )}
                 </div>
 
+
+                {/* ── Recargo tarjeta de crédito ── */}
+                <div className="admin-card">
+                    <p className="admin-card-label">Recargo tarjeta de crédito</p>
+                    <p className="admin-card-sub">
+                        Cambiá el porcentaje de recargo que se aplica cuando el pago es con crédito.
+                        El cambio impacta inmediatamente en todos los formularios abiertos.
+                    </p>
+
+                    {cargandoRecargo ? (
+                        <p className="admin-empty">Cargando...</p>
+                    ) : (
+                        <div className="admin-precio-fila">
+                            <span className="admin-precio-tipo">Recargo actual</span>
+                            <span className="admin-paq-precio-valor">{(recargo * 100).toFixed(0)}%</span>
+                            <input
+                                type="number"
+                                className="admin-input"
+                                placeholder="Nuevo % (ej: 25)"
+                                value={nuevoRecargo}
+                                min="0"
+                                max="100"
+                                onChange={e => setNuevoRecargo(e.target.value)}
+                            />
+                            <button
+                                className={`admin-btn-guardar ${recargoGuardado ? "admin-btn-guardado" : ""}`}
+                                onClick={guardarRecargo}
+                                disabled={!nuevoRecargo}
+                            >
+                                {recargoGuardado ? "✓ Guardado" : "Guardar"}
+                            </button>
+                        </div>
+                    )}
+                </div>
+
                 {/* ── Registrar gasto ── */}
                 <div className="admin-card">
                     <p className="admin-card-label">Registrar gasto</p>
@@ -327,6 +377,7 @@ const Admin = () => {
                         </div>
                     )}
                 </div>
+
 
                 {/* ── Egresos por mes ── */}
                 <div className="admin-card">

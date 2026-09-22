@@ -3,16 +3,13 @@ import { useForm } from 'react-hook-form'
 import { db } from "../../firebase/firebaseConfig"
 import { useState } from "react"
 import { usePaquetes, getPrecio } from "../../helpers/usePaquetes"
+import { useConfiguracion } from "../../helpers/useConfiguracion"
 
 const MEDIOS_PAGO = ["efectivo", "transferencia", "credito"]
-const RECARGO_CREDITO = 0.35
 
-const ReservarPrueba = ({
-    setVentanaReservar,
-    turnoSim,
-    setRefresh,
-    handleReservaConfirmada
-}) => {
+
+const ReservarPrueba = ({ setVentanaReservar, turnoSim, setRefresh, handleReservaConfirmada }) => {
+
     const { register, handleSubmit } = useForm()
     const { paquetes, cargando } = usePaquetes()
     const turnos = turnoSim
@@ -23,8 +20,10 @@ const ReservarPrueba = ({
     const [medioPago, setMedioPago] = useState("efectivo")
     const [tipoAuto, setTipoAuto] = useState("manual")
 
+    const { recargo: RECARGO_CREDITO, cargando: cargandoConfig } = useConfiguracion()
 
-    if (cargando) return null
+
+    if (cargando || cargandoConfig) return null
 
     const paquetesFiltrados = paquetes.filter(p =>
         tipoAuto === "manual" ? true : !p.soloManual
@@ -294,7 +293,7 @@ const ReservarPrueba = ({
                                         ))}
                                         {conRecargo && (
                                             <div className="pago-carrito-item pago-recargo">
-                                                <span className="sim-recargo">Recargo crédito (35%)</span>
+                                                <span className="sim-recargo">Recargo crédito ({RECARGO_CREDITO * 100}%)</span>
                                                 <span className="sim-recargo">+${(totalFinal - totalBase).toLocaleString("es-AR")}</span>
                                             </div>
                                         )}
